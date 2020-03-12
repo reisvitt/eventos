@@ -10,19 +10,32 @@ export default class Post extends React.Component {
         super(props);
         //state of the Post, all variables are been recorded inside here
         this.state = {
-            comments: [
-                { text: 'Good Post!' }
-            ]
+            comments: [],
+            newCommentText: ''
         };
-        //infor to react when hadleSubimit is used we will be referencing the POST class
+
+        //inform to react when hadleSubimit is used we will be referencing the escope of the function
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
     }
 
     //the paramenter is the variable of event
     handleSubmit(e) {
-        //this.setStarte
+        this.setState ({
+            comments: [
+                ...this.state.comments,
+                { text: this.state.newCommentText }
+            ]
+        })
+
+        this.setState({ newCommentText: '' });
+
         //prevent the reload of the page
         e.preventDefault();
+    }
+
+    handleTextChange(e) {
+        this.setState({ newCommentText: e.target.value })
     }
 
     //returns HTML content for this component 
@@ -33,7 +46,10 @@ export default class Post extends React.Component {
                 
                 {/*create new comments to the post*/}
                 <form onSubmit={this.handleSubmit}>
-                    <input />
+                    <input 
+                        value={this.state.newCommentText}
+                        onChange= {this.handleTextChange}
+                    />
                     <button type="submit">Comment</button>
                 </form>
                 

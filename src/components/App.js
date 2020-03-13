@@ -8,9 +8,8 @@ export default class App extends React.Component {
     //render can have only one container of all components inside he
     render() {
         return (
-            <div>
-
-                <h1>Hello World!</h1>
+            <div className="App">
+                <h1>Eventos</h1>
                 <Post title="Learning ReactJs with RocketSeat" />
                 <Post title="ReactJs is awesome" />
                 <Post title="Soon more video of ReactJS" />

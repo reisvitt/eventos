@@ -41,7 +41,7 @@ export default class Post extends React.Component {
     //returns HTML content for this component 
     render() { 
         return (
-            <div>
+            <div className="Post">
                 <h2>{ this.props.title }</h2>
                 
                 {/*create new comments to the post*/}

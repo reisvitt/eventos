@@ -1,30 +1,69 @@
-import React from 'react'
+import React, { useState } from "react";
+import Campo from "../../components/Campo/";
 
-import './App.css';
-
-import Campos from '../../components/Campos';
-import Botao from '../../components/Botao';
+import "./styles.css";
 
 import { Link } from "react-router-dom";
 
-export default class index extends React.Component{
-
+const Subscribre = props => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [name, setName] = useState("");
   //funcao do render: retornar o conteudo html do componente App
-  render(){
-    document.title = 'Cadastrar'
-    //<Campos text = "DATA/NASCI" type = "date" />
-    return(
-      <div>
-        <form onSubmit = {this.handleSubmit}>
-          <Campos text = "NOME COMPLETO" />
-          <Campos text = "SENHA"      type = "password" />
-          <Campos text = "EMAIL"      type = "email" />
-          <Campos text = "CPF"        type = "number" />
-          <Link to= "/login">Login</Link>
-         
-        </form>
+  document.title = "Cadastrar";
+  //<Campos text = "DATA/NASCI" type = "date" />
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log("subscribe");
+  };
+
+  return (
+    <div className="container">
+      <div className="form-container">
+        <h1>Cadastro</h1>
+        <form onSubmit={handleSubmit}>
+          <Campo
+            value={name}
+            onChange={e => {
+              setName(e.target.value);
+            }}
+            text="Nome completo"
+          />
+          <Campo
+            value={password}
+            onChange={e => {
+              setPassword(e.target.value);
+            }}
+            text="Senha"
+            type="password"
+          />
+          <Campo
+            onChange={e => {
+              setEmail(e.target.value);
+            }}
+            value={email}
+            text="E-mail"
+            type="email"
+          />
+          <Campo
+            onChange={e => {
+              setCpf(e.target.value);
+            }}
+            value={cpf}
+            text="CPF"
+            type="number"
+          />
+          <div className="container-link">
+            <button type="submit" className="link">
+              Cadastrar
+            </button>
+          </div>
+        </form>
       </div>
-    );//fim return
-  }//fim metodo render
-}//fim classe App
+    </div>
+  ); //fim return
+}; //fim classe App
+
+export default Subscribre;

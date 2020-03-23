@@ -21,7 +21,7 @@ const Subscribre = props => {
     // fazer tratamento
 
     const name_user = name.split(" ", 2);
-    /*
+
     const user = {
       first_name: name_user[0],
       last_name: name_user[1],
@@ -29,14 +29,6 @@ const Subscribre = props => {
       name: name,
       cpf: cpf,
       password: password
-    };*/
-
-    const user = {
-      first_name: "vitor",
-      last_name: "reis",
-      email: "reis_vitor@outlook.com  ",
-      cpf: "3425654",
-      password: "2145654"
     };
 
     const response = await api.post("/user", user);

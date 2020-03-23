@@ -45,3 +45,19 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+::-webkit-input-placeholder {
+  color: #bab8dd;
+}
+
+:-moz-placeholder {
+  color: #bab8dd;
+}
+
+::-moz-placeholder {
+  color: #bab8dd;
+}
+
+:-ms-input-placeholder {
+  color: #bab8dd;
+}

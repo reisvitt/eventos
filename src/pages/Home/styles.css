@@ -1,0 +1,27 @@
+.container-home {
+  display: flex;
+  justify-content: flex-end;
+}
+
+h1 {
+  margin: 0;
+
+  padding: 30px;
+}
+
+.container-home .link {
+  border: 1px solid #211d46;
+  background-color: transparent;
+  font-size: 16px;
+  padding: 5px 30px;
+  border-radius: 15px;
+  text-decoration: none;
+  color: #211d46;
+  transition: 0.3s;
+  margin: 10px;
+}
+
+.container-home .link:hover {
+  background-color: #211d46;
+  color: white;
+}

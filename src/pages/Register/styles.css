@@ -8,6 +8,11 @@
   justify-content: center;
 }
 
+.container .form-container .errorMessage {
+  font-size: 14px;
+  color: red;
+}
+
 .form-container {
   width: 800px;
   height: 550px;

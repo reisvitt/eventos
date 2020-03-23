@@ -8,7 +8,7 @@ const createUser = async (req, res) => {
   if (!body) {
     return res.status(400).json({
       success: false,
-      error: "Você precisa enviar um usuário"
+      message: "Você precisa enviar um usuário"
     });
   }
 
@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
   if (!user) {
     return res.status(400).json({
       success: false,
-      error: "Erro ao criar usuário - Dados incorretos"
+      message: "Erro ao criar usuário - Dados incorretos"
     });
   }
 
@@ -32,10 +32,10 @@ const createUser = async (req, res) => {
       });
     })
     .catch(err => {
-      return res.status(400).json({
+      return res.status(200).json({
         err,
         success: false,
-        message: "User not created!"
+        message: "User already exists"
       });
     });
 };
@@ -44,7 +44,7 @@ const updateUser = (req, res) => {
   if (!req.body) {
     return res.status(400).json({
       success: false,
-      error: "Você precisa enviar um usuário"
+      message: "Você precisa enviar um usuário"
     });
   }
 

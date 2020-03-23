@@ -2,38 +2,47 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const SALT_WORK_FACTOR = 10;
 
-const UserSchema = new mongoose.Schema({
-  first_name: {
-    type: String,
-    required: true
+const UserSchema = new mongoose.Schema(
+  {
+    first_name: {
+      type: String,
+      required: true
+    },
+    last_name: {
+      type: String,
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    },
+    cpf: {
+      type: Number,
+      unique: true
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true
+    },
+    avatar: String,
+    created_at: {
+      type: Date,
+      default: Date.now
+    },
+    update_at: Date,
+    admin: Boolean,
+    events: Array,
+    events_admin: Array
   },
-  last_name: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  cpf: {
-    type: Number,
-    unique: true
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: true
-  },
-  avatar: String,
-  created_at: {
-    type: Date,
-    default: Date.now
-  },
-  update_at: Date,
-  admin: Boolean,
-  events: Array,
-  events_admin: Array
-});
+  {
+    writeConcern: {
+      w: "majority",
+      j: true,
+      wtimeout: 1000
+    }
+  }
+);
 
 UserSchema.pre("save", async function(next) {
   var user = this;

@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const db = require("./database");
 const userRouter = require("./routes/userRouter");
+const eventRouter = require("./routes/eventRouter");
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
   res.send("SERVER OK");
 });
 
-app.use("/api", userRouter);
+app.use(`/api/${process.env.VERSION}`, userRouter);
+app.use(`/api/${process.env.VERSION}`, eventRouter);
 
 app.listen(3333, () => console.log("Server running OKOK"));

@@ -30,10 +30,14 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       default: Date.now
     },
+    can_create_event: {
+      type: Boolean,
+      default: false
+    },
     update_at: Date,
-    admin: Boolean,
-    events: Array,
-    events_admin: Array
+    events: [String],
+    events_assistant: [String],
+    events_coordenator: [String],
   },
   {
     writeConcern: {

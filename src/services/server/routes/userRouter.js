@@ -1,4 +1,4 @@
-const UserCtrl = require("../controllers/user-ctrl")
+const UserCtrl = require("../controllers/UserController")
 const express = require ("express")
 
 const routes = express.Router()

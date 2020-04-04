@@ -24,7 +24,7 @@ const EventSchema = new mongoose.Schema(
     activities: [String], // contem o id das atividades
     price: Number,
     coordinator: {
-      type: UserSchema,
+      type: String,
       required: true
     },
     assistants: [String], // contem o id dos auxiliares

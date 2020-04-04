@@ -23,7 +23,9 @@ app.get("/", (req, res) => {
   res.send("SERVER OK");
 });
 
-app.use(`/api/${process.env.VERSION}`, userRouter);
-app.use(`/api/${process.env.VERSION}`, eventRouter);
+console.log("version",process.env.VERSION)
+
+app.use(`/api`, userRouter);
+app.use(`/api`, eventRouter);
 
 app.listen(3333, () => console.log("Server running OKOK"));

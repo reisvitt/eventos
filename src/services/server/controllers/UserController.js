@@ -1,3 +1,4 @@
+const jwt = require("../utils/jwt");
 const User = require("../models/User");
 
 const createUser = async (req, res) => {
@@ -6,49 +7,35 @@ const createUser = async (req, res) => {
   //verificar se usuario eh admin ou nao
 
   if (!body) {
-    return res.status(400).json({
-      success: false,
-      message: "Você precisa enviar um usuário"
-    });
+    return res.sendStatus(400);
   }
 
-  const user = User({ ...body });
+  try {
+    const result = await User.create({ ...body });
+    const { password, ...user } = result.toObject();
 
-  if (!user) {
+    const token = await jwt.sign(user._id);
+
+    return res.status(201).json({
+      user: user,
+      token,
+    });
+  } catch (error) {
     return res.status(400).json({
-      success: false,
-      message: "Erro ao criar usuário - Dados incorretos"
+      error,
     });
   }
-
-  await user
-    .save()
-    .then(() => {
-      return res.status(201).json({
-        success: true,
-        id: user._id,
-        user: user,
-        message: "User created"
-      });
-    })
-    .catch(err => {
-      return res.status(200).json({
-        err,
-        success: false,
-        message: "User already exists"
-      });
-    });
 };
 
 const updateUser = (req, res) => {
   if (!req.body) {
     return res.status(400).json({
       success: false,
-      message: "Você precisa enviar um usuário"
+      message: "Você precisa enviar um usuário",
     });
   }
 
-  User.findById(req.params.id, user => {
+  User.findById(req.params.id, (user) => {
     if (user) {
       user.set(req.body);
       user.update_at = new Date();
@@ -59,19 +46,19 @@ const updateUser = (req, res) => {
           return res.status(200).json({
             success: true,
             id: user._id,
-            message: "User updated"
+            message: "User updated",
           });
         })
-        .catch(err => {
+        .catch((err) => {
           return res.status(404).json({
             error: err,
-            message: "User not updated"
+            message: "User not updated",
           });
         });
     }
 
     return res.status(400).json({
-      message: "User not found"
+      message: "User not found",
     });
   });
 };
@@ -79,27 +66,27 @@ const updateUser = (req, res) => {
 const deleteUser = (req, res) => {
   const id = req.params.id;
 
-  User.findById(id, user => {
+  User.findById(id, (user) => {
     if (user) {
       user
         .remove()
-        .then(newUser => {
+        .then((newUser) => {
           return res.status(200).json({
             success: true,
             user: newUser,
-            message: "User deleted"
+            message: "User deleted",
           });
         })
-        .catch(err => {
+        .catch((err) => {
           return res.status(404).json({
             error: err,
-            message: "User not deleted"
+            message: "User not deleted",
           });
         });
     }
 
     return res.status(400).json({
-      message: "User not found"
+      message: "User not found",
     });
   });
 };
@@ -110,19 +97,41 @@ const getUser = (req, res) => {
   User.findById(id, (err, user) => {
     if (user) {
       return res.status(200).json({
-        user
+        user,
       });
     }
 
     return res.status(400).json({
-      message: "User not found"
+      message: "User not found",
     });
   });
+};
+
+const deleteUsers = async (req, res) => {
+  try {
+    await User.deleteMany(); // no conditions = delete everyone
+
+    return res.status(204).json();
+  } catch (err) {
+    return res.json({ err });
+  }
+};
+
+const showUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+
+    return res.status(200).json(users);
+  } catch (err) {
+    return res.json({ err });
+  }
 };
 
 module.exports = {
   createUser,
   updateUser,
   deleteUser,
-  getUser
+  getUser,
+  deleteUsers,
+  showUsers,
 };

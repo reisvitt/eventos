@@ -4,35 +4,34 @@ const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new mongoose.Schema(
   {
-    first_name: {
+    name: {
       type: String,
-      required: true
-    },
-    last_name: {
-      type: String,
-      required: true
+      required: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
+      select: false,
     },
     cpf: {
       type: Number,
-      unique: true
+      unique: true,
     },
     email: {
       type: String,
       unique: true,
-      required: true
+      required: true,
+      lowercase: true,
+      trim: true,
     },
     avatar: String,
     created_at: {
       type: Date,
-      default: Date.now
+      default: Date.now,
     },
     can_create_event: {
       type: Boolean,
-      default: false
+      default: false,
     },
     update_at: Date,
     events: [String],
@@ -43,12 +42,12 @@ const UserSchema = new mongoose.Schema(
     writeConcern: {
       w: "majority",
       j: true,
-      wtimeout: 1000
-    }
+      wtimeout: 1000,
+    },
   }
 );
 
-UserSchema.pre("save", async function(next) {
+UserSchema.pre("save", async function (next) {
   var user = this;
 
   // gera o salt
@@ -57,7 +56,7 @@ UserSchema.pre("save", async function(next) {
   if (!salt) {
     return next({
       success: false,
-      error: "Error to create Salt"
+      error: "Error to create Salt",
     });
   }
 
@@ -67,7 +66,7 @@ UserSchema.pre("save", async function(next) {
     if (!hash) {
       return next({
         success: false,
-        error: "Error to ecrypt password"
+        error: "Error to ecrypt password",
       });
     }
 

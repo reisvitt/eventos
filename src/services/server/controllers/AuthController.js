@@ -1,12 +1,27 @@
 const User = require("../models/User");
+const jwt = require("../utils/jwt");
 
-const login = (req, res) => {
-  const body = req.body;
-  const email = { body };
+const login = async (req, res) => {
+  const [, hash] = req.headers.authorization.split(" ");
+  const [email, password] = Buffer.from(hash, "base64").toString().split(":");
 
-  // jjjjjjjj
+  try {
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
+      return res.sendStatus(404);
+    }
+
+    user.comparePassword(password, async (error, isMatch) => {
+      if (error) return res.sendStatus(401);
+
+      const token = await jwt.sign(user._id);
+      return res.json({ token });
+    });
+  } catch (error) {
+    return res.sendStatus(404);
+  }
 };
 
-const logout = (req, res) => {
-  // sukahdasudh
+module.exports = {
+  login,
 };

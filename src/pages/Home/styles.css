@@ -22,9 +22,9 @@ body{
 }
 
 .container-home .searchBar{
-  position: absolute;
-  right: 700px;
-  bottom: 630px;
+  position: relative;
+  right: 30px;
+  bottom: 20px;
   width:570px;
 }
 
@@ -37,9 +37,9 @@ body{
   padding: 5px 30px;
   text-decoration: none;
   transition: 0.2s;
-  position: absolute;
-  right: 260px;
-  bottom: 630px;
+  position: relative;
+  right: -180px;
+  bottom: 23px;
 }
 
 .container-home .linkR{
@@ -51,9 +51,9 @@ body{
   padding: 5px 30px;
   text-decoration: none;
   transition: 0.2s;
-  position: absolute;
-  right: 100px;
-  bottom: 630px;
+  position: relative;
+  right: -430px;
+  bottom: 23px;
 }
 
 

@@ -4,47 +4,50 @@ const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new mongoose.Schema(
   {
-    first_name: {
+    name: {
       type: String,
-      required: true
-    },
-    last_name: {
-      type: String,
-      required: true
+      required: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
+      select: false,
     },
     cpf: {
       type: Number,
-      unique: true
+      unique: true,
     },
     email: {
       type: String,
       unique: true,
-      required: true
+      required: true,
+      lowercase: true,
+      trim: true,
     },
     avatar: String,
     created_at: {
       type: Date,
-      default: Date.now
+      default: Date.now,
+    },
+    can_create_event: {
+      type: Boolean,
+      default: false,
     },
     update_at: Date,
-    admin: Boolean,
-    events: Array,
-    events_admin: Array
+    events: [String],
+    events_assistant: [String],
+    events_coordenator: [String],
   },
   {
     writeConcern: {
       w: "majority",
       j: true,
-      wtimeout: 1000
-    }
+      wtimeout: 1000,
+    },
   }
 );
 
-UserSchema.pre("save", async function(next) {
+UserSchema.pre("save", async function (next) {
   var user = this;
 
   // gera o salt
@@ -53,7 +56,7 @@ UserSchema.pre("save", async function(next) {
   if (!salt) {
     return next({
       success: false,
-      error: "Error to create Salt"
+      error: "Error to create Salt",
     });
   }
 
@@ -63,7 +66,7 @@ UserSchema.pre("save", async function(next) {
     if (!hash) {
       return next({
         success: false,
-        error: "Error to ecrypt password"
+        error: "Error to ecrypt password",
       });
     }
 
@@ -73,5 +76,12 @@ UserSchema.pre("save", async function(next) {
     next();
   }
 });
+
+UserSchema.methods.comparePassword = function (password, callback) {
+  bcrypt.compare(password, this.password, function (err, isMatch) {
+    if (err) return callback(err);
+    callback(null, isMatch);
+  });
+};
 
 module.exports = mongoose.model("User", UserSchema);

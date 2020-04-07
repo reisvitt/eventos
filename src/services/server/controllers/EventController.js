@@ -21,7 +21,7 @@ const create = async (req, res) => {
     return res.sendStatus(400);
   }
 
-  if (body) {
+  if (!user) {
     return res.sendStatus(401);
   }
 

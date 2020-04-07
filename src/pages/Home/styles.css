@@ -1,27 +1,99 @@
-.container-home {
-  display: flex;
-  justify-content: flex-end;
+body{
+  background-color: #0489B1;
 }
 
-h1 {
-  margin: 0;
-
-  padding: 30px;
+.home{
+  width: 100%;
+  max-width: 1180px;
+  padding: 0 30px;
+  margin: 32px auto;
 }
 
-.container-home .link {
-  border: 1px solid #211d46;
+.container-home .nav {
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.container-home .imgLogo{
+  position: relative;
+  left: -150px;
+  top: -28px;
+  left: -200px;
+}
+
+.container-home .searchBar{
+  position: absolute;
+  right: 700px;
+  bottom: 630px;
+  width:570px;
+}
+
+.container-home .linkL{
+  color: white;
+  border: 1px solid white;
+  border-radius: 15px;
   background-color: transparent;
   font-size: 16px;
   padding: 5px 30px;
-  border-radius: 15px;
   text-decoration: none;
-  color: #211d46;
-  transition: 0.3s;
-  margin: 10px;
+  transition: 0.2s;
+  position: absolute;
+  right: 260px;
+  bottom: 630px;
 }
 
-.container-home .link:hover {
-  background-color: #211d46;
+.container-home .linkR{
   color: white;
+  border: 1px solid white;
+  border-radius: 15px;
+  background-color: transparent;
+  font-size: 16px;
+  padding: 5px 30px;
+  text-decoration: none;
+  transition: 0.2s;
+  position: absolute;
+  right: 100px;
+  bottom: 630px;
+}
+
+
+.container-home .linkR:hover {
+  background-color: #46C2FD;
+  color: #f0f0f5;
+}
+
+.container-home .linkL:hover {
+  background-color: #46C2FD;
+  color: #f0f0f5;
+}
+
+.home ul{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 24px;
+  list-style: none;
+}
+
+.home ul li{
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.home ul li .link{
+  color: #87CEEB ;
+  border: 1px solid #0489B1;
+  border-radius: 15px;
+  background-color: transparent;
+  font-size: 16px;
+  padding: 5px 30px;
+  text-decoration: none;
+  transition: 0.2s;
+  margin-left: 400px;
+}
+
+.home ul li .link:hover {
+  background-color: #46C2FD;
+  color: #f0f0f5;
 }

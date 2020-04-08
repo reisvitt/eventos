@@ -43,7 +43,7 @@ const Home = () => {
           <strong>Descrição:</strong>
           <p>{event.description}</p>
 
-          <p>Valor: {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(event.__v)}</p>
+          <p> <strong>Valor: </strong> {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(event.__v)}</p>
           <Link className="link" to="/details">
               Detalhes
           </Link>

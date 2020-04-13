@@ -46,7 +46,7 @@ const Subscribre = props => {
 //         setErrorVisible(false);
 //       }, 5000);
 //     }
-   };
+   //};
 
   return (
     <div className="container">

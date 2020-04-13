@@ -5,12 +5,13 @@ import api from "../../services/api";
 import "./styles.css";
 
 const Subscribre = props => {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [cpf, setCpf] = useState("");
-//   const [name, setName] = useState("");
-//   const [erroMessage, setErrorMessage] = useState("");
-//   const [errorVisible, setErrorVisible] = useState(false);
+   const [eventName, setEventName] = useState("");
+   const [coordName, setCoordName] = useState("");
+   const [assistentName, setAssistentName] = useState("");
+   const [theme, setTheme] = useState("");
+   const [duration, setDuration] = useState("");
+   const [numberParticipants, setNumberParticipants] = useState(false);
+   const [valor, setValor] = useState("");
 
 //   document.title = "Criar"; // title da pagina
 
@@ -45,7 +46,7 @@ const Subscribre = props => {
 //         setErrorVisible(false);
 //       }, 5000);
 //     }
-//   };
+   };
 
   return (
     <div className="container">

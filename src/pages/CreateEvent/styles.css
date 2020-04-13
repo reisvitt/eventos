@@ -1,14 +1,13 @@
 .content {
   margin: auto;
-  /*overflow-y: scroll;*/
   border-radius: 2px;
-  width: 1000px;
+  width: 80%;
+  height: auto;
   background-color: #fff;
   color: #333;
   padding: 55px 95px 68px 95px;
 }
-.form-content {
-}
+
 .form-content h1 {
   font-family: 400-Raleway;
   font-size: 40px;
@@ -19,10 +18,11 @@
 
 .form-content .campo-container label {
   font-family: Raleway;
-  font-size: 18px;
+  font-size: 15px;
   color: #2e2e2e;
   text-transform: uppercase;
   width: 100%;
+  height: 100%;
   padding-bottom: 11px;
   margin: auto 0px auto -50px;
   white-space: nowrap;
@@ -44,6 +44,10 @@
   padding: 0 25px;
 }
 
+.form-content .campo-container input:focus {
+  outline: auto #0489b1!important;
+}
+
 textarea {
   resize: unset;
   font-size: 18px;
@@ -58,9 +62,9 @@ textarea {
 
 button {
   background: #333;
-  border: 0px;
+  border: none;
   color: #dcdce6;
-  font-family: 700-Raleway;
+  font-family: Raleway;
   font-size: 26px;
   padding: 0 25px;
   cursor: pointer;
@@ -68,7 +72,6 @@ button {
   width: 200px;
   border-radius: 300px;
   transition: background-color 0.4s, color 0.4s;
-  content: "";
   display: block;
   top: 0;
   left: 0;
@@ -76,7 +79,11 @@ button {
 }
 
 button:hover {
-  background: -webkit-linear-gradient(50deg, #64c3e0, #0489b1);
+  background: -webkit-linear-gradient(50deg, #64c3e0, #0489b1);  
+  outline: unset;
+}
+button:focus {
+  outline: 0px auto -webkit-focus-ring-color;
 }
 
 @media (max-width: 800px) {

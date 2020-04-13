@@ -5,6 +5,7 @@ import Register from "./../pages/Register";
 import Login from "./../pages/Login";
 import Activity from "./../pages/Activity";
 import Error from "./../pages/Error";
+import CreateEvents from "./../pages/CreateEvents";
 
 const Routers = () => (
   <BrowserRouter>
@@ -14,6 +15,7 @@ const Routers = () => (
       <Route path="/login" exact component={Login} />
       <Route path="/activity" exact component={Activity} />
       <Route path="/error" component={Error} />
+      <Route path="/createEvents" component={CreateEvents} />
     </Switch>
   </BrowserRouter>
 );

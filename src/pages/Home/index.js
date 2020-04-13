@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect, useState }  from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
 import logoImg from '../../assets/logo.png'
+import api from '../../services/api';
 //import { FiPower, FiTrash2 } from 'react-icons/fi';
 
 const Home = () => {
+  
+  const[events,setEvents] = useState([]);
+
+  useEffect(() => {
+    api.get('/event/list', {
+    
+    }).then(response => {
+        setEvents(response.data);
+    })
+  });
+
   return (
     <div className="home">
       
@@ -23,59 +35,21 @@ const Home = () => {
       </div>
       
       <ul>
-        <li>
-          <strong>Titulo do evento</strong>
-          <p>Descrição do evento</p>
-          <p>Valor: {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(120)}</p>
-          <Link className="link" to="/details">
-              Detalhes
-          </Link>
-        </li>
+      {events.map(event => (
+        <li key={event.id}>
+          <strong>Titulo:</strong>
+          <p>{event.title}</p>
+          
+          <strong>Descrição:</strong>
+          <p>{event.description}</p>
 
-        <li>
-          <strong>Titulo do evento</strong>
-          <p>Descrição do evento</p>
-          <p>Valor: {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(120)}</p>
+          <p> <strong>Valor: </strong> {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(event.__v)}</p>
           <Link className="link" to="/details">
               Detalhes
           </Link>
         </li>
+      ))}
 
-        <li>
-          <strong>Titulo do evento</strong>
-          <p>Descrição do evento</p>
-          <p>Valor: {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(120)}</p>
-          <Link className="link" to="/details">
-              Detalhes
-          </Link>
-        </li>
-
-        <li>
-          <strong>Titulo do evento</strong>
-          <p>Descrição do evento</p>
-          <p>Valor: {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(120)}</p>
-          <Link className="link" to="/details">
-              Detalhes
-          </Link>
-        </li>
-
-        <li>
-          <strong>Titulo do evento</strong>
-          <p>Descrição do evento</p>
-          <p>Valor: {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(120)}</p>
-          <Link className="link" to="/details">
-              Detalhes
-          </Link>
-        </li>
-
-        <li>
-          <strong>Titulo do evento</strong>
-          <p>Descrição do evento</p>
-          <p>Valor: {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(120)}</p>
-          <Link className="link" to="/details">
-              Detalhes
-          </Link>
-        </li>
       </ul>
 
     </div>

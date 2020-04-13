@@ -4,12 +4,13 @@ require('dotenv/config')
 mongoose.connect(process.env.DATABASE, {
   useNewUrlParser:  true,
   useUnifiedTopology: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  family: 4
 }).then(() => {
   console.log("Connection with database - OK")
 })
   .catch(err =>{
-    console.error("Connection error", err.message)
+    console.error("Connection error", err)
   })
 
 const db = mongoose.connection

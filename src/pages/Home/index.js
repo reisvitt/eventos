@@ -1,8 +1,8 @@
 import React, { useEffect, useState }  from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
-import logoImg from '../../assets/logo.png'
 import api from '../../services/api';
+import Cabecario from '../../components/Cabecario';
 //import { FiPower, FiTrash2 } from 'react-icons/fi';
 
 const Home = () => {
@@ -20,35 +20,23 @@ const Home = () => {
   return (
     <div className="home">
       
-      <div className="container-home">
-        <div className="nav">
-            <img className="imgLogo" src ={logoImg} alt = "logoSite"/>
-            <input className= "searchBar" type="text" placeholder="Pesquisar evento.."></input>
-            <Link className="linkR" to="/register">
-              Sign Up 
-            </Link>
-            <Link className="linkL" to="/login">
-              Sign In
-            </Link>
-            
-        </div>
-      </div>
+      <Cabecario />
       
       <ul>
-      {events.map(event => (
-        <li key={event.id}>
-          <strong>Titulo:</strong>
-          <p>{event.title}</p>
-          
-          <strong>Descrição:</strong>
-          <p>{event.description}</p>
+          {events.map(event => (
+            <li key={event.id}>
+              <strong>Titulo:</strong>
+              <p>{event.title}</p>
+              
+              <strong>Descrição:</strong>
+              <p>{event.description}</p>
 
-          <p> <strong>Valor: </strong> {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(event.__v)}</p>
-          <Link className="link" to="/details">
-              Detalhes
-          </Link>
-        </li>
-      ))}
+              <p> <strong>Valor: </strong> {Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(event.__v)}</p>
+              <Link className="link" to="/details">
+                  Detalhes
+              </Link>
+            </li>
+          ))}
 
       </ul>
 

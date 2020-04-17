@@ -1,0 +1,100 @@
+.content {
+  margin: auto;
+  border-radius: 2px;
+  width: 80%;
+  height: auto;
+  background-color: #fff;
+  color: #333;
+  padding: 55px 95px 68px 95px;
+}
+
+.form-content h1 {
+  font-family: 400-Raleway;
+  font-size: 40px;
+  text-align: center;
+  padding: 30px;
+  text-transform: uppercase;
+}
+
+.form-content .campo-container label {
+  font-family: Raleway;
+  font-size: 15px;
+  color: #2e2e2e;
+  text-transform: uppercase;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 11px;
+  margin: auto 0px auto -50px;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.form-content .campo-container input {
+  width: 80%;
+  margin: 8px;
+  line-height: 1.2;
+  display: flex;
+  height: 60px;
+  border: 1px solid #dcdce6;
+  border-radius: 8px;
+  background: transparent;
+  color: #333;
+  font-family: Raleway;
+  font-size: 18px;
+  padding: 0 25px;
+}
+
+.form-content .campo-container input:focus {
+  outline: auto #0489b1!important;
+}
+
+textarea {
+  resize: unset;
+  font-size: 18px;
+  width: 80%;
+  height: 140px;
+  color: #333;
+  border: 1px solid #dcdce6;
+  border-radius: 8px;
+  padding: 16px 24px;
+  line-height: 24px;
+}
+
+button {
+  background: #333;
+  border: none;
+  color: #dcdce6;
+  font-family: Raleway;
+  font-size: 26px;
+  padding: 0 25px;
+  cursor: pointer;
+  height: 100px;
+  width: 200px;
+  border-radius: 300px;
+  transition: background-color 0.4s, color 0.4s;
+  display: block;
+  top: 0;
+  left: 0;
+  margin: auto;
+}
+
+button:hover {
+  background: -webkit-linear-gradient(50deg, #64c3e0, #0489b1);  
+  outline: unset;
+}
+button:focus {
+  outline: 0px auto -webkit-focus-ring-color;
+}
+
+@media (max-width: 800px) {
+  .form-container {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .campo-container div {
+    display: none;
+  }
+}

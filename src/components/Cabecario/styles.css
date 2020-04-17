@@ -1,0 +1,56 @@
+body{width:100%;}
+
+.cabecario{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+  
+  .cabecario .imgLogo{
+    margin-bottom: 40px;
+    max-width: 100%;
+  }
+  
+  .cabecario .searchBar{
+    padding: 15px;
+    width:570px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .cabecario .linkL{
+    color: white;
+    border: 1px solid white;
+    border-radius: 15px;
+    background-color: transparent;
+    font-size: 16px;
+    padding: 5px 30px;
+    text-decoration: none;
+    transition: 0.2s;
+  }
+  
+  .cabecario .linkR{
+    color: white;
+    border: 1px solid white;
+    border-radius: 15px;
+    background-color: transparent;
+    font-size: 16px;
+    padding: 5px 30px;
+    text-decoration: none;
+    transition: 0.2s;
+    margin-right: 15px;
+  }
+  
+  
+  .cabecario .linkR:hover {
+    background-color: #46C2FD;
+    color: #f0f0f5;
+  }
+  
+  .cabecario .linkL:hover {
+    background-color: #46C2FD;
+    color: #f0f0f5;
+  }

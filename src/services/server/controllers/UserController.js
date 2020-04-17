@@ -1,5 +1,6 @@
 const jwt = require("../utils/jwt");
 const User = require("../models/User");
+const mongooseError = require("../error/mongoose")
 
 const createUser = async (req, res) => {
   const body = req.body;
@@ -7,102 +8,100 @@ const createUser = async (req, res) => {
   //verificar se usuario eh admin ou nao
 
   if (!body) {
-    return res.sendStatus(400);
-  }
-
-  try {
-    const result = await User.create({ ...body });
-    const { password, ...user } = result.toObject();
-
-    const token = await jwt.sign(user._id);
-
-    return res.status(201).json({
-      user: user,
-      token,
-    });
-  } catch (error) {
     return res.status(400).json({
-      error,
+      error: "Requisição sem corpo"
     });
   }
+
+  await User.create({ ...body }, async (error, result) => {
+    if(error){
+      return res.status(400).json({
+        error: mongooseError.error(error) // verifica o erro e retorna uma mensagem
+      })
+    }else{
+      const { password, ...user } = result.toObject(); // remove a senha 
+
+      const token = await jwt.sign(user._id); // cria um token de acordo com o id do usuario recem criado
+
+      return res.status(201).json({ // retorna o usuario e o token
+        user: user,
+        token,
+      })
+    }
+  });
 };
 
 const updateUser = (req, res) => {
   if (!req.body) {
     return res.status(400).json({
-      success: false,
-      message: "Você precisa enviar um usuário",
+      error: "Você precisa enviar os dados!",
     });
   }
 
-  User.findById(req.params.id, (user) => {
-    if (user) {
-      user.set(req.body);
-      user.update_at = new Date();
+  User.updateOne({ _id: req.params.id }, {...req.body, update_at: new Date()}, (err, raw) => {
 
-      user
-        .save()
-        .then(() => {
-          return res.status(200).json({
-            success: true,
-            id: user._id,
-            message: "User updated",
-          });
-        })
-        .catch((err) => {
-          return res.status(404).json({
-            error: err,
-            message: "User not updated",
-          });
-        });
+    if(err){
+      return res.status(400).json({
+        error: mongooseError.error(err)
+      })
     }
 
-    return res.status(400).json({
-      message: "User not found",
-    });
-  });
+    if(raw){
+      if(raw.n !== 0){
+        return res.status(200).json({
+          message: "Usuário atualizado!"
+        })
+      }
+    }
+
+    return res.status(404).json({
+      error: "Usuário não encontrado"
+    })
+  })
 };
 
 const deleteUser = (req, res) => {
-  const id = req.params.id;
 
-  User.findById(id, (user) => {
-    if (user) {
-      user
-        .remove()
-        .then((newUser) => {
-          return res.status(200).json({
-            success: true,
-            user: newUser,
-            message: "User deleted",
-          });
-        })
-        .catch((err) => {
-          return res.status(404).json({
-            error: err,
-            message: "User not deleted",
-          });
-        });
+  User.deleteOne({ _id:req.params.id }, (err, raw) => {
+    if(err){
+      return res.status(400).json({
+        error: mongooseError.error(err)
+      })
     }
 
-    return res.status(400).json({
-      message: "User not found",
-    });
-  });
+    if(raw){
+      if(raw.n !== 0){
+        return res.status(200).json({
+          message: "Usuário deletado!"
+        })
+      }
+    }
+
+    return res.status(404).json({
+      error: "Usuário não encontrado"
+    })
+  })
 };
 
 const getUser = (req, res) => {
   const id = req.query.id;
 
   User.findById(id, (err, user) => {
+
+    if(err){
+      return res.status(400).json({
+        error: mongooseError.error(err)
+      })
+    }
+
     if (user) {
       return res.status(200).json({
         user,
       });
     }
 
-    return res.status(400).json({
-      message: "User not found",
+    return res.status(404).json({
+      error: "Usuário não encontrado!",
     });
   });
 };
@@ -111,9 +110,9 @@ const deleteUsers = async (req, res) => {
   try {
     await User.deleteMany(); // no conditions = delete everyone
 
-    return res.status(204).json();
-  } catch (err) {
-    return res.json({ err });
+    return res.sendStatus(204);
+  } catch (error) {
+    return res.status(404).json({ error: mongooseError.error(error) });
   }
 };
 
@@ -123,7 +122,7 @@ const showUsers = async (req, res) => {
 
     return res.status(200).json(users);
   } catch (err) {
-    return res.json({ err });
+    return res.json({ error: mongooseError.error(err) })// verifica o erro e retorna uma mensagem });
   }
 };
 

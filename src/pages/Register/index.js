@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo/";
 import api from "../../services/api";
+import { setToken } from '../../utils/auth'
 
 import "./styles.css";
 
@@ -16,7 +17,6 @@ const Subscribre = props => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log("subscribe");
 
     // fazer tratamento
 
@@ -32,11 +32,10 @@ const Subscribre = props => {
     };
 
     const response = await api.post("/user", user);
-    console.log("response", response);
-
-    if (response.data.success) {
-      console.log("success");
+    if (response.status === 201) {
+      setToken(response.data.token)
       props.history.push("/");
+
     } else {
       setErrorMessage(response.data.message);
       setErrorVisible(true);

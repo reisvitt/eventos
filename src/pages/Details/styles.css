@@ -1,0 +1,94 @@
+.details{
+    width: 100%;
+    max-width: 1180px;
+    padding: 0 30px;
+    margin: 32px auto;
+}
+
+.conteudo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+    margin-left: 20px;
+    background-color: white;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 150px;
+    background-image: url("../../assets/secomp.png");
+    background-color: rgba(0,0,0,25%);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
+}
+
+.conteudo .title{
+    font-size: 30px;
+    color: white;
+}
+
+.conteudo .descricao{
+    font-size: 17px;
+    color: white;
+}
+
+.conteudo .valor{
+    font-size: 17px;
+    color: white;
+}
+
+.conteudo .numeroVal {
+  font-size: 17px;
+  color: white;
+}
+
+.details ul{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 24px;
+    list-style: none;
+  }
+  
+  .details ul li{
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .details .botaoIns{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-grow: 1;
+  }
+
+  .details .Inscrever{
+    color: white;
+    border: 1px solid white;
+    border-radius: 15px;
+    background-color: transparent;
+    font-size: 16px;
+    padding: 5px 30px;
+    text-decoration: none;
+    transition: 0.2s;
+    margin-left: 400px;
+    text-align: center;
+    width: 400px;
+  }
+
+  .details .Inscrever:hover {
+    background-color: #46C2FD;
+    color: #f0f0f5;
+  }
+  
+  @media (max-width: 1000px) {
+    .details ul{
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 24px;
+      list-style: none;
+    }
+  }

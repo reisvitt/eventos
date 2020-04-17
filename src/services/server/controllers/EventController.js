@@ -1,6 +1,7 @@
 const EventSchema = require("../models/Event");
 const util = require("../utils/getUserByToken");
 const permission = require("../utils/permission");
+const mongooseError = require("../error/mongoose")
 
 // Tipos de parâmetos:
 
@@ -18,11 +19,15 @@ const create = async (req, res) => {
   const user = await util.getUser(token);
 
   if (!body) {
-    return res.sendStatus(400);
+    return res.status(400).json({
+      error: "Dados inválidos!"
+    });
   }
 
   if (!user) {
-    return res.sendStatus(401);
+    return res.status(401).json({
+      error: "Você não tem autorização para criar uma evento!"
+    });
   }
 
   try {
@@ -30,7 +35,7 @@ const create = async (req, res) => {
 
     return res.status(201).json(event);
   } catch (error) {
-    return res.json({ error });
+    return res.status(409).json({ error });
   }
 };
 
@@ -52,12 +57,27 @@ const update = async (req, res) => {
     await EventSchema.updateOne(
       { _id: eventID },
       {
-        updated_at: new Date(),
         ...body,
+        updated_at: new Date()
       },
-      (error) => {
-        if (error) return res.sendStatus(204);
-        return res.sendStatus(204);
+      (error, raw) => {
+        if (error){
+          return res.status(400).json({
+            error: mongooseError.error(error)
+          });
+        }
+        
+        if(raw){
+          if(raw.n !== 0){
+            return res.status(200).json({
+              message: "Atualizado com sucesso!"
+            });
+          }
+        }
+
+        return res.status(404).json({
+          error: "Usuário não encontrado!"
+        })
       }
     );
   } catch (error) {
@@ -74,7 +94,9 @@ const deleteEvent = async (req, res) => {
 
   // verifica se o usuario existe
   if (!user) {
-    return res.sendStatus(400);
+    return res.status(400).json({
+      error: "Token expirado. Usuário não encontrado!"
+    });
   }
 
   // busca o evento
@@ -83,19 +105,33 @@ const deleteEvent = async (req, res) => {
   // verifica se o usuario eh o coordenador
   if (user._id != event.coordinator) {
     // so o coordenador pode apagar o evento
-    return res.sendStatus(401);
+    return res.status(401).json({
+      error: "Você não tem autorização para deletar este evento!"
+    });
   }
 
   // verificaçoes concluidas, pode deletar
-  try {
-    await EventSchema.deleteOne({ _id: eventID }, (error) => {
-      if (error) return res.json({ error });
 
-      return res.sendStatus(204);
+  await EventSchema.deleteOne({ _id: eventID }, (error, raw) => {
+    if (error) {
+      return res.status(400).json({
+        error: mongooseError.error(error) 
+      });
+    }
+
+    if(raw){
+      if(raw.n !== 0){
+        return res.status(200).json({
+          message: "Evento deletado com sucesso!"
+        });
+      }
+    }
+
+    return res.status(404).json({
+      error: "Evento não encontrado!"
     });
-  } catch (error) {
-    return res.sendStatus(400);
-  }
+
+  });
 };
 
 const get = async (req, res) => {
@@ -106,7 +142,9 @@ const get = async (req, res) => {
     const event = await EventSchema.findById(eventID);
 
     if (!event) {
-      return res.sendStatus(404);
+      return res.status(404).json({
+        error: "Evento não encontrado!"
+      });
     }
 
     return res.json(event);
@@ -122,7 +160,9 @@ const index = async (req, res) => {
 
     return res.json(events);
   } catch (error) {
-    return res.json({ error });
+    return res.status(404).json({ 
+      error: mongooseError.error(error) 
+    });
   }
 };
 
@@ -132,7 +172,7 @@ const deleteEvents = async (req, res) => {
     await EventSchema.deleteMany();
     return res.sendStatus(204);
   } catch (error) {
-    return res.json({ error });
+    return res.status(404).json({ error: mongooseError.error(error) });
   }
 };
 

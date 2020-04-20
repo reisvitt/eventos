@@ -16,7 +16,7 @@
   text-transform: uppercase;
 }
 
-.form-content .campo-container label {
+.form-content .campo-container label, .date-container label {
   font-family: Raleway;
   font-size: 15px;
   color: #2e2e2e;
@@ -29,7 +29,7 @@
   text-align: left;
 }
 
-.form-content .campo-container input {
+.form-content .campo-container input, .date-container  input {
   width: 80%;
   margin: 8px;
   line-height: 1.2;
@@ -44,7 +44,7 @@
   padding: 0 25px;
 }
 
-.form-content .campo-container input:focus {
+.form-content .campo-container  input:focus {
   outline: auto #0489b1!important;
 }
 
@@ -65,11 +65,11 @@ button {
   border: none;
   color: #dcdce6;
   font-family: Raleway;
-  font-size: 26px;
+  font-size: 20px;
   padding: 0 25px;
   cursor: pointer;
-  height: 100px;
-  width: 200px;
+  height: 50px;
+  width: 170px;
   border-radius: 300px;
   transition: background-color 0.4s, color 0.4s;
   display: block;
@@ -94,7 +94,7 @@ button:focus {
 }
 
 @media (max-width: 600px) {
-  .campo-container div {
+  .campo-container  div {
     display: none;
   }
 }

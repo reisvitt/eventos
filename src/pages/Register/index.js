@@ -5,6 +5,7 @@ import { setToken } from '../../utils/auth'
 
 import "./styles.css";
 
+/* Need fix */
 const Subscribre = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +20,6 @@ const Subscribre = props => {
     e.preventDefault();
 
     // fazer tratamento
-
     const name_user = name.split(" ", 2);
 
     const user = {

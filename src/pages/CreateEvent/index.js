@@ -1,27 +1,33 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo";
 import api from "../../services/api";
+import { setToken } from '../../utils/auth';
 
 import "./styles.css";
 
 const RegisterEvent = props => {
 
-  //BD labels
-  const [eventName, setEventName] = useState("");
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date + ' ' + time;
+
+  const [title, setTitle] = useState("");
   const [startDateEvent, setStartDateEvent] = useState("");
   const [endDateEvent, setEndDateEvent] = useState("");
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [contact, setContact] = useState("");
+  const [coordinator, setCoordinator] = useState("");
+  const [accountable, setAccountable] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+
   const [startSubscriptionEvent, setStartSubscriptionEvent] = useState("");
   const [endSubscriptionEvent, setEndSubscriptionEvent] = useState("");
-  const [locale, setLocale] = useState("");
-  const [description, setDescription] = useState("");
 
-  //Mockup labels
-  const [coordName, setCoordName] = useState("");
+  /* vector */
   const [assistentName, setAssistentName] = useState("");
-  const [theme, setTheme] = useState("");
-  const [numberParticipants, setNumberParticipants] = useState("");
-  const [value, setValue] = useState("");
-
   const [erroMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
 
@@ -31,31 +37,40 @@ const RegisterEvent = props => {
     e.preventDefault();
     console.log("Registered Event");
 
-    //     // fazer tratamento
-
     const event = {
-      //       first_name: name_user[0],
-      //       last_name: name_user[1],
-      //       email: email,
-      //       name: name,
-      //       cpf: cpf,
-      //       password: password
+      title: title,
+      start_date: startDateEvent,
+      end_date: endDateEvent,
+      picture: "",
+      address: [address, contact, email],
+      start_subscribe: startSubscriptionEvent,
+      end_subscribe: endSubscriptionEvent,
+      accountable: accountable,
+      description: description,
+      activities: [],
+      price: price,
+      coordinator: coordinator,
+      assistants: [],
+      created_at: dateTime,
+      updated_at: dateTime,
+      is_available: true,
+      payment_address: []
     };
 
-    //    const response = await api.post("/user", event);
-    //    console.log("response", response);
+    const response = await api.post("/event", event);
+    console.log("response", response);
 
-    //   if (response.data.success) {
-    //     console.log("success");
-    //     props.history.push("/");
-    //   } else {
-    //     setErrorMessage(response.data.message);
-    //     setErrorVisible(true);
+    if (response.data.success) {
+      console.log("success");
+      props.history.push("/");
+    } else {
+      setErrorMessage(response.data.message);
+      setErrorVisible(true);
 
-    //     setTimeout(() => {
-    //       setErrorVisible(false);
-    //     }, 5000);
-    //   }
+      setTimeout(() => {
+        setErrorVisible(false);
+      }, 5000);
+    }
   };
 
   return (
@@ -68,18 +83,25 @@ const RegisterEvent = props => {
 
         <form onSubmit={handleSubmit}>
           <Campo
-            value={eventName}
+            value={title}
             onChange={e => {
-              setEventName(e.target.value);
+              setTitle(e.target.value);
             }}
             text="Nome do Evento"
           />
           <Campo
-            value={coordName}
+            value={coordinator}
             onChange={e => {
-              setCoordName(e.target.value);
+              setCoordinator(e.target.value);
             }}
             text="Coordenador"
+          />
+          <Campo
+            value={accountable}
+            onChange={e => {
+              setAccountable(e.target.value);
+            }}
+            text="Cordenação"
           />
           <Campo
             value={assistentName}
@@ -89,23 +111,23 @@ const RegisterEvent = props => {
             text="Nome Assistente"
           />
           <Campo
-            value={theme}
+            value={email}
             onChange={e => {
-              setTheme(e.target.value);
+              setEmail(e.target.value);
             }}
-            text="Tema"
+            text="Email"
           />
           <Campo
-            value={numberParticipants}
+            value={contact}
             onChange={e => {
-              setNumberParticipants(e.target.value);
+              setContact(e.target.value);
             }}
-            text="Numero de Participantes"
+            text="Contato"
           />
           <Campo
-            value={value}
+            value={price}
             onChange={e => {
-              setValue(e.target.value);
+              setPrice(e.target.value);
             }}
             text="Valor do Evento"
           />
@@ -138,9 +160,9 @@ const RegisterEvent = props => {
             text="Término das incrições"
           />
           <Campo
-            value={locale}
+            value={address}
             onChange={e => {
-              setLocale(e.target.value);
+              setAddress(e.target.value);
             }}
             text="Localidade"
           />

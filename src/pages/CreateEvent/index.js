@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo";
 import api from "../../services/api";
-import { setToken } from '../../utils/auth';
+
+import { setToken, getToken } from '../../utils/auth';
+
 
 import "./styles.css";
 
@@ -37,6 +39,7 @@ const RegisterEvent = props => {
     e.preventDefault();
     console.log("Registered Event");
 
+
     const event = {
       title: title,
       start_date: startDateEvent,
@@ -55,14 +58,21 @@ const RegisterEvent = props => {
       updated_at: dateTime,
       is_available: true,
       payment_address: []
-    };
+  }
+    console.log(event);
 
-    const response = await api.post("/event", event);
-    console.log("response", response);
+
+    const response = await api.post("/event",event,{
+      headers: {
+        Authorization: getToken()
+    }}
+    )
+
 
     if (response.data.success) {
       console.log("success");
       props.history.push("/");
+
     } else {
       setErrorMessage(response.data.message);
       setErrorVisible(true);

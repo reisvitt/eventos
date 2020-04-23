@@ -32,6 +32,8 @@ const Subscribre = props => {
     };
 
     const response = await api.post("/user", user);
+    console.log("response", response);
+
     if (response.status === 201) {
       setToken(response.data.token)
       props.history.push("/");

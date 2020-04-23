@@ -8,6 +8,7 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
+      console.log(user)
       return res.sendStatus(404);
     }
 
@@ -18,14 +19,38 @@ const login = async (req, res) => {
       return res.json({ token });
     });
   } catch (error) {
+    console.log(error)
     return res.sendStatus(404);
   }
 };
 
 const refreshToken = async (req, res) => {
-  
+  try {
+    const token = req.headers.authorization
+    const data = await jwt.verify(token)
+
+    const user = await User.findById(data._id)
+
+    if (!user) {
+      res.status(404).send({
+        message: 'Usuario não encontrado'
+      });
+      return;
+    }
+
+    const tokenData = await jwt.sign(user._id)
+
+    res.status(201).json({ token });
+
+
+  } catch (error) {
+    res.status(500).send({
+      message: 'Falha ao processar sua requisição'
+    });
+  }
 }
 
 module.exports = {
   login,
+  refreshToken
 };

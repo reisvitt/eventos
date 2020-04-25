@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo/";
 import api from "../../services/api";
+import { cpfMask } from '../mask/cpfMask';
 
 import "./styles.css";
 
@@ -81,11 +82,10 @@ const Subscribre = props => {
           />
           <Campo
             onChange={e => {
-              setCpf(e.target.value);
+              setCpf(cpfMask(e.target.value));
             }}
             value={cpf}
             text="CPF"
-            type="number"
           />
 
           <div className="container-link">

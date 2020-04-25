@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo/";
 import api from "../../services/api";
-import { cpfMask } from '../mask/cpfMask';
+import {cpfMask} from '../../services/server/utils/mask/cpfMask';
+import {unMask} from '../../services/server/utils/mask/unMask';
 
 import "./styles.css";
 
@@ -23,12 +24,14 @@ const Subscribre = props => {
 
     const name_user = name.split(" ", 2);
 
+    const cpfUnmask = unMask(cpf);
+
     const user = {
       first_name: name_user[0],
       last_name: name_user[1],
       email: email,
       name: name,
-      cpf: cpf,
+      cpf: cpfUnmask,
       password: password
     };
 

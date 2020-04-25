@@ -56,6 +56,62 @@
     position: relative;
   }
 
+  .imagem img {
+    border-radius: 10px;
+    width: 180px;
+    height: 220px;
+  }
+
+  .feitoPor {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .feitoPor img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+
+  .details ul li .feitoPor {
+    display: flex;
+    
+  }
+  .details ul li .detailAtividade {
+    display: flex;
+    width: 100%;
+  }
+
+  .details ul li .detailAtividade .textoDetail {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-left:23px;
+  }
+
+  .textoDetail .horarioElocal {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .detailAtividade .imagem{
+    display: flex;
+  }
+
+  .textoDetail .titulo{
+    font-size: 25px;
+    margin: 0;
+  }
+
+  .textoDetail .data{
+    color: #8A2BE2;
+    margin-bottom: 0px;
+  }
+
+  .textoDetail .descricao{
+    font-size: 14px;
+  }
+
   .details .botaoIns{
     display: flex;
     flex-wrap: nowrap;

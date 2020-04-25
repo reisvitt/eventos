@@ -1,5 +1,5 @@
 body{
-  background-color: #0489B1;
+  background-color: #084d6e;
 }
 
 .home{
@@ -18,13 +18,75 @@ body{
 
 .home ul li{
   background: white;
-  padding: 24px;
+  padding: 30px;
   border-radius: 12px;
   position: relative;
 }
 
+.home ul li .imagem img {
+  border-radius: 10px;
+  width: 170px;
+  height: 200px;
+  margin-right: -20px;
+  margin-left: -40px;
+  margin-top: -30px;
+}
+
+.feitoPor {
+  display: flex;
+  justify-content: space-around;
+}
+
+.feitoPor img{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.home ul li .feitoPor {
+  display: flex;
+  
+}
+.home ul li .detailAtividade {
+  display: flex;
+  width: 100%;
+}
+
+.home ul li .detailAtividade .textoDetail {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-left:23px;
+}
+
+.textoDetail .horarioElocal {
+  display: flex;
+  justify-content: space-between;
+}
+
+.detailAtividade .imagem{
+  display: flex;
+}
+
+.textoDetail .titulo{
+  font-size: 25px;
+  margin: 0;
+}
+
+.textoDetail .data{
+  color: #8A2BE2;
+  margin-bottom: 0px;
+}
+
+.textoDetail .descricao{
+  font-size: 14px;
+}
+
+
 .home ul li .link{
   color: #87CEEB ;
+  width: 130px;
+  margin-left: 200px;
   border: 1px solid #0489B1;
   border-radius: 15px;
   background-color: transparent;
@@ -32,7 +94,6 @@ body{
   padding: 5px 30px;
   text-decoration: none;
   transition: 0.2s;
-  margin-left: 400px;
 }
 
 .home ul li .link:hover {

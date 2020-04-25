@@ -1,9 +1,12 @@
 import React from "react";
 import "./styles.css";
-import api from '../../services/api';
-import Cabecario from '../../components/Cabecario';
+//import api from '../../services/api';
+//import Cabecario from '../../components/Cabecario';
 import { Link } from "react-router-dom";
-import imagem from '../../assets/vitor.jpg';
+import imagem from '../../assets/miniCursoRos.png';
+import ministrante1 from '../../assets/brad_pitt.jpg';
+import ministrante2 from '../../assets/indiana_jones.jpg';
+import ministrante3 from '../../assets/tony_stark.jpg';
 
 
 const Details = () =>{
@@ -31,7 +34,7 @@ const Details = () =>{
                 <li>
                     <div className="detailAtividade">
                         <div className="imagem">
-                            <img src={imagem} alt="fotoAtividade" width="180" height="220"></img>
+                            <img src={imagem} alt="fotoAtividade"></img>
                         </div>
                         
                         <div className="textoDetail">
@@ -44,8 +47,13 @@ const Details = () =>{
                                 <p><strong>Horário: </strong> 12:00</p>
                                 <p><strong>Local: </strong> Modulo 1(preto)</p>
                             </div>
+                            <div className="feitoPor">
+                                <p>Por: </p>
+                                <img src={ministrante1} alt="fotoAtividade1"></img>
+                                <img src={ministrante2} alt="fotoAtividade2"></img>
+                                <img src={ministrante3} alt="fotoAtividade3"></img>
+                            </div>
                             
-                            <p>Por: </p>
                         </div>
                         
                     </div>
@@ -55,7 +63,7 @@ const Details = () =>{
                 <li>
                     <div className="detailAtividade">
                         <div className="imagem">
-                            <img src={imagem} alt="fotoAtividade" width="180" height="220"></img>
+                            <img src={imagem} alt="fotoAtividade"></img>
                         </div>
                         
                         <div className="textoDetail">
@@ -68,8 +76,13 @@ const Details = () =>{
                                 <p><strong>Horário: </strong> 12:00</p>
                                 <p><strong>Local: </strong> Modulo 1(preto)</p>
                             </div>
+                            <div className="feitoPor">
+                                <p>Por: </p>
+                                <img src={ministrante1} alt="fotoAtividade1"></img>
+                                <img src={ministrante2} alt="fotoAtividade2"></img>
+                                <img src={ministrante3} alt="fotoAtividade3"></img>
+                            </div>
                             
-                            <p>Por: </p>
                         </div>
                         
                     </div>
@@ -79,7 +92,7 @@ const Details = () =>{
                 <li>
                     <div className="detailAtividade">
                         <div className="imagem">
-                            <img src={imagem} alt="fotoAtividade" width="180" height="220"></img>
+                            <img src={imagem} alt="fotoAtividade"></img>
                         </div>
                         
                         <div className="textoDetail">
@@ -92,8 +105,13 @@ const Details = () =>{
                                 <p><strong>Horário: </strong> 12:00</p>
                                 <p><strong>Local: </strong> Modulo 1(preto)</p>
                             </div>
+                            <div className="feitoPor">
+                                <p>Por: </p>
+                                <img src={ministrante1} alt="fotoAtividade1"></img>
+                                <img src={ministrante2} alt="fotoAtividade2"></img>
+                                <img src={ministrante3} alt="fotoAtividade3"></img>
+                            </div>
                             
-                            <p>Por: </p>
                         </div>
                         
                     </div>
@@ -103,7 +121,7 @@ const Details = () =>{
                 <li>
                     <div className="detailAtividade">
                         <div className="imagem">
-                            <img src={imagem} alt="fotoAtividade" width="180" height="220"></img>
+                            <img src={imagem} alt="fotoAtividade"></img>
                         </div>
                         
                         <div className="textoDetail">
@@ -116,13 +134,19 @@ const Details = () =>{
                                 <p><strong>Horário: </strong> 12:00</p>
                                 <p><strong>Local: </strong> Modulo 1(preto)</p>
                             </div>
+                            <div className="feitoPor">
+                                <p>Por: </p>
+                                <img src={ministrante1} alt="fotoAtividade1"></img>
+                                <img src={ministrante2} alt="fotoAtividade2"></img>
+                                <img src={ministrante3} alt="fotoAtividade3"></img>
+                            </div>
                             
-                            <p>Por: </p>
                         </div>
                         
                     </div>
 
                 </li>
+                
             </ul>
             
         </div>

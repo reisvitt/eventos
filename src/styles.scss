@@ -1,0 +1,31 @@
+.modal{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //largura
+  width: 100%;
+  //altura
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+  
+  .container{
+    background-color:rgba($color: #084d6e, $alpha: 1.0);
+    width: 40%;
+    height: 60%;
+    color: #4169E1;
+    border-radius: 20px;
+    align-items: center;
+  }//end container
+
+  .modal-buttons{
+    background-color: hue($color: #000000);
+  }
+
+
+
+
+}//end modal

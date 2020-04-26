@@ -1,4 +1,5 @@
 import React from "react";
+import {useState} from 'react';
 import "./styles.css";
 //import api from '../../services/api';
 //import Cabecario from '../../components/Cabecario';
@@ -8,9 +9,16 @@ import ministrante1 from '../../assets/brad_pitt.jpg';
 import ministrante2 from '../../assets/indiana_jones.jpg';
 import ministrante3 from '../../assets/tony_stark.jpg';
 
+import Modal from '../../components/Cabecario/Components/modal';
+
+import '../../styles.scss';
+
+
 
 const Details = () =>{
-    //falta botao de se inscrever
+    
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
     return(
         <div className="details">
            
@@ -24,9 +32,13 @@ const Details = () =>{
             </div>
             
             <div className="botaoIns">
-                <Link className="Inscrever" to="/details">
-                    Inscrever
-                </Link>
+
+                <button onClick={() => setIsModalVisible(true)} >Inscrever</button>
+                {isModalVisible ? (
+                    <Modal onClose={()=>setIsModalVisible(false)}>
+                       
+                    </Modal>
+                )   : null}
             </div>
             
             

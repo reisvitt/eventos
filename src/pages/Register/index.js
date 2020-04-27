@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import Campo from "../../components/Campo/";
 import api from "../../services/api";
 import { setToken } from '../../utils/auth'
+import {cpfMask} from '../../services/server/utils/mask/cpfMask';
+import {unMask} from '../../services/server/utils/mask/unMask';
 
 import "./styles.css";
 
+/* Need fix */
 const Subscribre = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,19 +22,22 @@ const Subscribre = props => {
     e.preventDefault();
 
     // fazer tratamento
-
     const name_user = name.split(" ", 2);
+
+    const cpfUnmask = unMask(cpf);
 
     const user = {
       first_name: name_user[0],
       last_name: name_user[1],
       email: email,
       name: name,
-      cpf: cpf,
+      cpf: cpfUnmask,
       password: password
     };
 
     const response = await api.post("/user", user);
+    console.log("response", response);
+
     if (response.status === 201) {
       setToken(response.data.token)
       props.history.push("/");
@@ -80,11 +86,10 @@ const Subscribre = props => {
           />
           <Campo
             onChange={e => {
-              setCpf(e.target.value);
+              setCpf(cpfMask(e.target.value));
             }}
             value={cpf}
             text="CPF"
-            type="number"
           />
 
           <div className="container-link">

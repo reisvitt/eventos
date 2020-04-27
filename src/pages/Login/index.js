@@ -28,6 +28,7 @@ const Login = () => {
     console.log(response.data)
 
     history.push('/')
+
     // console.log("email:", email);
     // console.log("senha:", password);
   };

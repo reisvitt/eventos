@@ -1,22 +1,18 @@
-body{
-  background-color: #084d6e;
-}
-
-.home{
+.home {
   width: 100%;
   max-width: 1180px;
   padding: 0 30px;
   margin: 32px auto;
 }
 
-.home ul{
+.home ul {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 24px;
   list-style: none;
 }
 
-.home ul li{
+.home ul li {
   background: white;
   padding: 30px;
   border-radius: 12px;
@@ -37,7 +33,7 @@ body{
   justify-content: space-around;
 }
 
-.feitoPor img{
+.feitoPor img {
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -45,7 +41,6 @@ body{
 
 .home ul li .feitoPor {
   display: flex;
-  
 }
 .home ul li .detailAtividade {
   display: flex;
@@ -56,7 +51,7 @@ body{
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin-left:23px;
+  margin-left: 23px;
 }
 
 .textoDetail .horarioElocal {
@@ -64,30 +59,29 @@ body{
   justify-content: space-between;
 }
 
-.detailAtividade .imagem{
+.detailAtividade .imagem {
   display: flex;
 }
 
-.textoDetail .titulo{
+.textoDetail .titulo {
   font-size: 25px;
   margin: 0;
 }
 
-.textoDetail .data{
-  color: #8A2BE2;
+.textoDetail .data {
+  color: #8a2be2;
   margin-bottom: 0px;
 }
 
-.textoDetail .descricao{
+.textoDetail .descricao {
   font-size: 14px;
 }
 
-
-.home ul li .link{
-  color: #87CEEB ;
+.home ul li .link {
+  color: #87ceeb;
   width: 130px;
   margin-left: 200px;
-  border: 1px solid #0489B1;
+  border: 1px solid #0489b1;
   border-radius: 15px;
   background-color: transparent;
   font-size: 16px;
@@ -97,12 +91,12 @@ body{
 }
 
 .home ul li .link:hover {
-  background-color: #46C2FD;
+  background-color: #46c2fd;
   color: #f0f0f5;
 }
 
 @media (max-width: 1000px) {
-  .home ul{
+  .home ul {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 24px;

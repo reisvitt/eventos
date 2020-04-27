@@ -9,11 +9,7 @@ import ministrante1 from '../../assets/brad_pitt.jpg';
 import ministrante2 from '../../assets/indiana_jones.jpg';
 import ministrante3 from '../../assets/tony_stark.jpg';
 
-import Modal from '../../components/Cabecario/Components/modal';
-
-import '../../styles.scss';
-
-
+import Modal from '../../components/Modal';
 
 const Details = () =>{
     

@@ -23,6 +23,11 @@
 
   .modal-buttons{
     background-color: hue($color: #000000);
+    //pra deixar alinhado horizontal
+    display: flex;
+
+    //vertical
+    //flex-direction: row;
   }
 
 

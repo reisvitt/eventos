@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo";
 import api from "../../services/api";
-
-import { setToken, getToken } from "../../utils/auth";
+import { getToken } from "../../utils/auth";
 
 import "./styles.css";
 

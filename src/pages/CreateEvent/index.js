@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo";
 import api from "../../services/api";
-
 import { getToken } from "../../utils/auth";
 
 import "./styles.css";
@@ -69,7 +68,7 @@ const RegisterEvent = (props) => {
     if (response.status === 201) {
       props.history.push("/");
     } else {
-      setErrorMessage(response.data.message);
+      setErrorMessage(response.data.error);
       setErrorVisible(true);
 
       setTimeout(() => {

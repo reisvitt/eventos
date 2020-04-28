@@ -1,0 +1,155 @@
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  padding: 10px;
+  background-image: url("../../assets/secomp.png");
+  background-color: rgba(0, 0, 0, 25%);
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: contain;
+}
+
+.conteudo .title {
+  font-size: 30px;
+  color: white;
+}
+
+.conteudo .descricao {
+  font-size: 17px;
+  color: white;
+}
+
+.conteudo .valor {
+  font-size: 17px;
+  color: white;
+}
+
+.conteudo .numeroVal {
+  font-size: 17px;
+  color: white;
+}
+
+.event ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 24px;
+  list-style: none;
+  padding: 0;
+}
+
+.event ul li {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.imagem img {
+  border-radius: 10px;
+  width: 180px;
+  height: 220px;
+}
+
+.feitoPor {
+  display: flex;
+  justify-content: space-around;
+}
+
+.feitoPor img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.event ul li .feitoPor {
+  display: flex;
+}
+.event ul li .detailAtividade {
+  display: flex;
+  width: 100%;
+}
+
+.event ul li .detailAtividade .textoDetail {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-left: 23px;
+}
+
+.textoDetail .horarioElocal {
+  display: flex;
+  justify-content: space-between;
+}
+
+.detailAtividade .imagem {
+  display: flex;
+}
+
+.textoDetail .titulo {
+  font-size: 25px;
+  margin: 0;
+}
+
+.textoDetail .data {
+  color: #8a2be2;
+  margin-bottom: 0px;
+}
+
+.textoDetail .descricao {
+  font-size: 14px;
+}
+
+.event .botaoIns {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  flex-grow: 1;
+}
+
+.event .Inscrever {
+  color: white;
+  border: 1px solid white;
+  border-radius: 15px;
+  background-color: transparent;
+  font-size: 16px;
+  padding: 5px 30px;
+  text-decoration: none;
+  transition: 0.2s;
+  margin-left: 400px;
+  text-align: center;
+  width: 400px;
+}
+
+.event .Inscrever:hover {
+  background-color: #46c2fd;
+  color: #f0f0f5;
+}
+
+@media (max-width: 1000px) {
+  .event ul {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 24px;
+    list-style: none;
+  }
+}
+
+.new-activity button {
+  width: 150px;
+  height: 50px;
+  font-size: 14px;
+  border-radius: 15px;
+  background-color: #4d4faa;
+  border: none;
+  color: white;
+  outline: none !important;
+}
+
+.new-activity button:hover {
+  background-color: #5d5eb6;
+}

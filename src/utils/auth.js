@@ -1,7 +1,7 @@
 import Cookie from 'js-cookie'
 
 const getToken = () => {
-  return Cookie.get(process.env.TOKEN)
+  return Cookie.get('event-token')
 }
 
 const setToken = token => {

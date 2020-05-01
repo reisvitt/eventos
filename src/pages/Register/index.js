@@ -40,6 +40,7 @@ const Subscribre = props => {
 
     if (response.status === 201) {
       setToken(response.data.token)
+      alert('Registro efetuado com sucesso! :)')
       props.history.push("/");
 
     } else {

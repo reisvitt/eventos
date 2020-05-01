@@ -26,7 +26,7 @@ const Login = () => {
     })
     setToken(response.data.token)
     console.log(response.data)
-
+    alert('Você está logado! :)' )
     history.push('/')
 
     // console.log("email:", email);

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo/";
 import api from "../../services/api";
-import { setToken } from '../../utils/auth'
-import {cpfMask} from '../../services/server/utils/mask/cpfMask';
-import {unMask} from '../../services/server/utils/mask/unMask';
+import { setToken } from "../../utils/auth";
+import { cpfMask } from "../../utils/mask/cpfMask";
+import { unMask } from "../../utils/mask/unMask";
 
 import "./styles.css";
 
 /* Need fix */
-const Subscribre = props => {
+const Subscribre = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpf, setCpf] = useState("");
@@ -18,7 +18,7 @@ const Subscribre = props => {
 
   document.title = "Cadastrar"; // title da pagina
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // fazer tratamento
@@ -32,17 +32,20 @@ const Subscribre = props => {
       email: email,
       name: name,
       cpf: cpfUnmask,
-      password: password
+      password: password,
     };
 
     const response = await api.post("/user", user);
-    console.log("response", response);
 
     if (response.status === 201) {
+
       setToken(response.data.token)
       alert('Registro efetuado com sucesso! :)')
       props.history.push("/");
 
+
+      // deve redirecionar para a pagina do evento recem criado
+      props.history.push("/");
     } else {
       setErrorMessage(response.data.message);
       setErrorVisible(true);
@@ -54,7 +57,7 @@ const Subscribre = props => {
   };
 
   return (
-    <div className="container">
+    <div className="register-container">
       <div className="form-container">
         {errorVisible ? (
           <label className="errorMessage">{erroMessage}</label>
@@ -64,21 +67,21 @@ const Subscribre = props => {
         <form onSubmit={handleSubmit}>
           <Campo
             value={name}
-            onChange={e => {
+            onChange={(e) => {
               setName(e.target.value);
             }}
             text="Nome completo"
           />
           <Campo
             value={password}
-            onChange={e => {
+            onChange={(e) => {
               setPassword(e.target.value);
             }}
             text="Senha"
             type="password"
           />
           <Campo
-            onChange={e => {
+            onChange={(e) => {
               setEmail(e.target.value);
             }}
             value={email}
@@ -86,7 +89,7 @@ const Subscribre = props => {
             type="email"
           />
           <Campo
-            onChange={e => {
+            onChange={(e) => {
               setCpf(cpfMask(e.target.value));
             }}
             value={cpf}

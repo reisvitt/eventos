@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import Campo from "../../components/Campo";
 import api from "../../services/api";
 
+
 import { setToken, getToken } from "../../utils/auth";
 import { Link, useHistory } from "react-router-dom";
 
 
+
 import "./styles.css";
-import { useEffect } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   //funcao do render: retornar o conteudo html do componente App
+
 
   const history = useHistory();
 
@@ -29,8 +31,21 @@ const Login = () => {
     alert('Você está logado! :)' )
     history.push('/')
 
-    // console.log("email:", email);
-    // console.log("senha:", password);
+
+    try {
+      const response = await api.get("/login", {
+        headers: {
+          authorization: [email, password],
+        },
+      });
+
+      if (response.status === 200) {
+        setToken(response.data.token);
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   document.title = "Login";
@@ -44,7 +59,7 @@ const Login = () => {
           <Campo
             text="E-mail"
             value={email}
-            onChange={e => {
+            onChange={(e) => {
               setEmail(e.target.value);
             }}
             type="text"
@@ -52,7 +67,7 @@ const Login = () => {
           <Campo
             text="Senha"
             value={password}
-            onChange={e => {
+            onChange={(e) => {
               setPassword(e.target.value);
             }}
             type="password"

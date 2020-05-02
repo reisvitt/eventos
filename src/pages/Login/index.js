@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo";
 import api from "../../services/api";
-import { setToken } from "../../utils/auth";
+
+
+import { setToken, getToken } from "../../utils/auth";
+import { Link, useHistory } from "react-router-dom";
+
+
 
 import "./styles.css";
 
@@ -10,8 +15,22 @@ const Login = () => {
   const [password, setPassword] = useState("");
   //funcao do render: retornar o conteudo html do componente App
 
-  const handleSubmit = async (e) => {
+
+  const history = useHistory();
+
+  const handleSubmit = async e => {
     e.preventDefault();
+    const response = await api.get("/login",{
+      auth: {
+        username: email,
+        password: password  
+      }
+    })
+    setToken(response.data.token)
+    console.log(response.data)
+    alert('Você está logado! :)' )
+    history.push('/')
+
 
     try {
       const response = await api.get("/login", {
@@ -55,7 +74,10 @@ const Login = () => {
           />
           <div className="container-link">
             <button className="link" type="submit">
+            Entrar
+            {/* <Link className="link" to="/"> 
               Entrar
+            </Link> */}
             </button>
           </div>
         </form>

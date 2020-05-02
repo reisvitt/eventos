@@ -38,35 +38,52 @@ const RegisterEvent = (props) => {
     e.preventDefault();
     console.log("Registered Event");
 
-    const event = {
-      title: title,
+    // const event = {
+    //   title: title,
+    //   start_date: startDateEvent,
+    //   end_date: endDateEvent,
+    //   picture: "",
+    //   address: [address, contact, email],
+    //   start_subscribe: startSubscriptionEvent,
+    //   end_subscribe: endSubscriptionEvent,
+    //   accountable: accountable,
+    //   description: description,
+    //   activities: [],
+    //   price: price,
+    //   coordinator,
+    //   assistants: [],
+    //   created_at: dateTime,
+    //   updated_at: dateTime,
+    //   is_available: true,
+    //   payment_address: [],
+    // };
+    
+    console.log(getToken('event-token'))
+    const response = await api.post("/event",{
+      title,
       start_date: startDateEvent,
       end_date: endDateEvent,
       picture: "",
-      address: [address, contact, email],
+      address: [{address, contact, email}],
       start_subscribe: startSubscriptionEvent,
       end_subscribe: endSubscriptionEvent,
       accountable: accountable,
       description: description,
       activities: [],
       price: price,
-      coordinator: coordinator,
       assistants: [],
-      created_at: dateTime,
-      updated_at: dateTime,
       is_available: true,
       payment_address: [],
-    };
-    console.log(event);
+      headers:{
+        authorization: getToken('event-token')
+      }
+    })
 
-    const response = await api.post("/event", event, {
-      headers: {
-        Authorization: getToken(),
-      },
-    });
+    console.log(response)
 
     if (response.status === 201) {
       props.history.push("/");
+      alert("Evento criado com sucesso! :)")
     } else {
       setErrorMessage(response.data.error);
       setErrorVisible(true);

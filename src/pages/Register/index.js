@@ -38,7 +38,11 @@ const Subscribre = (props) => {
     const response = await api.post("/user", user);
 
     if (response.status === 201) {
-      setToken(response.data.token);
+
+      setToken(response.data.token)
+      alert('Registro efetuado com sucesso! :)')
+      props.history.push("/");
+
 
       // deve redirecionar para a pagina do evento recem criado
       props.history.push("/");

@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo/";
-import api from "../../services/api";
-import { setToken } from "../../utils/auth";
 import { cpfMask } from "../../utils/mask/cpfMask";
 import { unMask } from "../../utils/mask/unMask";
+import { useAuthContext } from "../../store/Auth";
 
 import "./styles.css";
 
 /* Need fix */
-const Subscribre = (props) => {
+const Subscribre = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpf, setCpf] = useState("");
   const [name, setName] = useState("");
-  const [erroMessage, setErrorMessage] = useState("");
-  const [errorVisible, setErrorVisible] = useState(false);
+  const { SignUp } = useAuthContext();
 
   document.title = "Cadastrar"; // title da pagina
 
@@ -28,36 +26,26 @@ const Subscribre = (props) => {
 
     const user = {
       first_name: name_user[0],
-      last_name: name_user[1],
+      last_name: name_user[1] || "",
       email: email,
       name: name,
       cpf: cpfUnmask,
       password: password,
     };
 
-    const response = await api.post("/user", user);
-
-    if (response.status === 201) {
-      setToken(response.data.token);
-
-      // deve redirecionar para a pagina do evento recem criado
-      props.history.push("/");
-    } else {
-      setErrorMessage(response.data.message);
-      setErrorVisible(true);
-
-      setTimeout(() => {
-        setErrorVisible(false);
-      }, 5000);
-    }
+    await SignUp(user)
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        // printar toast de error
+        console.log(error);
+      });
   };
 
   return (
     <div className="register-container">
       <div className="form-container">
-        {errorVisible ? (
-          <label className="errorMessage">{erroMessage}</label>
-        ) : null}
         <h1>Cadastro</h1>
 
         <form onSubmit={handleSubmit}>

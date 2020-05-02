@@ -32,7 +32,7 @@ const Subscribre = ({ history }) => {
       cpf: cpfUnmask,
       password: password,
     };
-
+    
     await SignUp(user)
       .then(() => {
         history.push("/");

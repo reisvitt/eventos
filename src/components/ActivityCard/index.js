@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import api from "../../services/api";
 import { MoreVert } from "@material-ui/icons";
 import { IconButton } from "@material-ui/core";
 import "./styles.css";
 
+import image from "../../assets/js.jpg";
+
 const ActivityCard = ({ activity }) => {
+  const { id } = useParams();
+
+  useEffect(() => {
+    //api.get("activity")
+  }, []);
+
   return (
     <div className="activity-card">
-      <a href="link para a atividade">
-        <img
-          className="picture"
-          src="https://c4.wallpaperflare.com/wallpaper/966/672/905/javascript-minimalism-wallpaper-preview.jpg"
-          alt="activity"
-        />
-      </a>
+      <Link to={`/event/${id}/${activity}`}>
+        <img className="picture" src={image} alt="activity" />
+      </Link>
 
-      <div className="more">
+      <div className="about">
         <div className="title-container">
-          <a href="link para a atividade">
+          <Link to={`/event/${id}/${activity}`}>
             <h3 className="title">Título da atividade</h3>
-          </a>
+          </Link>
           <span className="info">Vagas restantes</span>
           <IconButton className="more-vert">
             <MoreVert size={25} style={{ color: "#363636" }} />
@@ -32,7 +38,8 @@ const ActivityCard = ({ activity }) => {
           <p>
             sku asdkysadhsdksad soaiuds dsadhjsakudsakd saduaskdjsa dsaoidhsakud
             sa skaudhskauds sakduhkuds aksudhukasd asduashdask dasudasd asdukasd
-            sadukasd sadukbs sakdhasd sakudbasdk
+            sadukasd sadukbs sakdhasd sakudbasdk sakdhasd sakudbasdk sakdhasd
+            sakudbasdk vv sakudbasdk vv sakudbasdk vv sakudbasdk vv
           </p>
         </div>
         <div className="support-container">

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo";
+import Datepicker from "../../components/Datepicker";
 import api from "../../services/api";
 import { getToken } from "../../utils/auth";
 
@@ -36,35 +37,14 @@ const RegisterEvent = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Registered Event");
-
-    // const event = {
-    //   title: title,
-    //   start_date: startDateEvent,
-    //   end_date: endDateEvent,
-    //   picture: "",
-    //   address: [address, contact, email],
-    //   start_subscribe: startSubscriptionEvent,
-    //   end_subscribe: endSubscriptionEvent,
-    //   accountable: accountable,
-    //   description: description,
-    //   activities: [],
-    //   price: price,
-    //   coordinator,
-    //   assistants: [],
-    //   created_at: dateTime,
-    //   updated_at: dateTime,
-    //   is_available: true,
-    //   payment_address: [],
-    // };
     
     console.log(getToken('event-token'))
-    const response = await api.post("/event",{
+    const response = await api.post("/event", {
       title,
       start_date: startDateEvent,
       end_date: endDateEvent,
       picture: "",
-      address: [{address, contact, email}],
+      address: [{ address, contact, email }],
       start_subscribe: startSubscriptionEvent,
       end_subscribe: endSubscriptionEvent,
       accountable: accountable,
@@ -74,7 +54,7 @@ const RegisterEvent = (props) => {
       assistants: [],
       is_available: true,
       payment_address: [],
-      headers:{
+      headers: {
         authorization: getToken('event-token')
       }
     })
@@ -110,78 +90,34 @@ const RegisterEvent = (props) => {
             onChange={(e) => {
               setTitle(e.target.value);
             }}
-            text="Nome do Evento"
+            text="*Nome do Evento"
           />
-          <Campo
-            value={coordinator}
-            onChange={(e) => {
-              setCoordinator(e.target.value);
-            }}
-            text="Coordenador"
-          />
-          <Campo
-            value={accountable}
-            onChange={(e) => {
-              setAccountable(e.target.value);
-            }}
-            text="Cordenação"
-          />
-          <Campo
-            value={assistentName}
-            onChange={(e) => {
-              setAssistentName(e.target.value);
-            }}
-            text="Nome Assistente"
-          />
-          <Campo
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            text="Email"
-          />
-          <Campo
-            value={contact}
-            onChange={(e) => {
-              setContact(e.target.value);
-            }}
-            text="Contato"
-          />
-          <Campo
-            value={price}
-            onChange={(e) => {
-              setPrice(e.target.value);
-            }}
-            text="Valor do Evento"
-          />
-          <Campo
-            value={startDateEvent}
-            onChange={(e) => {
-              setStartDateEvent(e.target.value);
-            }}
-            text="Início do evento"
-          />
-          <Campo
-            value={endDateEvent}
-            onChange={(e) => {
-              setEndDateEvent(e.target.value);
-            }}
-            text="Término do evento"
-          />
-          <Campo
-            value={startSubscriptionEvent}
-            onChange={(e) => {
-              setStartSubscriptionEvent(e.target.value);
-            }}
-            text="Início das incrições"
-          />
-          <Campo
-            value={endSubscriptionEvent}
-            onChange={(e) => {
-              setEndSubscriptionEvent(e.target.value);
-            }}
-            text="Término das incrições"
-          />
+
+          <div class="row">
+            <div class="col">
+              <Datepicker
+                selected={startDateEvent}
+                onChange={date => {
+                  setStartDateEvent(date)
+                  console.log(startDateEvent)
+                }
+                }
+                text="Início do evento"
+              />
+            </div>
+            <div class="col">
+              <Datepicker
+                selected={endDateEvent}
+                onChange={date => {
+                  setEndDateEvent(date)
+                  console.log(endDateEvent)
+                }
+                }
+                text="Fim do evento"
+              />
+            </div>
+          </div>
+
           <Campo
             value={address}
             onChange={(e) => {
@@ -189,6 +125,7 @@ const RegisterEvent = (props) => {
             }}
             text="Localidade"
           />
+
           <div className="campo-container">
             <div>
               <label>Descrição</label>

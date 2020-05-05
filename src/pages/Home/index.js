@@ -13,7 +13,7 @@ const Home = () => {
     api
       .get("/event/list")
       .then(async (response) => {
-        //await new Promise((resolve) => setTimeout(resolve, 5000));
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         setEvents(response.data);
         setLoading(false);
       })

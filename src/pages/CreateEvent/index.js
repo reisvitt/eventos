@@ -5,7 +5,7 @@ import { getToken } from "../../utils/auth";
 
 import "./styles.css";
 
-const RegisterEvent = (props) => {
+const CreateEvent = (props) => {
   var today = new Date();
   var date =
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
@@ -57,14 +57,14 @@ const RegisterEvent = (props) => {
     //   is_available: true,
     //   payment_address: [],
     // };
-    
-    console.log(getToken('event-token'))
-    const response = await api.post("/event",{
+
+    console.log(getToken("event-token"));
+    const response = await api.post("/event", {
       title,
       start_date: startDateEvent,
       end_date: endDateEvent,
       picture: "",
-      address: [{address, contact, email}],
+      address: [{ address, contact, email }],
       start_subscribe: startSubscriptionEvent,
       end_subscribe: endSubscriptionEvent,
       accountable: accountable,
@@ -74,16 +74,16 @@ const RegisterEvent = (props) => {
       assistants: [],
       is_available: true,
       payment_address: [],
-      headers:{
-        authorization: getToken('event-token')
-      }
-    })
+      headers: {
+        authorization: getToken("event-token"),
+      },
+    });
 
-    console.log(response)
+    console.log(response);
 
     if (response.status === 201) {
       props.history.push("/");
-      alert("Evento criado com sucesso! :)")
+      alert("Evento criado com sucesso! :)");
     } else {
       setErrorMessage(response.data.error);
       setErrorVisible(true);
@@ -212,4 +212,4 @@ const RegisterEvent = (props) => {
   ); //fim return
 }; //fim classe RegisterEvent
 
-export default RegisterEvent;
+export default CreateEvent;

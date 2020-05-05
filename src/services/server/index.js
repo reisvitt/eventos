@@ -1,10 +1,11 @@
-require("dotenv").config()
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const db = require("./database");
 const userRouter = require("./routes/userRouter");
 const eventRouter = require("./routes/eventRouter");
 const authRouter = require("./routes/authRouter");
+const activityRouter = require("./routes/activityRouter");
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -28,5 +29,6 @@ app.get("/", (req, res) => {
 app.use(`/api`, userRouter);
 app.use(`/api`, eventRouter);
 app.use("/api", authRouter);
+app.use("/api", activityRouter);
 
 app.listen(3333, () => console.log("Server running - OK"));

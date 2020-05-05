@@ -34,9 +34,11 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
     update_at: Date,
-    events: [String],
-    events_assistant: [String],
-    events_coordenator: [String],
+    events: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
+    events_assistant: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
+    events_coordinator: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Event" },
+    ],
   },
   {
     writeConcern: {

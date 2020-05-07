@@ -22,10 +22,11 @@ export default class Datepicker extends React.Component {
           <label>{this.props.text}</label>
         </div>
         <DatePicker
-          selected={this.props.value}
+          selected={this.props.selected}
           onChange={this.props.onChange}
           dateFormat='dd/MM/yyyy'
           minDate={new Date()}
+          placeholderText={this.props.text}
         />
       </div>
     ); //fim return

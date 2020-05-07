@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import Formulary from "../../components/Formulary";
-import MyTextInput from "../../components/MyTextInput";
-import Campo from "../../components/Campo";
-import Datepicker from "../../components/Datepicker";
+import Formulary from "../../components/FormComponents/Formulary";
+import MyTextInput from "../../components/FormComponents/MyTextInput";
+import MyTextAreaInput from "../../components/FormComponents/MyTextAreaInput";
+import Datepicker from "../../components/FormComponents/Datepicker";
 import api from "../../services/api";
 import { getToken } from "../../utils/auth";
 
 import "./styles.css";
 
 const validate = values => {
+  console.log(values)
   const errors = {};
   if (!values.title) {
     errors.title = 'Required';
   } else if (values.title.length > 15) {
     errors.title = 'Must be 15 characters or less';
   }
+
   return errors;
 };
 
@@ -32,7 +34,6 @@ const RegisterEvent = (props) => {
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
-  const [coordinator, setCoordinator] = useState("");
   const [accountable, setAccountable] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -40,16 +41,14 @@ const RegisterEvent = (props) => {
   const [startSubscriptionEvent, setStartSubscriptionEvent] = useState("");
   const [endSubscriptionEvent, setEndSubscriptionEvent] = useState("");
 
-  /* vector */
-  const [assistentName, setAssistentName] = useState("");
   const [erroMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
 
   document.title = "Criar Evento"; // title of page
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-
+    
     console.log(getToken('event-token'))
     const response = await api.post("/event", {
       title,
@@ -88,119 +87,87 @@ const RegisterEvent = (props) => {
 
   return (
     <div className="content">
+      {errorVisible ? (
+        <label className="errorMessage">{erroMessage}</label>
+      ) : null}
+      <h1>
+        <strong>Criação do Evento</strong>
+      </h1>
       <Formulary
         initialValues={{
           title: '',
           address: '',
           description: '',
         }}
-        validate
-        onSubmit={handleSubmit}
-        contents={
+        //validate={validate}
+        //onSubmit={handleSubmit}
+        content={
           <>
             <MyTextInput
-              label="Title"
+              label="title"
               name="title"
               type="text"
               placeholder="Nome do evento"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
             />
-            <div className="campo-container">
-              <div>
-                <label>Descrição</label>
+
+            <div className="row">
+              <div className="col">
+                <Datepicker
+                  selected={startDateEvent}
+                  onChange={date => {
+                    setStartDateEvent(date)
+                  }
+                  }
+                  text="Início do evento"
+                />
               </div>
-              <textarea
-                className="input"
-                value={description}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
+              <div className="col">
+                <Datepicker
+                  selected={endDateEvent}
+                  onChange={date => {
+                    setEndDateEvent(date)
+                  }
+                  }
+                  text="Fim do evento"
+                />
+              </div>
             </div>
             <MyTextInput
               label="Endereço"
               name="address"
               type="text"
               placeholder="Local do evento"
+              value={address}
+              onChange={(e) => {
+                setAddress(e.target.value);
+              }}
             />
-
-            <MyTextInput
+            <MyTextAreaInput
               label="Descrição"
               name="description"
               type="text"
               placeholder="Descrição"
-            />
-          </>
-        }
-      />
-      {/* <div className="form-content">
-        {errorVisible ? (
-          <label className="errorMessage">{erroMessage}</label>
-        ) : null}
-        <h1>
-          <strong>Criação do Evento</strong>
-        </h1>
-
-        <form onSubmit={handleSubmit}>
-          <Campo
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-            text="*Nome do Evento"
-          />
-
-          <div class="row">
-            <div class="col">
-              <Datepicker
-                selected={startDateEvent}
-                onChange={date => {
-                  setStartDateEvent(date)
-                  console.log(startDateEvent)
-                }
-                }
-                text="Início do evento"
-              />
-            </div>
-            <div class="col">
-              <Datepicker
-                selected={endDateEvent}
-                onChange={date => {
-                  setEndDateEvent(date)
-                  console.log(endDateEvent)
-                }
-                }
-                text="Fim do evento"
-              />
-            </div>
-          </div>
-
-          <Campo
-            value={address}
-            onChange={(e) => {
-              setAddress(e.target.value);
-            }}
-            text="Localidade"
-          />
-
-          <div className="campo-container">
-            <div>
-              <label>Descrição</label>
-            </div>
-            <textarea
-              className="input"
               value={description}
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
             />
-          </div>
-          <div>
-            <button type="submit" className="link">
-              Criar Evento
+          </>
+        }
+        button={
+          <>
+            <div>
+              <button type="submit" className="link">
+                Criar Evento
             </button>
-          </div>
-        </form>
-      </div> */}
+            </div>
+          </>
+        }
+      />
     </div>
   ); //fim return
 }; //fim classe RegisterEvent

@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, useField } from 'formik';
+import { useField } from 'formik';
 import "./styles.css";
 
 const TextInput = ({ label, ...props }) => {
@@ -28,10 +28,12 @@ export default class MyTextInput extends React.Component {
     render() {
         return (
             <TextInput
+                value={this.props.value}
                 label={this.props.label}
                 name={this.props.name}
                 type={this.props.type}
                 placeholder={this.props.placeholder}
+                onChange={this.props.onChange}
             />
         ); //fim return
     } //fim metodo render

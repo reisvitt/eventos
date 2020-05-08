@@ -44,6 +44,10 @@ header .menu .menu-profile {
   align-items: center;
 }
 
+header .menu .menu-profile .open p{
+  color: blue;
+}
+
 header .menu .menu-profile img {
   height: 40px;
   width: 40px;

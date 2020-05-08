@@ -23,7 +23,8 @@ const Event = () => {
   useEffect(() => {
     api
       .get(`/event/${id}`)
-      .then((response) => {
+      .then(async (response) => {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         setEvent(response.data);
         setLoading(false);
       })
@@ -82,6 +83,7 @@ const Event = () => {
             />
             <OutlineButton title="Inscrever-se" />
             <Button title="Assistentes" />
+            <OutlineButton title="Editar evento" />
           </section>
 
           <ul>

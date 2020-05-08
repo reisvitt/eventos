@@ -15,8 +15,8 @@ const Routers = () => (
       <Route path="/register" exact component={Register} />
       <Route path="/login" exact component={Login} />
       <Route path="/activity" exact component={Activity} />
+      <Route path="/event/create/" exact component={CreateEvent} />
       <Route path="/event/:id" exact component={Event} />
-      <Route path="/event/create" exact component={CreateEvent} />
       <Route path="/error" component={Error} />
     </Switch>
   </BrowserRouter>

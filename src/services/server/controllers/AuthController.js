@@ -15,7 +15,7 @@ const login = async (req, res) => {
       if (error) return res.sendStatus(401);
 
       const token = await jwt.sign(user._id);
-      return res.status(200).json({ token });
+      return res.status(200).json({ user, token });
     });
   } catch (error) {
     return res.sendStatus(404);

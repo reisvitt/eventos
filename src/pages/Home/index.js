@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
+
+import { Link, useHistory } from 'react-router-dom';
+
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import EventCard from "../../components/EventCard";
 import "./styles.css";
 import Base from "../../template/Base";
 import api from "../../services/api";
 
+import { removeCookie } from "../../utils/auth";
+import { Remove } from "@material-ui/icons";
+
+
 const Home = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  const history = useHistory()  
 
   useEffect(() => {
     api
@@ -33,6 +42,12 @@ const Home = () => {
         </div>
       </Base>
     );
+  }
+
+  function logout(){
+    removeCookie()
+    history.push('/')
+    console.log("Logout efetuado com sucesso!")
   }
 
   return (

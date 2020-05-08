@@ -1,7 +1,9 @@
 import React from 'react'
+
 import './styles.css'
 
-const Activity = () => {
+const Activity = (props) => {
+  
   return (
     <h1>Activity</h1>
   )

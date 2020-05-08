@@ -1,7 +1,7 @@
 const EventSchema = require("../models/Event");
 const util = require("../utils/getUserByToken");
 const permission = require("../utils/permission");
-const mongooseError = require("../error/mongoose")
+const mongooseError = require("../error/mongoose");
 
 // Tipos de parâmetos:
 
@@ -20,13 +20,13 @@ const create = async (req, res) => {
 
   if (!body) {
     return res.status(400).json({
-      error: "Dados inválidos!"
+      error: "Dados inválidos!",
     });
   }
 
   if (!user) {
     return res.status(401).json({
-      error: "Você não tem autorização para criar uma evento!"
+      error: "Você não tem autorização para criar uma evento!",
     });
   }
 
@@ -59,26 +59,26 @@ const update = async (req, res) => {
       { _id: eventID },
       {
         ...body,
-        updated_at: new Date()
+        updated_at: new Date(),
       },
       (error, raw) => {
-        if (error){
+        if (error) {
           return res.status(400).json({
-            error: mongooseError.error(error)
+            error: mongooseError.error(error),
           });
         }
-        
-        if(raw){
-          if(raw.n !== 0){
+
+        if (raw) {
+          if (raw.n !== 0) {
             return res.status(200).json({
-              message: "Atualizado com sucesso!"
+              message: "Atualizado com sucesso!",
             });
           }
         }
 
         return res.status(404).json({
-          error: "Usuário não encontrado!"
-        })
+          error: "Usuário não encontrado!",
+        });
       }
     );
   } catch (error) {
@@ -96,7 +96,7 @@ const deleteEvent = async (req, res) => {
   // verifica se o usuario existe
   if (!user) {
     return res.status(400).json({
-      error: "Token expirado. Usuário não encontrado!"
+      error: "Token expirado. Usuário não encontrado!",
     });
   }
 
@@ -107,7 +107,7 @@ const deleteEvent = async (req, res) => {
   if (user._id != event.coordinator) {
     // so o coordenador pode apagar o evento
     return res.status(401).json({
-      error: "Você não tem autorização para deletar este evento!"
+      error: "Você não tem autorização para deletar este evento!",
     });
   }
 
@@ -116,22 +116,21 @@ const deleteEvent = async (req, res) => {
   await EventSchema.deleteOne({ _id: eventID }, (error, raw) => {
     if (error) {
       return res.status(400).json({
-        error: mongooseError.error(error) 
+        error: mongooseError.error(error),
       });
     }
 
-    if(raw){
-      if(raw.n !== 0){
+    if (raw) {
+      if (raw.n !== 0) {
         return res.status(200).json({
-          message: "Evento deletado com sucesso!"
+          message: "Evento deletado com sucesso!",
         });
       }
     }
 
     return res.status(404).json({
-      error: "Evento não encontrado!"
+      error: "Evento não encontrado!",
     });
-
   });
 };
 
@@ -140,11 +139,13 @@ const get = async (req, res) => {
   // verificar quem eh que esta logado. Se tem permissao ou nao
 
   try {
-    const event = await EventSchema.findById(eventID);
+    const event = await EventSchema.findById(eventID)
+      .populate("activities")
+      .exec();
 
     if (!event) {
       return res.status(404).json({
-        error: "Evento não encontrado!"
+        error: "Evento não encontrado!",
       });
     }
 
@@ -161,8 +162,8 @@ const index = async (req, res) => {
 
     return res.json(events);
   } catch (error) {
-    return res.status(404).json({ 
-      error: mongooseError.error(error) 
+    return res.status(404).json({
+      error: mongooseError.error(error),
     });
   }
 };

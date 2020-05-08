@@ -1,16 +1,58 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { OutlineButton, Button } from "../../components/Button";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import api from "../../services/api";
 import Base from "../../template/Base";
+import ActivityCard from "../../components/ActivityCard";
+
 import imagem from "../../assets/miniCursoRos.png";
 import ministrante1 from "../../assets/brad_pitt.jpg";
 import ministrante2 from "../../assets/indiana_jones.jpg";
 import ministrante3 from "../../assets/tony_stark.jpg";
-//import ActivityCard from "../../components/ActivityCard";
 import Modal from "../../components/Modal";
+
 import "./styles.css";
 
 const Event = () => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [event, setEvent] = useState({});
+  const { id } = useParams();
+
+  useEffect(() => {
+    api
+      .get(`/event/${id}`)
+      .then(async (response) => {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        setEvent(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log("erro no load do evento", error);
+        setLoading(false);
+      });
+  }, []);
+
+  function showAssistents() {
+    // essa informação já tem salvo no evento
+    // mostra um modal com os assistents e o botao de adicionar.
+    // os assistens que já estiverem cadastrados deve aparecer um lixeira ao lado para deletar
+    // teve surgir outro modal para confirmação
+  }
+
+  if (loading) {
+    return (
+      <Base>
+        <div className="loading">
+          <h3>
+            <AiOutlineLoading3Quarters className="icon-loading" />
+          </h3>
+        </div>
+      </Base>
+    );
+  }
+
   //falta botao de se inscrever
   return (
     <>
@@ -18,19 +60,14 @@ const Event = () => {
         <Modal onClose={() => setModalIsVisible(false)} />
       ) : null}
       <Base>
-        <div className="event">
+        <div className="event-container">
           <div className="conteudo">
             <div className="contEscrito">
-              <strong className="title">
-                Semana de ciência da computação da UESB
-              </strong>
-              <p className="descricao">
-                descrição descrição descrição descrição descrição descrição
-                descrição{" "}
-              </p>
+              <strong className="title">{event.title}</strong>
+              <p className="descricao">{event.description}</p>
               <p className="numeroVal">
                 {" "}
-                <strong className="valor">Valor: </strong>{" "}
+                <strong className="valor">Valor: {event.prince}</strong>{" "}
                 {Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
@@ -39,161 +76,43 @@ const Event = () => {
             </div>
           </div>
 
-          <div className="new-activity">
-            <button
-              onClick={() => {
-                setModalIsVisible(true);
-                console.log("visible");
-              }}
-            >
-              Nova atividade
-            </button>
-          </div>
+          <section className="controls">
+            <Button
+              onClick={() => setModalIsVisible(false)}
+              title="Nova atividade"
+            />
+            <OutlineButton title="Inscrever-se" />
+            <Button title="Assistentes" />
+            <OutlineButton title="Editar evento" />
+          </section>
 
-          <div className="botaoIns">
-            <Link className="Inscrever" to="/details">
-              Inscrever
-            </Link>
-          </div>
-
-          {
-            //<ActivityCard />
-          }
           <ul>
             <li>
-              <div className="detailAtividade">
-                <div className="imagem">
-                  <img src={imagem} alt="fotoAtividade"></img>
-                </div>
-
-                <div className="textoDetail">
-                  <strong className="titulo">Titulo da atividade</strong>
-                  <p className="data">22/10/2020, 23/10/2020 e 24/10/2020</p>
-
-                  <p className="descricao">
-                    descricao do evento, simples e concisa, se for muito grande,
-                    deve ter os ... (3 pontinhos) para não atrapalhar a exibição
-                    dos autores
-                  </p>
-
-                  <div className="horarioElocal">
-                    <p>
-                      <strong>Horário: </strong> 12:00
-                    </p>
-                    <p>
-                      <strong>Local: </strong> Modulo 1(preto)
-                    </p>
-                  </div>
-                  <div className="feitoPor">
-                    <p>Por: </p>
-                    <img src={ministrante1} alt="fotoAtividade1"></img>
-                    <img src={ministrante2} alt="fotoAtividade2"></img>
-                    <img src={ministrante3} alt="fotoAtividade3"></img>
-                  </div>
-                </div>
-              </div>
+              <ActivityCard />
             </li>
-
             <li>
-              <div className="detailAtividade">
-                <div className="imagem">
-                  <img src={imagem} alt="fotoAtividade"></img>
-                </div>
-
-                <div className="textoDetail">
-                  <strong className="titulo">Titulo da atividade</strong>
-                  <p className="data">22/10/2020, 23/10/2020 e 24/10/2020</p>
-
-                  <p className="descricao">
-                    descricao do evento, simples e concisa, se for muito grande,
-                    deve ter os ... (3 pontinhos) para não atrapalhar a exibição
-                    dos autores
-                  </p>
-
-                  <div className="horarioElocal">
-                    <p>
-                      <strong>Horário: </strong> 12:00
-                    </p>
-                    <p>
-                      <strong>Local: </strong> Modulo 1(preto)
-                    </p>
-                  </div>
-                  <div className="feitoPor">
-                    <p>Por: </p>
-                    <img src={ministrante1} alt="fotoAtividade1"></img>
-                    <img src={ministrante2} alt="fotoAtividade2"></img>
-                    <img src={ministrante3} alt="fotoAtividade3"></img>
-                  </div>
-                </div>
-              </div>
+              <ActivityCard />
             </li>
-
             <li>
-              <div className="detailAtividade">
-                <div className="imagem">
-                  <img src={imagem} alt="fotoAtividade"></img>
-                </div>
-
-                <div className="textoDetail">
-                  <strong className="titulo">Titulo da atividade</strong>
-                  <p className="data">22/10/2020, 23/10/2020 e 24/10/2020</p>
-
-                  <p className="descricao">
-                    descricao do evento, simples e concisa, se for muito grande,
-                    deve ter os ... (3 pontinhos) para não atrapalhar a exibição
-                    dos autores
-                  </p>
-
-                  <div className="horarioElocal">
-                    <p>
-                      <strong>Horário: </strong> 12:00
-                    </p>
-                    <p>
-                      <strong>Local: </strong> Modulo 1(preto)
-                    </p>
-                  </div>
-                  <div className="feitoPor">
-                    <p>Por: </p>
-                    <img src={ministrante1} alt="fotoAtividade1"></img>
-                    <img src={ministrante2} alt="fotoAtividade2"></img>
-                    <img src={ministrante3} alt="fotoAtividade3"></img>
-                  </div>
-                </div>
-              </div>
+              <ActivityCard />
             </li>
-
             <li>
-              <div className="detailAtividade">
-                <div className="imagem">
-                  <img src={imagem} alt="fotoAtividade"></img>
-                </div>
-
-                <div className="textoDetail">
-                  <strong className="titulo">Titulo da atividade</strong>
-                  <p className="data">22/10/2020, 23/10/2020 e 24/10/2020</p>
-
-                  <p className="descricao">
-                    descricao do evento, simples e concisa, se for muito grande,
-                    deve ter os ... (3 pontinhos) para não atrapalhar a exibição
-                    dos autores
-                  </p>
-
-                  <div className="horarioElocal">
-                    <p>
-                      <strong>Horário: </strong> 12:00
-                    </p>
-                    <p>
-                      <strong>Local: </strong> Modulo 1(preto)
-                    </p>
-                  </div>
-                  <div className="feitoPor">
-                    <p>Por: </p>
-                    <img src={ministrante1} alt="fotoAtividade1"></img>
-                    <img src={ministrante2} alt="fotoAtividade2"></img>
-                    <img src={ministrante3} alt="fotoAtividade3"></img>
-                  </div>
-                </div>
-              </div>
+              <ActivityCard />
+            </li>
+            <li>
+              <ActivityCard />
+            </li>
+            <li>
+              <ActivityCard />
+            </li>
+            <li>
+              <ActivityCard />
+            </li>
+            <li>
+              <ActivityCard />
+            </li>
+            <li>
+              <ActivityCard />
             </li>
           </ul>
         </div>

@@ -11,11 +11,19 @@ const login = async (req, res) => {
       return res.sendStatus(404);
     }
 
-    user.comparePassword(password, async (error, isMatch) => {
-      if (error) return res.sendStatus(401);
+    await user.comparePassword(password, async (error, isMatch) => {
+      if (error) {
+        return res.sendStatus(401);
+      } else {
+        // const { password, ...user } = isMatch.toObject(); Desse jeito da erro
+        user.password = undefined // remove a senha
+        const token = await jwt.sign(user._id);
 
-      const token = await jwt.sign(user._id);
-      return res.status(200).json({ user, token });
+        return res.status(200).json({
+          user: user,
+          token
+        });
+      }
     });
   } catch (error) {
     return res.sendStatus(404);

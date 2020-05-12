@@ -1,4 +1,5 @@
 const EventSchema = require("../models/Event");
+const UserSchema = require("../models/User");
 const util = require("../utils/getUserByToken");
 const permission = require("../utils/permission");
 const mongooseError = require("../error/mongoose");
@@ -13,7 +14,7 @@ const create = async (req, res) => {
   const body = req.body;
   const token = await req.headers.authorization;
 
-  // verificar quem eh que esta logado. Se tem permissao ou nao: status 403 caso nao seja
+  // verificar quem eh que esta logado. Se tem permissao ou nao: status 401 caso nao seja
 
   // busca o usuario atraves do token
   const user = await util.getUser(token);
@@ -26,14 +27,26 @@ const create = async (req, res) => {
 
   if (!user) {
     return res.status(401).json({
-      error: "Você não tem autorização para criar uma evento!",
+      error: "Usuário não existe",
     });
   }
 
   try {
     const event = await EventSchema.create({ coordinator: user._id, ...body });
 
-    return res.status(201).json(event);
+    if (event) {
+      UserSchema.updateOne(
+        { _id: user._id },
+        { $push: { events_coordinator: event._id } },
+        (error, success) => {
+          if (error) {
+            return res.sendStatus(500);
+          }
+
+          return res.status(201).json(event);
+        }
+      );
+    }
   } catch (error) {
     // console.log(error)
     return res.status(409).json({ error });
@@ -100,20 +113,14 @@ const deleteEvent = async (req, res) => {
     });
   }
 
-  // busca o evento
-  const event = await EventSchema.findById(eventID);
+  const allow = await permission.allowedEvent(token, eventID);
 
-  // verifica se o usuario eh o coordenador
-  if (user._id != event.coordinator) {
-    // so o coordenador pode apagar o evento
-    return res.status(401).json({
-      error: "Você não tem autorização para deletar este evento!",
-    });
+  if (!allow) {
+    return res.sendStatus(401);
   }
 
   // verificaçoes concluidas, pode deletar
-
-  await EventSchema.deleteOne({ _id: eventID }, (error, raw) => {
+  await EventSchema.deleteOne({ _id: eventID }, async (error, raw) => {
     if (error) {
       return res.status(400).json({
         error: mongooseError.error(error),
@@ -122,6 +129,15 @@ const deleteEvent = async (req, res) => {
 
     if (raw) {
       if (raw.n !== 0) {
+        await UserSchema.updateOne(
+          { _id: user._id },
+          { $pull: { events_coordinator: eventID } },
+          (err, row) => {
+            console.log("err", { err });
+            console.log("row", { row });
+          }
+        );
+
         return res.status(200).json({
           message: "Evento deletado com sucesso!",
         });
@@ -141,6 +157,8 @@ const get = async (req, res) => {
   try {
     const event = await EventSchema.findById(eventID)
       .populate("activities")
+      .populate("coordinator")
+      .populate("assistants")
       .exec();
 
     if (!event) {
@@ -158,7 +176,11 @@ const get = async (req, res) => {
 const index = async (req, res) => {
   // listar todos os eventos OBS: nao precisa de autenticacao
   try {
-    const events = await EventSchema.find();
+    const events = await EventSchema.find()
+      .populate("activities")
+      .populate("coordinator")
+      .populate("assistants")
+      .exec();
 
     return res.json(events);
   } catch (error) {

@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import Campo from "../../components/Campo";
+import Datepicker from "../../components/Datepicker";
 import api from "../../services/api";
 import { getToken } from "../../utils/auth";
 
+import ImageUploader from 'react-images-upload';
+
 import './styles.css'
 
-const Activity = (props) => {
+
+const CreateActivity = (props) => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -49,10 +54,77 @@ const Activity = (props) => {
     }
   }
 
+  const constructor = (props)=> {
+    this.super(props);
+    this.state = { pictures: [] };
+    this.onDrop = this.onDrop.bind(this);
+  }
+
+  const onDrop = (picture)=> {
+    this.setState({
+      pictures: this.state.pictures.concat(picture),
+    });
+  }
+
+
   return (
-    <h1>Activity</h1>
-  )
-}
+    <div className="register-container">
+      <div className="form-container">
+        <h1>Criar Atividade</h1>
 
+        <form onSubmit={handleSubmit}>
+          <Campo
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+            text="Nome da atividade"
+          />
+          <Campo
+            value={description}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+            text="Descrição"
+          />
+          <div class="row">
+            <div class="col">
+              <Datepicker
+                selected={start_date}
+                onChange={date => {
+                  setStart_date(date)
+                }
+                }
+                text="Início da atividade"
+              />
+            </div>
+            <div class="col">
+              <Datepicker
+                selected={end_date}
+                onChange={date => {
+                  setEnd_date(date)
+                }
+                }
+                text="Fim da atividade"
+              />
+            </div>
+          </div>
+          <Campo
+            value={price}
+            onChange={(e) => {
+              setPrice(e.target.value);
+            }}
+            text="Preço da atividade"
+          />
+          <div className="container-link">
+            <button type="submit" className="link">
+              Cadastrar atividade
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-export default Activity
+export default CreateActivity;

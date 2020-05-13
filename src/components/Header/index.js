@@ -8,11 +8,6 @@ import { FaChevronDown } from "react-icons/fa";
 import { withStyles } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
 
 
 const StyledMenu = withStyles({
@@ -86,7 +81,7 @@ const Header = () => {
               
             >
               <p style={{textAlign: "center", fontWeight:"bolder"}}>Sherlock Holmes</p>
-              {<hr style={{ border: "0.2px solid white"}} />}
+              <hr style={{ border: "0.5px solid #fff"}} />
               <StyledMenuItem onClick={handleClose}>Logout</StyledMenuItem>
             </StyledMenu>
 

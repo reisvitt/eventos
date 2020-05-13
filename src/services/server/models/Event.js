@@ -26,7 +26,8 @@ const EventSchema = new mongoose.Schema({
   price: Number,
 
   coordinator: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "User",
     required: true,
   },
 

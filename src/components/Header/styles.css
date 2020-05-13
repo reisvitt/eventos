@@ -1,60 +1,72 @@
-body{width:100%;}
-
-.cabecario{
+header {
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
+  flex-direction: row;
+  box-sizing: border-box;
+  position: relative;
+  padding: 10px 10px;
   align-items: center;
-  padding: 20px;
 }
 
-  img {
-    border-radius: 10px;
-  }
-  
-  .cabecario .imgLogo{
-    margin-bottom: 40px;
-    max-width: 100%;
-  }
-  
-  .cabecario .searchBar{
-    padding: 15px;
-    width:570px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    margin-left: 10px;
-  }
-  
-  .cabecario .linkL{
-    color: white;
-    border: 1px solid white;
-    border-radius: 15px;
-    background-color: transparent;
-    font-size: 16px;
-    padding: 5px 30px;
-    text-decoration: none;
-    transition: 0.2s;
-  }
-  
-  .cabecario .linkR{
-    color: white;
-    border: 1px solid white;
-    border-radius: 15px;
-    background-color: transparent;
-    font-size: 16px;
-    padding: 5px 30px;
-    text-decoration: none;
-    transition: 0.2s;
-    margin-right: 15px;
-  }
-  
-  
-  .cabecario .linkR:hover {
-    background-color: #46C2FD;
-    color: #f0f0f5;
-  }
-  
-  .cabecario .linkL:hover {
-    background-color: #46C2FD;
-    color: #f0f0f5;
-  }
+header .section-logo {
+}
+
+header .menu {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-right: 30px;
+}
+header .menu a {
+  align-self: center;
+  text-decoration: none;
+  color: #151515;
+  font-weight: 500;
+}
+header .menu a:hover {
+  color: #4d4faa;
+  opacity: 85%;
+}
+
+header .menu hr {
+  margin: 0 20px;
+  height: 35px;
+  align-self: center;
+}
+
+header .menu .menu-profile {
+  display: flex;
+  width: 80px;
+  height: 40px;
+  background-color: #4d4faa;
+  border-radius: 20px 10px 10px 20px;
+  align-items: center;
+}
+
+header .menu .menu-profile .open p{
+  color: blue;
+}
+
+header .menu .menu-profile img {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+header .menu .menu-profile .icon {
+  cursor: pointer;
+}
+
+header .section-auth {
+  position: absolute;
+  min-width: 350px;
+  padding-right: 30px;
+  right: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

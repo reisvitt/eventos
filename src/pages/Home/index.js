@@ -7,7 +7,6 @@ import EventCard from "../../components/EventCard";
 import "./styles.css";
 import Base from "../../template/Base";
 import api from "../../services/api";
-import imagem from "../../assets/secomp.png";
 
 import { removeCookie } from "../../utils/auth";
 import { Remove } from "@material-ui/icons";
@@ -19,12 +18,31 @@ const Home = () => {
   
   const history = useHistory()  
 
-
   useEffect(() => {
-    api.get("/event/list", {}).then((response) => {
-      setEvents(response.data);
-    });
-  });
+    api
+      .get("/event/list")
+      .then(async (response) => {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        setEvents(response.data);
+        setLoading(false);
+      })
+      .catch(async (error) => {
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <Base>
+        <div className="loading">
+          <h3>
+            Carregando próximos eventos...
+            <AiOutlineLoading3Quarters className="icon-loading" />
+          </h3>
+        </div>
+      </Base>
+    );
+  }
 
   function logout(){
     removeCookie()
@@ -35,40 +53,11 @@ const Home = () => {
   return (
     <Base>
       <div className="home">
+        <h2>Próximos eventos</h2>
         <ul>
           {events.map((event) => (
-            <li>
-              <div className="detailAtividade">
-                <div className="imagem">
-                  <img src={imagem} alt="fotoAtividade"></img>
-                </div>
-
-                <div className="textoDetail">
-                  <strong className="titulo">{event.title}</strong>
-                  <p className="data">22/10/2020, 23/10/2020 e 24/10/2020</p>
-
-                  <p className="descricao">{event.description}</p>
-
-                  <div className="horarioElocal">
-                    <p>
-                      <strong>Horário: </strong> 12:00
-                    </p>
-                    <p>
-                      <strong>Local: </strong> Modulo 1(preto)
-                    </p>
-                  </div>
-                  <p>
-                    <strong>Valor: </strong>
-                    {Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    }).format(event.__v)}
-                  </p>
-                  <Link className="link" to="/details">
-                    Detalhes
-                  </Link>
-                </div>
-              </div>
+            <li key={event._id}>
+              <EventCard event={event} />
             </li>
           ))}
         </ul>

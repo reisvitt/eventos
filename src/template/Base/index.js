@@ -6,7 +6,7 @@ const Base = (props) => {
   return (
     <div className="site">
       <Header />
-      {props.children}
+      <div className="base">{props.children}</div>
     </div>
   );
 };

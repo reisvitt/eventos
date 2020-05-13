@@ -1,11 +1,15 @@
 .activity-card {
-  width: 500px;
+  max-width: 550px;
+  max-height: 200px;
   border-radius: 10px;
   background-color: white;
   display: flex;
   box-sizing: border-box;
   position: relative;
   align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0.5px 0.5px 10px 0.5px rgb(224, 224, 224);
+  margin: 10px 20px;
 }
 
 .activity-card .picture {
@@ -13,6 +17,7 @@
   width: 120px;
   height: 120px;
   margin-left: 15px;
+  object-fit: cover;
 }
 
 .activity-card .title-container {
@@ -26,16 +31,28 @@
   margin: 0 10px 0 0;
 }
 
-.activity-card .more {
+.activity-card .about {
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  padding: 10px;
+  height: 200px;
+  width: 410px;
+}
+
+.activity-card .about a {
+  text-decoration: none;
+  color: #151515;
+}
+
+.activity-card .about a:hover {
+  opacity: 80%;
 }
 
 .activity-card .info {
   font-size: 12px;
   color: rgb(230, 59, 59);
   font-weight: bold;
+  margin-top: 2px;
 }
 
 .activity-card .more-vert {
@@ -44,15 +61,21 @@
   right: -5px;
 }
 
-.activity-card .more .data {
+.activity-card .about .data {
   margin-top: 5px;
   font-size: 12px;
   color: #4d4faa;
 }
 
 .activity-card .description {
+  line-height: 20px;
   margin: 5px 0;
+  padding-right: 5px;
+
   color: #363636;
+  text-overflow: ellipsis;
+
+  overflow: hidden;
 }
 .activity-card .description p {
   margin: 0;
@@ -66,6 +89,8 @@
   margin: 0;
   padding: 0;
   display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .activity-card .support-container li {

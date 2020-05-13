@@ -62,7 +62,7 @@
   line-height: 24px;
 }
 
-.form-content button {
+.form-content .link{
   background: #333;
   border: none;
   color: #dcdce6;

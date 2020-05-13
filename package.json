@@ -29,7 +29,9 @@
     "react-images-upload": "^1.2.8",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "react-toggle-switch": "^3.0.4"
+    "react-toastify": "^6.0.2",
+    "react-toggle-switch": "^3.0.4",
+    "styled-components": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

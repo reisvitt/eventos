@@ -17,7 +17,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   
   const history = useHistory()  
-
+  
   useEffect(() => {
     api
       .get("/event/list")

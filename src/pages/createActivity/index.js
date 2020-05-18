@@ -51,7 +51,6 @@ const Activity = (props) => {
     }
   }
 
-
   const constructor = (props) => {
     this.super(props);
     this.state = { pictures: [] };

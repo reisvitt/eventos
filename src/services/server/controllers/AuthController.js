@@ -11,19 +11,15 @@ const login = async (req, res) => {
       return res.sendStatus(404);
     }
 
-    await user.comparePassword(password, async (error, isMatch) => {
-      if (error) {
-        return res.sendStatus(401);
-      } else {
-        const { password, ...result } = user.toObject(); 
-        // user.password = undefined // remove a senha
-        const token = await jwt.sign(user._id);
 
-        return res.status(200).json({
-          result,
-          token
-        });
-      }
+    user.comparePassword(password, async (error, isMatch) => {
+      if (error) return res.sendStatus(401);
+
+      const { password, ...result} = user.toObject();
+
+      const token = await jwt.sign(user._id);
+      return res.status(200).json({ user: result, token });
+
     });
   } catch (error) {
     return res.sendStatus(404);

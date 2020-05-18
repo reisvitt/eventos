@@ -6,11 +6,13 @@ import api from "../../services/api";
 import Base from "../../template/Base";
 import ActivityCard from "../../components/ActivityCard";
 
-import imagem from "../../assets/miniCursoRos.png";
-import ministrante1 from "../../assets/brad_pitt.jpg";
-import ministrante2 from "../../assets/indiana_jones.jpg";
-import ministrante3 from "../../assets/tony_stark.jpg";
 import Modal from "../../components/Modal";
+import Toast from "../../components/Toast/toast";
+import ToastAnimated, { showToast } from "../../components/Toast/toast";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 import "./styles.css";
 
@@ -19,6 +21,7 @@ const Event = () => {
   const [loading, setLoading] = useState(true);
   const [event, setEvent] = useState({});
   const { id } = useParams();
+
 
   useEffect(() => {
     api
@@ -33,6 +36,15 @@ const Event = () => {
         setLoading(false);
       });
   }, []);
+
+
+  function handleSuccess() {
+    showToast({ type: "success", message: "Mensagem de sucesso" });
+  }
+  
+  function handleError() {
+    showToast({ type: "warn", message: "Mensagem de erro" });
+  }
 
   function showAssistents() {
     // essa informação já tem salvo no evento
@@ -81,9 +93,13 @@ const Event = () => {
               onClick={() => setModalIsVisible(false)}
               title="Nova atividade"
             />
+            
             <OutlineButton title="Inscrever-se" />
             <Button title="Assistentes" />
             <OutlineButton title="Editar evento" />
+            <ToastAnimated />
+            <button onClick={handleSuccess}>toast sucess!</button>
+            <button onClick={handleError}>toast error!</button>
           </section>
 
           <ul>

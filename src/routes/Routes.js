@@ -7,6 +7,7 @@ import Activity from "./../pages/Activity";
 import Event from "./../pages/Event";
 import Error from "./../pages/Error";
 import CreateEvent from "./../pages/CreateEvent";
+import CreateActivity from "../pages/CreateActivity";
 
 import CreateActivity from "../pages/createActivity";
 
@@ -17,6 +18,7 @@ const Routers = () => (
       <Route path="/" exact component={Home} />
       <Route path="/register" exact component={Register} />
       <Route path="/login" exact component={Login} />
+      <Route path="/activity/create" exact component={CreateActivity} />
       <Route path="/activity" exact component={Activity} />
       <Route path="/event" exact component={Event} />
       <Route path="/event/create" exact component={CreateEvent} />

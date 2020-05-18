@@ -23,19 +23,21 @@ const Activity = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     console.log('Ativade Criada')
-    const response = await api.post("/activity/create", {
+     //Colocar esse id no api.post para criar a atividade
+    //  event_id: '5eba856f1ec95c086063fda4',
+    const response = await api.post(`/event/${event_id}/activity`, {
       title,
       description,
-      picture,
+      picture: '',
       start_date,
       end_date,
-      type,
-      subscribed_users,
-      event_id,
+      type: '',
+      // subscribed_users: [{}],
       price,
       headers: {
         authorization: getToken('event-token')
-      }
+      },
+      
     })
     if (response.status === 201) {
       props.history.push('/');
@@ -47,6 +49,19 @@ const Activity = (props) => {
         setErrorVisible(false);
       }, 5000);
     }
+  }
+
+
+  const constructor = (props) => {
+    this.super(props);
+    this.state = { pictures: [] };
+    this.onDrop = this.onDrop.bind(this);
+  }
+
+  const onDrop = (picture) => {
+    this.setState({
+      pictures: this.state.pictures.concat(picture),
+    });
   }
 
   return (

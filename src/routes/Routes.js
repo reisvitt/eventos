@@ -8,6 +8,9 @@ import Event from "./../pages/Event";
 import Error from "./../pages/Error";
 import CreateEvent from "./../pages/CreateEvent";
 
+import CreateActivity from "../pages/createActivity";
+
+
 const Routers = () => (
   <BrowserRouter>
     <Switch>

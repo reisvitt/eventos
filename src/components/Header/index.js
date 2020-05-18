@@ -1,8 +1,11 @@
 import React from "react";
 import "./styles.css";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import js from "../../assets/js.jpg";
+
+import { removeCookie } from "../../utils/auth";
+
 import { OutlineButton, Button } from "../Button";
 import { FaChevronDown } from "react-icons/fa";
 import { withStyles } from "@material-ui/core/styles";
@@ -51,6 +54,7 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 const Header = () => {
+  const history = useHistory()  
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -59,6 +63,9 @@ const Header = () => {
   };
 
   const handleClose = () => {
+    removeCookie()
+    history.push('/')
+    alert("Logout efetuado com sucesso!")
     setAnchorEl(null);
   };
 
@@ -74,8 +81,8 @@ const Header = () => {
         {<hr />}
         <div className="menu-profile">
           <img src={js} />
-          <FaChevronDown className="icon" size={18} color="#fff" onClick={handleClick}/>
-          
+          <FaChevronDown className="icon" size={18} color="#fff" onClick={handleClick} />
+
           <div className="open">
             <StyledMenu
               id="customized-menu"
@@ -83,15 +90,17 @@ const Header = () => {
               keepMounted
               open={Boolean(anchorEl)}
               onClose={handleClose}
-              
+
             >
-              <p style={{textAlign: "center", fontWeight:"bolder"}}>Sherlock Holmes</p>
-              {<hr style={{ border: "0.2px solid white"}} />}
+
+              <p style={{ textAlign: "center", fontWeight: "bolder" }}>Sherlock Holmes</p>
+              <hr style={{ border: "0.5px solid #fff" }} />
+
               <StyledMenuItem onClick={handleClose}>Logout</StyledMenuItem>
             </StyledMenu>
 
           </div>
-          
+
         </div>
       </section>
       {/*

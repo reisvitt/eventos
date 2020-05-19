@@ -6,10 +6,10 @@ const TextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
         <>
-            <label htmlFor={props.id || props.name}>{label}</label>
-            <input className="text-input" {...field} {...props} />
+            <label className="form-text-label" htmlFor={props.id || props.name}>{label}</label>
+            <input {...field} {...props} />
             {meta.touched && meta.error ? (
-                <div className="error">{meta.error}</div>
+                <div className="form-error">{meta.error}</div>
             ) : null}
         </>
     );
@@ -18,7 +18,6 @@ const TextInput = ({ label, ...props }) => {
 export default class MyTextInput extends React.Component {
     constructor(props) {
         super(props);
-
         //eh o estado do componente, dentro desse estado guardaremos todas as variaveis que utilizaremos
         this.state = {
             newCommentText: ""
@@ -28,6 +27,7 @@ export default class MyTextInput extends React.Component {
     render() {
         return (
             <TextInput
+                className="form-text-container"
                 value={this.props.value}
                 label={this.props.label}
                 name={this.props.name}

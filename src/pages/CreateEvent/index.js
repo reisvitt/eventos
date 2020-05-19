@@ -3,22 +3,11 @@ import Formulary from "../../components/FormComponents/Formulary";
 import MyTextInput from "../../components/FormComponents/MyTextInput";
 import MyTextAreaInput from "../../components/FormComponents/MyTextAreaInput";
 import Datepicker from "../../components/FormComponents/Datepicker";
+import ButtonForm from "../../components/FormComponents/ButtonForm";
 import api from "../../services/api";
 import { getToken } from "../../utils/auth";
 
 import "./styles.css";
-
-const validate = values => {
-  console.log(values)
-  const errors = {};
-  if (!values.title) {
-    errors.title = 'Required';
-  } else if (values.title.length > 15) {
-    errors.title = 'Must be 15 characters or less';
-  }
-
-  return errors;
-};
 
 const RegisterEvent = (props) => {
   var today = new Date();
@@ -47,8 +36,8 @@ const RegisterEvent = (props) => {
   document.title = "Criar Evento"; // title of page
 
   const handleSubmit = async e => {
-    e.preventDefault();
-    
+    //    e.preventDefault();
+
     console.log(getToken('event-token'))
     const response = await api.post("/event", {
       title,
@@ -85,12 +74,22 @@ const RegisterEvent = (props) => {
     }
   };
 
+  const validate = () => {
+    const errors = {};
+    if (!title) {
+      errors.title = '* Campo requerido';
+    } else if (title.length > 15) {
+      errors.title = '* Deve ter 15 caracteres ou menos';
+    }
+    return errors;
+  };
+
   return (
-    <div className="content">
+    <div className="form-content">
       {errorVisible ? (
         <label className="errorMessage">{erroMessage}</label>
       ) : null}
-      <h1>
+      <h1 className="title-form">
         <strong>Criação do Evento</strong>
       </h1>
       <Formulary
@@ -98,13 +97,14 @@ const RegisterEvent = (props) => {
           title: '',
           address: '',
           description: '',
+          price: '',
         }}
-        //validate={validate}
-        //onSubmit={handleSubmit}
+        validate={validate}
+        onSubmit={handleSubmit}
         content={
           <>
             <MyTextInput
-              label="title"
+              label="* Nome do Evento"
               name="title"
               type="text"
               placeholder="Nome do evento"
@@ -159,13 +159,10 @@ const RegisterEvent = (props) => {
           </>
         }
         button={
-          <>
-            <div>
-              <button type="submit" className="link">
-                Criar Evento
-            </button>
-            </div>
-          </>
+          <ButtonForm
+            type="submit"
+            text="Criar Evento"
+          />
         }
       />
     </div>

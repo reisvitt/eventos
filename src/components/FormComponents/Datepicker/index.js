@@ -6,9 +6,7 @@ import "./styles.css";
 export default class Datepicker extends React.Component {
 
   constructor(props) {
-
     super(props);
-
     //eh o estado do componente, dentro desse estado guardaremos todas as variaveis que utilizaremos
     this.state = {
       newCommentText: ""
@@ -17,11 +15,12 @@ export default class Datepicker extends React.Component {
 
   render() {
     return (
-      <div className="date-container">
+      <div className="form-date">
         <div>
-          <label>{this.props.text}</label>
+          <label className="form-date-label">{this.props.text}</label>
         </div>
         <DatePicker
+          className="form-date-container"
           selected={this.props.selected}
           onChange={this.props.onChange}
           dateFormat='dd/MM/yyyy'

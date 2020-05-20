@@ -41,7 +41,7 @@ const Event = () => {
   function handleSuccess() {
     showToast({ type: "success", message: "Mensagem de sucesso" });
   }
-  
+
   function handleError() {
     showToast({ type: "warn", message: "Mensagem de erro" });
   }
@@ -90,10 +90,11 @@ const Event = () => {
 
           <section className="controls">
             <Button
-              onClick={() => setModalIsVisible(false)}
+              
               title="Nova atividade"
-            />
-            
+              to = {`/activity/create/${id}`}
+           />
+              
             <OutlineButton title="Inscrever-se" />
             <Button title="Assistentes" />
             <OutlineButton title="Editar evento" />

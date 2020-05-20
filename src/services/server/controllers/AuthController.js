@@ -1,6 +1,8 @@
 const User = require("../models/User");
 const jwt = require("../utils/jwt");
 
+let refreshTokens = []
+
 const login = async (req, res) => {
   const [, hash] = req.headers.authorization.split(" ");
   const [email, password] = Buffer.from(hash, "base64").toString().split(":");
@@ -18,7 +20,10 @@ const login = async (req, res) => {
       const { password, ...result} = user.toObject();
 
       const token = await jwt.sign(user._id);
-      return res.status(200).json({ user: result, token });
+      const refreshToken = await jwt.signRefresh(user._id)
+      refreshTokens.push(refreshToken)
+
+      return res.status(200).json({ user: result, token, refreshToken });
 
     });
   } catch (error) {
@@ -26,31 +31,18 @@ const login = async (req, res) => {
   }
 };
 
-const refreshToken = async (req, res) => {
-  try {
-    const token = req.headers.authorization;
-    const data = await jwt.verify(token);
+const refreshLogin = async (req, res) => {
+  // const user = await User.findOne({ email }).select("+password");
 
-    const user = await User.findById(data._id);
+  const refreshToken = req.body.token
+  if(refreshToken == null) return res.sendStatus(401)
 
-    if (!user) {
-      res.status(404).send({
-        message: "Usuario não encontrado",
-      });
-      return;
-    }
+  if(!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
 
-    const tokenData = await jwt.sign(user._id);
+  jwt.verifyRefresh(refreshToken)
 
-    res.status(201).json({ token });
-  } catch (error) {
-    res.status(500).send({
-      message: "Falha ao processar sua requisição",
-    });
-  }
 };
 
 module.exports = {
-  login,
-  refreshToken,
+  login,refreshLogin
 };

@@ -13,13 +13,13 @@ const login = async (req, res) => {
       return res.sendStatus(404);
     }
 
-
     user.comparePassword(password, async (error, isMatch) => {
       if (error) return res.sendStatus(401);
 
       const { password, ...result} = user.toObject();
 
       const token = await jwt.sign(user._id);
+      
       const refreshToken = await jwt.signRefresh(user._id)
       refreshTokens.push(refreshToken)
 
@@ -32,14 +32,17 @@ const login = async (req, res) => {
 };
 
 const refreshLogin = async (req, res) => {
-  // const user = await User.findOne({ email }).select("+password");
-
   const refreshToken = req.body.token
   if(refreshToken == null) return res.sendStatus(401)
 
   if(!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
 
-  jwt.verifyRefresh(refreshToken)
+  jwt.verifyRefresh(refreshToken, async (err,user) => {
+    if (err) return res.sendStatus(403)
+
+    const token = await jwt.sign(user._id);
+    res.json({token: token}) 
+  })
 
 };
 

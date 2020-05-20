@@ -5,6 +5,6 @@ const express = require("express");
 const routes = express.Router();
 
 routes.get("/login", AuthCtrl.login);
-// routes.post("/refresh-token", AuthCtrl.refreshToken, Auth.authMiddleware)
+routes.post("/refresh-login",  Auth.authMiddleware, AuthCtrl.refreshLogin)
 
 module.exports = routes;

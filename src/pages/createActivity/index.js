@@ -7,6 +7,7 @@ import { getToken } from "../../utils/auth";
 import ImageUploader from 'react-images-upload';
 
 import './styles.css'
+import { useParams } from "react-router-dom";
 
 
 const CreateActivity = (props) => {
@@ -18,29 +19,35 @@ const CreateActivity = (props) => {
   const [end_date, setEnd_date] = useState('');
   const [type, setType] = useState('');
   const [subscribed_users, setSubscribed_users] = useState('');
-  const [event_id, setEvent_id] = useState('');
+  // const [event_id, setEvent_id] = useState('');
   const [price, setPrice] = useState('');
   const [erroMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
+
+  const { id } = useParams();
 
   document.title = "Atividade"
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Ativade Criada')
-    const response = await api.post("/activity/create", {
+    console.log('Atividade Criada')
+    //Colocar esse id no api.post para criar a atividade - event_id: '5eba856f1ec95c086063fda4',
+    // Não sei ainda como pegar o id do evento diretamente pela pagina
+    //So o usuario de vitor pode criar uma atividade nesse evento, porque ele eh o cordenador
+    //login: reis@outlook.com, password: 123
+    const response = await api.post(`/event/${id}/activity`, {
       title,
       description,
-      picture,
+      picture: '',
       start_date,
       end_date,
-      type,
-      subscribed_users,
-      event_id,
+      type: '',
+      // subscribed_users: [{}],
       price,
       headers: {
         authorization: getToken('event-token')
-      }
+      },
+      
     })
     if (response.status === 201) {
       props.history.push('/');
@@ -54,18 +61,20 @@ const CreateActivity = (props) => {
     }
   }
 
+
   const constructor = (props)=> {
     this.super(props);
     this.state = { pictures: [] };
     this.onDrop = this.onDrop.bind(this);
   }
 
+
   const onDrop = (picture)=> {
+
     this.setState({
       pictures: this.state.pictures.concat(picture),
     });
   }
-
 
   return (
     <div className="register-container">

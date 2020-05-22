@@ -18,14 +18,15 @@ const allowedEvent = async (token, eventID) => {
     }, true);
 
     // verificar se o usuario tem permissao para realizar update neste evento, caso nao tenha, estrara no if
-    if (event.coordinator != user._id && assistant) {
+    if (event.coordinator + "" != user._id + "" && assistant) {
       return null;
     }
+
+    return true;
   } catch (error) {
+    console.log("ERROR", error);
     return null;
   }
-
-  return true;
 };
 
 module.exports = {

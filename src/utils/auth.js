@@ -8,4 +8,8 @@ const setToken = token => {
   Cookie.set("event-token", token)
 }
 
-export { getToken, setToken }
+const removeCookie = () => {
+  Cookie.remove('event-token')
+}
+
+export { getToken, setToken, removeCookie }

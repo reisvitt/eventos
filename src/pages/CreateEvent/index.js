@@ -9,7 +9,7 @@ import { getToken } from "../../utils/auth";
 
 import "./styles.css";
 
-const RegisterEvent = (props) => {
+const CreateEvent = (props) => {
   var today = new Date();
   var date =
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
@@ -59,11 +59,11 @@ const RegisterEvent = (props) => {
       }
     })
 
-    console.log(response)
+    console.log(response);
 
     if (response.status === 201) {
       props.history.push("/");
-      alert("Evento criado com sucesso! :)")
+      alert("Evento criado com sucesso! :)");
     } else {
       setErrorMessage(response.data.error);
       setErrorVisible(true);
@@ -169,4 +169,4 @@ const RegisterEvent = (props) => {
   ); //fim return
 }; //fim classe RegisterEvent
 
-export default RegisterEvent;
+export default CreateEvent;

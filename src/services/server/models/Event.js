@@ -9,7 +9,7 @@ const EventSchema = new mongoose.Schema({
   start_date: Date,
   end_date: Date,
   picture: String,
-  
+
   address: [
     {
       address: String,
@@ -22,16 +22,17 @@ const EventSchema = new mongoose.Schema({
   end_subscribe: Date,
   accountable: String,
   description: String,
-  activities: [String], // contem o id das atividades
+  activities: [{ type: mongoose.Schema.Types.ObjectId, ref: "Activity" }], // contem o id das atividades
   price: Number,
-  
+
   coordinator: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "User",
     required: true,
   },
-  
-  assistants: [String], // contem o id dos auxiliares
-  
+
+  assistants: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // contem o id dos auxiliares
+
   created_at: {
     type: Date,
     default: Date.now,
@@ -46,7 +47,7 @@ const EventSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  
+
   payment_address: [
     {
       address: String,

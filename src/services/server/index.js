@@ -6,6 +6,7 @@ const userRouter = require("./routes/userRouter");
 const eventRouter = require("./routes/eventRouter");
 const authRouter = require("./routes/authRouter");
 const activityRouter = require("./routes/activityRouter");
+const assistantRouter = require("./routes/assistantRouter")
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -30,5 +31,6 @@ app.use(`/api`, userRouter);
 app.use(`/api`, eventRouter);
 app.use("/api", authRouter);
 app.use("/api", activityRouter);
+app.use("/api", assistantRouter)
 
 app.listen(3333, () => console.log("Server running - OK"));

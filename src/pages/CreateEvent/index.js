@@ -38,10 +38,7 @@ const CreateEvent = (props) => {
   const handleSubmit = async e => {
     //    e.preventDefault();
 
-<<<<<<< HEAD
-=======
     console.log(getToken('event-token'))
->>>>>>> master
     const response = await api.post("/event", {
       title,
       start_date: startDateEvent,

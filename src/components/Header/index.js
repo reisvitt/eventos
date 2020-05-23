@@ -4,7 +4,7 @@ import { Link,useHistory } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import js from "../../assets/js.jpg";
 
-import { removeCookie } from "../../utils/auth";
+import { removeToken } from "../../utils/auth";
 
 import { OutlineButton, Button } from "../Button";
 import { FaChevronDown } from "react-icons/fa";
@@ -13,7 +13,6 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Divider from "@material-ui/core/Divider";
 import { useAuthContext } from "../../store/Auth";
-import { useHistory } from "react-router-dom";
 
 const StyledMenu = withStyles({
   paper: {
@@ -56,22 +55,19 @@ const Header = () => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { SignOut, user } = useAuthContext();
-  const history = useHistory();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    removeCookie()
-    history.push('/')
-    alert("Logout efetuado com sucesso!")
     setAnchorEl(null);
   };
 
   const HandleLogOut = () => {
     SignOut();
     history.push("/");
+    alert("Logout efetuado com sucesso!")
   };
 
   return (

@@ -7,7 +7,7 @@ import Activity from "./../pages/Activity";
 import Event from "./../pages/Event";
 import Error from "./../pages/Error";
 import CreateEvent from "./../pages/CreateEvent";
-import CreateActivity from "../pages/createActivity";
+import CreateActivity from "../pages/CreateActivity";
 
 const Routers = () => (
   <BrowserRouter>

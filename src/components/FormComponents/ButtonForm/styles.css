@@ -1,0 +1,25 @@
+.form-button {
+    background: #3c3c8b;
+    border: none;
+    color: #dcdce6;
+    font-size: 17px;
+    padding: 10 25px;
+    cursor: pointer;
+    height: 30px;
+    width: 170px;
+    border-radius: 300px;
+    transition: background-color 0.4s, color 0.4s;
+    display: block;
+    top: 0;
+    left: 0;
+    margin: 40px auto;
+}
+
+.form-button:hover {
+  outline: none;
+  background-color: #5b5bb1;
+}
+
+.form-button:focus {
+    outline: 0px auto -webkit-focus-ring-color;
+} 

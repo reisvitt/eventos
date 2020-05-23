@@ -89,10 +89,11 @@ const Event = () => {
 
           <section className="controls">
             <Button
-              onClick={() => setModalIsVisible(false)}
+              
               title="Nova atividade"
-            />
-
+              to = {`/activity/create/${id}`}
+           />
+              
             <OutlineButton title="Inscrever-se" />
             <Button title="Assistentes" />
             <OutlineButton title="Editar evento" />

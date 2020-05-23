@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import Campo from "../../components/Campo";
-import Datepicker from "../../components/Datepicker";
+import Formulary from "../../components/FormComponents/Formulary";
+import MyTextInput from "../../components/FormComponents/MyTextInput";
+import MyTextAreaInput from "../../components/FormComponents/MyTextAreaInput";
+import Datepicker from "../../components/FormComponents/Datepicker";
+import ButtonForm from "../../components/FormComponents/ButtonForm";
 import api from "../../services/api";
 import { getToken } from "../../utils/auth";
 
@@ -27,16 +30,18 @@ const CreateEvent = (props) => {
   const [startSubscriptionEvent, setStartSubscriptionEvent] = useState("");
   const [endSubscriptionEvent, setEndSubscriptionEvent] = useState("");
 
-  /* vector */
-  const [assistentName, setAssistentName] = useState("");
   const [erroMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
 
   document.title = "Criar Evento"; // title of page
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async e => {
+    //    e.preventDefault();
 
+<<<<<<< HEAD
+=======
+    console.log(getToken('event-token'))
+>>>>>>> master
     const response = await api.post("/event", {
       title,
       start_date: startDateEvent,
@@ -68,73 +73,97 @@ const CreateEvent = (props) => {
     }
   };
 
+  const validate = () => {
+    const errors = {};
+    if (!title) {
+      errors.title = '* Campo requerido';
+    } else if (title.length > 15) {
+      errors.title = '* Deve ter 15 caracteres ou menos';
+    }
+    return errors;
+  };
+
   return (
-    <div className="content">
-      <div className="form-content">
-        {errorVisible ? (
-          <label className="errorMessage">{erroMessage}</label>
-        ) : null}
-        <h1>
-          <strong>Criação do Evento</strong>
-        </h1>
+    <div className="form-content">
+      {errorVisible ? (
+        <label className="errorMessage">{erroMessage}</label>
+      ) : null}
+      <h1 className="title-form">
+        <strong>Criação do Evento</strong>
+      </h1>
+      <Formulary
+        initialValues={{
+          title: '',
+          address: '',
+          description: '',
+          price: '',
+        }}
+        validate={validate}
+        onSubmit={handleSubmit}
+        content={
+          <>
+            <MyTextInput
+              label="* Nome do Evento"
+              name="title"
+              type="text"
+              placeholder="Nome do evento"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
 
-        <form onSubmit={handleSubmit}>
-          <Campo
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-            text="*Nome do Evento"
-          />
-
-          <div class="row">
-            <div class="col">
-              <Datepicker
-                selected={startDateEvent}
-                onChange={(date) => {
-                  setStartDateEvent(date);
-                }}
-                text="Início do evento"
-              />
+            <div className="row">
+              <div className="col">
+                <Datepicker
+                  selected={startDateEvent}
+                  onChange={date => {
+                    setStartDateEvent(date)
+                  }
+                  }
+                  text="Início do evento"
+                />
+              </div>
+              <div className="col">
+                <Datepicker
+                  selected={endDateEvent}
+                  onChange={date => {
+                    setEndDateEvent(date)
+                  }
+                  }
+                  text="Fim do evento"
+                />
+              </div>
             </div>
-            <div class="col">
-              <Datepicker
-                selected={endDateEvent}
-                onChange={(date) => {
-                  setEndDateEvent(date);
-                }}
-                text="Fim do evento"
-              />
-            </div>
-          </div>
-
-          <Campo
-            value={address}
-            onChange={(e) => {
-              setAddress(e.target.value);
-            }}
-            text="Localidade"
-          />
-
-          <div className="campo-container">
-            <div>
-              <label>Descrição</label>
-            </div>
-            <textarea
-              className="input"
+            <MyTextInput
+              label="Endereço"
+              name="address"
+              type="text"
+              placeholder="Local do evento"
+              value={address}
+              onChange={(e) => {
+                setAddress(e.target.value);
+              }}
+            />
+            <MyTextAreaInput
+              label="Descrição"
+              name="description"
+              type="text"
+              placeholder="Descrição"
               value={description}
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
             />
-          </div>
-          <div>
-            <button type="submit" className="link">
-              Criar Evento
-            </button>
-          </div>
-        </form>
-      </div>
+          </>
+        }
+        button={
+          <ButtonForm
+            type="submit"
+            text="Criar Evento"
+          />
+        }
+      />
     </div>
   ); //fim return
 }; //fim classe RegisterEvent

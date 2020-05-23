@@ -1,8 +1,11 @@
 import React from "react";
 import "./styles.css";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import js from "../../assets/js.jpg";
+
+import { removeCookie } from "../../utils/auth";
+
 import { OutlineButton, Button } from "../Button";
 import { FaChevronDown } from "react-icons/fa";
 import { withStyles } from "@material-ui/core/styles";
@@ -49,6 +52,8 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 const Header = () => {
+  const history = useHistory()  
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { SignOut, user } = useAuthContext();
   const history = useHistory();
@@ -58,6 +63,9 @@ const Header = () => {
   };
 
   const handleClose = () => {
+    removeCookie()
+    history.push('/')
+    alert("Logout efetuado com sucesso!")
     setAnchorEl(null);
   };
 

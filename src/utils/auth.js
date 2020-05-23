@@ -1,15 +1,20 @@
-import Cookie from 'js-cookie'
+//import { secureStorage } from "./SecureStorage";
 
 const getToken = () => {
-  return Cookie.get('event-token')
-}
+  return localStorage.getItem("event-token");
+};
 
-const setToken = token => {
-  Cookie.set("event-token", token)
-}
+const setToken = (token) => {
+  localStorage.setItem("event-token", token);
+};
 
-const removeCookie = () => {
-  Cookie.remove('event-token')
-}
+const removeToken = () => {
+  localStorage.removeItem("event-token");
+};
 
-export { getToken, setToken, removeCookie }
+const isAuthenticated = () => {
+  console.log("getToken", getToken());
+  return !!getToken();
+};
+
+export { getToken, setToken, removeToken, isAuthenticated };

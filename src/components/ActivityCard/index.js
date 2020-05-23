@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useParams } from "react-router-dom";
-import api from "../../services/api";
 import { MoreVert } from "@material-ui/icons";
 import { IconButton } from "@material-ui/core";
 import "./styles.css";
@@ -9,10 +8,6 @@ import image from "../../assets/js.jpg";
 
 const ActivityCard = ({ activity }) => {
   const { id } = useParams();
-
-  useEffect(() => {
-    //api.get("activity")
-  }, []);
 
   return (
     <div className="activity-card">

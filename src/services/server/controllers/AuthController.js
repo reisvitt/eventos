@@ -14,7 +14,7 @@ const login = async (req, res) => {
     user.comparePassword(password, async (error, isMatch) => {
       if (error) return res.sendStatus(401);
 
-      const { password, ...result} = user.toObject();
+      const { password, ...result } = user.toObject();
 
       const token = await jwt.sign(user._id);
       return res.status(200).json({ user: result, token });

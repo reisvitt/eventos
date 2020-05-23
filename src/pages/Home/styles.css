@@ -3,17 +3,31 @@
   flex-direction: column;
 }
 
-.home ul {
-  list-style: none;
+.home .row {
   padding: 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: 60px;
-  justify-content: center;
+  justify-content: space-between;
 }
 
-.home ul li {
-  display: flex;
-  justify-content: center;
+@media (max-width: 1150px) {
+  .home .row .event-card {
+    max-width: 30vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .home .row .event-card {
+    max-width: 48%;
+  }
+}
+
+@media (max-width: 600px) {
+  .home .row {
+    justify-content: center;
+  }
+  .home .row .event-card {
+    max-width: 80%;
+  }
 }

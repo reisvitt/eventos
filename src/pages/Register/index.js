@@ -33,7 +33,7 @@ const Subscribre = ({ history }) => {
       password: password,
     };
     
-    await SignUp(user)
+    SignUp(user)
       .then(() => {
         history.push("/");
       })

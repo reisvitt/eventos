@@ -2,7 +2,6 @@ import React from "react";
 import image from "../../assets/js.jpg";
 import "./styles.css";
 import { Link } from "react-router-dom";
-
 const EventCard = ({ event }) => {
   function getThreeWordsOfMonth() {
     // retorna as tres primeiras letras do mes em questao
@@ -35,7 +34,9 @@ const EventCard = ({ event }) => {
           <Link to={`/event/${event._id}`}>
             <h3 className="title">{event.title}</h3>
           </Link>
-          <span className="description">{event.description}</span>
+          <div className="divDescrition">
+            <span className="description">{event.description}</span>
+          </div>
           <span className="accountable">{event.accountable}</span>
         </div>
       </div>

@@ -1,53 +1,32 @@
 import React, { useState } from "react";
 import Campo from "../../components/Campo";
-import api from "../../services/api";
-
-import { setToken, getToken } from "../../utils/auth";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useAuthContext } from "../../store/Auth";
 
 import "./styles.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //funcao do render: retornar o conteudo html do componente App
-
+  const { SignIn } = useAuthContext();
 
   const history = useHistory();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await api.get("/login",{
-      auth: {
-        username: email,
-        password: password  
-      }
-    })
-    setToken(response.data.token)
-    console.log(response.data)
-    alert('Você está logado! :)' )
-    history.push('/')
 
-
-    try {
-      const response = await api.get("/login", {
-        headers: {
-          authorization: [email, password],
-        },
+    SignIn(email, password)
+      .then((response) => {
+        history.push("/");
+      })
+      .catch((error) => {
+        console.log("ERROR AO LOGAR");
+        console.log(error);
       });
-
-      if (response.status === 200) {
-        setToken(response.data.token);
-        console.log(response.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   document.title = "Login";
 
-  //<Campos text = "DATA/NASCI" type = "date" />
   return (
     <div className="container-login">
       <div className="container">
@@ -71,10 +50,7 @@ const Login = () => {
           />
           <div className="container-link">
             <button className="link" type="submit">
-            Entrar
-            {/* <Link className="link" to="/"> 
               Entrar
-            </Link> */}
             </button>
           </div>
         </form>

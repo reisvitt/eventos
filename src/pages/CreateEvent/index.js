@@ -20,7 +20,6 @@ const CreateEvent = (props) => {
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
-  const [coordinator, setCoordinator] = useState("");
   const [accountable, setAccountable] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -38,7 +37,6 @@ const CreateEvent = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(getToken("event-token"));
     const response = await api.post("/event", {
       title,
       start_date: startDateEvent,
@@ -54,12 +52,8 @@ const CreateEvent = (props) => {
       assistants: [],
       is_available: true,
       payment_address: [],
-      headers: {
-        authorization: getToken('event-token')
-      }
-    })
+    });
 
-    console.log(response);
 
     if (response.status === 201) {
       props.history.push("/");
@@ -97,22 +91,18 @@ const CreateEvent = (props) => {
             <div class="col">
               <Datepicker
                 selected={startDateEvent}
-                onChange={date => {
-                  setStartDateEvent(date)
-                  console.log(startDateEvent)
-                }
-                }
+                onChange={(date) => {
+                  setStartDateEvent(date);
+                }}
                 text="Início do evento"
               />
             </div>
             <div class="col">
               <Datepicker
                 selected={endDateEvent}
-                onChange={date => {
-                  setEndDateEvent(date)
-                  console.log(endDateEvent)
-                }
-                }
+                onChange={(date) => {
+                  setEndDateEvent(date);
+                }}
                 text="Fim do evento"
               />
             </div>

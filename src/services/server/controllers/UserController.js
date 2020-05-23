@@ -1,6 +1,7 @@
 const jwt = require("../utils/jwt");
 const User = require("../models/User");
 const mongooseError = require("../error/mongoose");
+const getUserByToken = require("../utils/getUserByToken");
 
 const createUser = async (req, res) => {
   const body = req.body;
@@ -127,6 +128,16 @@ const showUsers = async (req, res) => {
   }
 };
 
+const me = async (req, res) => {
+  const token = req.headers.authorization;
+  try {
+    const user = await getUserByToken.getUser(token);
+    return res.status(200).json({ user });
+  } catch (error) {
+    return res.sendStatus(404);
+  }
+};
+
 module.exports = {
   createUser,
   updateUser,
@@ -134,4 +145,5 @@ module.exports = {
   getUser,
   deleteUsers,
   showUsers,
+  me,
 };

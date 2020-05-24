@@ -7,6 +7,7 @@ import ButtonForm from "../../components/FormComponents/ButtonForm";
 
 import { setToken, getToken } from "../../utils/auth";
 import { Link, useHistory } from "react-router-dom";
+import {useAuthContext} from '../../store/Auth'
 
 import "./styles.css";
 
@@ -14,38 +15,21 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { SignIn } = useAuthContext()
   //funcao do render: retornar o conteudo html do componente App
 
   const history = useHistory();
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const response = await api.get("/login", {
-      auth: {
-        username: email,
-        password: password
-      }
-    })
-    setToken(response.data.token)
-    console.log(response.data)
-    alert('Você está logado! :)')
-    history.push('/')
-
-
-    try {
-      const response = await api.get("/login", {
-        headers: {
-          authorization: [email, password],
-        },
+  const handleSubmit = async (e) => {
+        
+    SignIn(email, password)
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        console.log("ERROR AO LOGAR");
+        console.log(error);
       });
-
-      if (response.status === 200) {
-        setToken(response.data.token);
-        console.log(response.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   document.title = "Login";

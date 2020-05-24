@@ -54,12 +54,8 @@ const CreateEvent = (props) => {
       assistants: [],
       is_available: true,
       payment_address: [],
-      headers: {
-        authorization: getToken('event-token')
-      }
-    })
+    });
 
-    console.log(response);
 
     if (response.status === 201) {
       props.history.push("/");

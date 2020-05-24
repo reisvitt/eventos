@@ -1,32 +1,26 @@
 import React, { useEffect, useState } from "react";
-
-import { Link, useHistory } from 'react-router-dom';
-
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import EventCard from "../../components/EventCard";
-import "./styles.css";
 import Base from "../../template/Base";
-import api from "../../services/api";
+import { getAllEvents } from "../../services/endpoints";
+import { Container, Row, Col } from "reactstrap";
 
-import { removeCookie } from "../../utils/auth";
-import { Remove } from "@material-ui/icons";
-
+import "./styles.css";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  const history = useHistory()  
-  
+
   useEffect(() => {
-    api
-      .get("/event/list")
+    getAllEvents()
       .then(async (response) => {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         setEvents(response.data);
         setLoading(false);
       })
       .catch(async (error) => {
+        // exibir TOAST com o erro
+        console.log("ERRO AO CARREGAR EVENTOS");
         setLoading(false);
       });
   }, []);
@@ -44,23 +38,15 @@ const Home = () => {
     );
   }
 
-  function logout(){
-    removeCookie()
-    history.push('/')
-    console.log("Logout efetuado com sucesso!")
-  }
-
   return (
     <Base>
       <div className="home">
         <h2>Próximos eventos</h2>
-        <ul>
+        <div className="row">
           {events.map((event) => (
-            <li key={event._id}>
-              <EventCard event={event} />
-            </li>
+            <EventCard key={event._id} event={event} />
           ))}
-        </ul>
+        </div>
       </div>
     </Base>
   );

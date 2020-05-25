@@ -13,7 +13,7 @@ const add = async (req, res) => {
 
   if (!allow) {
     return res.status(401).json({
-      error: "Você não tem autorização para criar uma evento!",
+      error: "Você não tem autorização para adicionar um assistente",
     });
   }
 
@@ -29,6 +29,17 @@ const add = async (req, res) => {
       return res.sendStatus(404);
     }
 
+    User.updateOne(
+      { _id: user._id },
+      {
+        $push: { events_assistant: eventID },
+        update_at: new Date()
+      },
+      () =>{
+        return res.status(200)
+      }
+    )
+    
     Event.updateOne(
       { _id: eventID },
       {
@@ -70,7 +81,7 @@ const remove = async (req, res) => {
 
   if (!allow) {
     return res.status(401).json({
-      error: "Você não tem autorização para criar uma evento!",
+      error: "Você não tem autorização remover um assistente!",
     });
   }
 
@@ -86,10 +97,21 @@ const remove = async (req, res) => {
       return res.sendStatus(404);
     }
 
+    User.updateOne(
+      { _id: user._id },
+      {
+        $pull: { events_assistant: eventID },
+        update_at: new Date()
+      },
+      () =>{
+        return res.status(200)
+      }
+    )
+
     Event.updateOne(
       { _id: eventID },
       {
-        $pull:{ assistants: user._id },
+        $pull: { assistants: user._id },
         updated_at: new Date(),
       },
       (error, raw) => {

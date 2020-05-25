@@ -23,6 +23,7 @@ const CreateActivity = (props) => {
   const [subscribed_users, setSubscribed_users] = useState('');
   // const [event_id, setEvent_id] = useState('');
   const [price, setPrice] = useState('');
+  const[moneyPrice, setMoneyPrice] = useState('')
   const [erroMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
 

@@ -1,0 +1,16 @@
+.title-container {
+  margin-bottom: 20px;
+}
+.title-container h1 {
+  background-color: transparent;
+  position: relative;
+  color: #272727;
+}
+.title-container h1::before {
+  position: absolute;
+  content: "";
+  bottom: -13px;
+  min-height: 5px;
+  min-width: 50px;
+  background-color: #4d4faa;
+}

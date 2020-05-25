@@ -22,7 +22,7 @@ const create = async (req, res) => {
 
   if (!allow) {
     return res.status(401).json({
-      error: "Você não tem autorização para criar uma evento!",
+      error: "Você não tem autorização para criar uma atividade!",
     });
   }
 
@@ -41,7 +41,7 @@ const create = async (req, res) => {
     await EventSchema.updateOne(
       { _id: eventID },
       {
-        $push: { activities: activity._id },
+        $addToSet: { activities: activity._id },
       },
       (error, raw) => {
         if (error) {

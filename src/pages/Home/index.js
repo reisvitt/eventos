@@ -3,7 +3,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import EventCard from "../../components/EventCard";
 import Base from "../../template/Base";
 import { getAllEvents } from "../../services/endpoints";
-import { Container, Row, Col } from "reactstrap";
+import Title from "../../components/Theme/Title";
 
 import "./styles.css";
 
@@ -41,11 +41,13 @@ const Home = () => {
   return (
     <Base>
       <div className="home">
-        <h2>Próximos eventos</h2>
+        <Title title="Próximos Eventos" />
         <div className="row">
-          {events.map((event) => (
-            <EventCard key={event._id} event={event} />
-          ))}
+          {events.length > 0 ? (
+            events.map((event) => <EventCard key={event._id} event={event} />)
+          ) : (
+            <h2>Nenhum evento disponível até o momento</h2>
+          )}
         </div>
       </div>
     </Base>

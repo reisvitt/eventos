@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Input } from "reactstrap";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import Input from "../FormComponents/MyTextInput";
 import "react-tabs/style/react-tabs.css";
 import Loading from "../Loading";
 import AssistantCard from "./AssistantCard";
@@ -40,7 +40,7 @@ const data = [
   },
 ];
 
-const Assistants = ({ event }) => {
+const Assistants = ({ event, ...props }) => {
   const [searchEmail, setSearchEmail] = useState("");
   const [assistants, setAssistants] = useState(data);
   const [loading, setLoading] = useState(false);
@@ -50,7 +50,7 @@ const Assistants = ({ event }) => {
   const listAssistants = async () => {
     setLoading(true);
     // faz requisicao
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    //await new Promise((resolve) => setTimeout(resolve, 2000));
     setLoading(false);
 
     // lista todos os assistants do evento
@@ -65,7 +65,7 @@ const Assistants = ({ event }) => {
   }, [assistants]);
 
   return (
-    <div className="container-assistants">
+    <div className="container-assistants" {...props}>
       <Tabs>
         <TabList>
           <Tab>Lista</Tab>

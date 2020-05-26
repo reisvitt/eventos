@@ -1,36 +1,35 @@
 .form-text-label {
-    font-family: Roboto;
-    font-size: 14px;
-    color: #333;
-    text-transform: uppercase;
-    width: 100%;
-    height: 100%;
-    padding-bottom: 11px;
-    text-align: left;
+  font-family: Roboto;
+  font-size: 14px;
+  color: #333;
+  text-transform: uppercase;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 11px;
+  text-align: left;
 }
 
 .form-text-container {
-    width: 100%;
-    margin: 20px;
-    display: flex;
-    height: 40px;
-    border: 1px solid rgb(155, 155, 155);
-    border-radius: 8px;
-    background: white;
-    color: #333;
-    font-family: Raleway;
-    font-size: 15px;
-    padding: 0 25px;
-    box-sizing: border-box;
-    box-shadow: 0.5px 0.5px 10px 0.5px rgb(224, 224, 224);
+  width: 100%;
+  margin: 10px 0 20px 0;
+  display: flex;
+  height: 40px;
+  border: 1px solid rgb(155, 155, 155);
+  border-radius: 8px;
+  background: white;
+  color: #333;
+  font-family: Raleway;
+  font-size: 15px;
+  padding: 0 25px;
+  box-sizing: border-box;
 }
 
 .form-text-container:focus {
-    border: 1px;
-    outline: auto #000080 !important;
+  box-shadow: 0.5px 0.5px 5px 0.5px #4d4daa;
+  outline: none !important;
 }
 
 .form-error {
-    color: #4d4daa;
-    margin-bottom: 20px;
+  color: #4d4daa;
+  margin-bottom: 20px;
 }

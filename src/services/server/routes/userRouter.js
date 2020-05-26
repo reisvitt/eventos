@@ -12,5 +12,6 @@ routes.delete("/user/delete", UserCtrl.deleteUsers);
 routes.delete("/user/:id", UserCtrl.deleteUser);
 routes.get("/user", UserCtrl.getUser);
 routes.get("/user/list", Auth.authMiddleware, UserCtrl.showUsers);
+routes.get("/me", Auth.authMiddleware, UserCtrl.me);
 
 module.exports = routes;

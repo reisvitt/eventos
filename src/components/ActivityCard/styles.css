@@ -1,6 +1,4 @@
 .activity-card {
-  max-width: 550px;
-  max-height: 200px;
   border-radius: 10px;
   background-color: white;
   display: flex;
@@ -9,7 +7,9 @@
   align-items: center;
   box-sizing: border-box;
   box-shadow: 0.5px 0.5px 10px 0.5px rgb(224, 224, 224);
-  margin: 10px 20px;
+  margin-bottom: 15px;
+  max-width: 49%;
+  min-width: 49%;
 }
 
 .activity-card .picture {
@@ -35,8 +35,7 @@
   display: flex;
   flex-direction: column;
   padding: 10px;
-  height: 200px;
-  width: 410px;
+  max-height: 250px;
 }
 
 .activity-card .about a {
@@ -71,16 +70,15 @@
   line-height: 20px;
   margin: 5px 0;
   padding-right: 5px;
-
   color: #363636;
   text-overflow: ellipsis;
-
   overflow: hidden;
 }
 .activity-card .description p {
   margin: 0;
 }
 .activity-card .support-container {
+  margin-top: 5px;
   display: flex;
   align-items: center;
 }

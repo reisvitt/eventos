@@ -3,7 +3,7 @@ header {
   flex-direction: row;
   box-sizing: border-box;
   position: relative;
-  padding: 10px 10px;
+  padding: 10px 30px;
   align-items: center;
 }
 
@@ -18,11 +18,18 @@ header .menu {
   justify-content: center;
   margin-right: 30px;
 }
+
+header .menu .mainMenu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 header .menu a {
   align-self: center;
   text-decoration: none;
   color: #151515;
   font-weight: 500;
+  margin-left: 15px;
 }
 header .menu a:hover {
   color: #4d4faa;
@@ -69,4 +76,13 @@ header .section-auth {
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+@media (max-width: 576px) {
+  header {
+    padding: 10px;
+  }
+  header .menu {
+    margin-right: 10px;
+  }
 }

@@ -9,6 +9,7 @@
   box-shadow: 0.5px 0.5px 10px 0.5px rgb(224, 224, 224);
   margin-bottom: 15px;
   max-width: 49%;
+  min-width: 49%;
 }
 
 .activity-card .picture {

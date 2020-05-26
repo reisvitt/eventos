@@ -52,5 +52,6 @@
   }
   .event-container .container-activities .activity-card {
     max-width: 95%;
+    min-width: 95%;
   }
 }

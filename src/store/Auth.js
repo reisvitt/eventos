@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import api from "../services/api";
 import { setToken, isAuthenticated } from "../utils/auth";
+import { Success, Error } from "../components/Toast";
 
 const Context = createContext();
 
@@ -19,6 +20,7 @@ export default function AuthProvider({ children }) {
           setUser(response.data.user);
           setFetchUser(true);
         } catch (error) {
+          Error(`Error ao carregar usuário: ${error.message}`);
           setFetchUser(true);
           console.log("ERROR AO CARREGAR USUARIO");
         }
@@ -34,11 +36,13 @@ export default function AuthProvider({ children }) {
       api
         .post("/user", data)
         .then((response) => {
+          Success(`Usuário cadastrado com successo!`);
           setToken(response.data.token);
           setUser(response.data.user);
           resolve();
         })
         .catch((error) => {
+          Error(`Error ao cadastrar usuário: ${error.message}`);
           reject(error);
         });
     });
@@ -59,6 +63,7 @@ export default function AuthProvider({ children }) {
           resolve(response);
         })
         .catch((error) => {
+          Error(`Error ao entrar: ${error.message}`);
           reject(error);
         });
     });

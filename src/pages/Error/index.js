@@ -1,11 +1,8 @@
-import React from 'react'
-import './styles.css'
+import React from "react";
+import "./styles.css";
 
 const Error = () => {
-  return (
-    <h1>Página de erro</h1>
-  )
-}
+  return <h1>404: page not found</h1>;
+};
 
-
-export default Error
+export default Error;

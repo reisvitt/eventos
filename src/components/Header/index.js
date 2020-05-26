@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.css";
-import { Link,useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import js from "../../assets/js.jpg";
 
@@ -16,7 +16,7 @@ import { useAuthContext } from "../../store/Auth";
 
 const StyledMenu = withStyles({
   paper: {
-    width: "170px",
+    width: "220px",
     background: "#4d4faa",
     color: "white",
     paddingRight: "20px",
@@ -51,7 +51,7 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 const Header = () => {
-  const history = useHistory()  
+  const history = useHistory();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { SignOut, user } = useAuthContext();
@@ -67,7 +67,10 @@ const Header = () => {
   const HandleLogOut = () => {
     SignOut();
     history.push("/");
-    alert("Logout efetuado com sucesso!")
+  };
+
+  const handleCreateEvent = () => {
+    history.push("/event/create");
   };
 
   return (
@@ -79,7 +82,10 @@ const Header = () => {
       </section>
       {user ? (
         <section className="menu">
-          <Link to="/">Meus eventos</Link>
+          <div className="mainMenu">
+            <Link to="/">Meus eventos</Link>
+            <Link to="/">Novo Evento</Link>
+          </div>
           {<hr />}
           <div className="menu-profile">
             <img src={user.avatar || js} alt="profile" />
@@ -113,6 +119,13 @@ const Header = () => {
 
                 <StyledMenuItem style={{ outline: "none" }}>
                   Meu Perfil
+                </StyledMenuItem>
+
+                <StyledMenuItem
+                  style={{ outline: "none" }}
+                  onClick={handleCreateEvent}
+                >
+                  Criar Novo Evento
                 </StyledMenuItem>
 
                 <StyledMenuItem style={{ outline: "none" }}>

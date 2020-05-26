@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Base from "../../template/Base";
 
 import Formulary from "../../components/FormComponents/Formulary";
 import MyTextInput from "../../components/FormComponents/MyTextInput";
@@ -8,8 +9,9 @@ import { cpfMask } from "../../utils/mask/cpfMask";
 import { unMask } from "../../utils/mask/unMask";
 import { useAuthContext } from "../../store/Auth";
 
+import Title from "../../components/Theme/Title";
+
 import "./styles.css";
-import { sr } from "date-fns/locale";
 
 /* Need fix */
 const Subscribre = ({ history }) => {
@@ -50,13 +52,13 @@ const Subscribre = ({ history }) => {
 
   // validador CPF
   function validateCpf(strCPF) {
-    strCPF = (strCPF.split('-').join('')).split('.').join('');
+    strCPF = strCPF.split("-").join("").split(".").join("");
     var Sum;
     var Rest;
     var i;
     Sum = 0;
     if (
-      strCPF == "00000000000" || 
+      strCPF == "00000000000" ||
       strCPF == "11111111111" ||
       strCPF == "22222222222" ||
       strCPF == "33333333333" ||
@@ -66,19 +68,22 @@ const Subscribre = ({ history }) => {
       strCPF == "77777777777" ||
       strCPF == "88888888888" ||
       strCPF == "99999999999"
-    ) return false;
+    )
+      return false;
 
-    for (i = 1; i <= 9; i++) Sum = Sum + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+    for (i = 1; i <= 9; i++)
+      Sum = Sum + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
     Rest = (Sum * 10) % 11;
 
-    if ((Rest == 10) || (Rest == 11)) Rest = 0;
+    if (Rest == 10 || Rest == 11) Rest = 0;
     if (Rest != parseInt(strCPF.substring(9, 10))) return false;
 
     Sum = 0;
-    for (i = 1; i <= 10; i++) Sum = Sum + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+    for (i = 1; i <= 10; i++)
+      Sum = Sum + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
     Rest = (Sum * 10) % 11;
 
-    if ((Rest == 10) || (Rest == 11)) Rest = 0;
+    if (Rest == 10 || Rest == 11) Rest = 0;
     if (Rest != parseInt(strCPF.substring(10, 11))) return false;
     return true;
   }
@@ -86,96 +91,91 @@ const Subscribre = ({ history }) => {
   const validate = () => {
     const errors = {};
     let name_user = name.split(" ", 2);
-   
+
     if (!name) {
-      errors.name = '* Campo requerido';
+      errors.name = "* Campo requerido";
     } else if (!name_user[1]) {
-      errors.name = '* Digite o nome e sobrenome';
+      errors.name = "* Digite o nome e sobrenome";
     }
     if (!password) {
-      errors.password = '* Campo requerido';
-    }else if (password.length < 8 ) {
-      errors.password = '* A senha deve ter no mínimo 8 caracteres';
+      errors.password = "* Campo requerido";
+    } else if (password.length < 8) {
+      errors.password = "* A senha deve ter no mínimo 8 caracteres";
     }
     if (!email) {
-      errors.email = '* Campo requerido';
+      errors.email = "* Campo requerido";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      errors.email = '* Endereço de email inválido';
+      errors.email = "* Endereço de email inválido";
     }
     if (!cpf) {
-      errors.cpf = '* Campo requerido';
+      errors.cpf = "* Campo requerido";
     } else if (cpf.length < 11 || !validateCpf(cpf)) {
-      errors.cpf = '* CPF inválido';
+      errors.cpf = "* CPF inválido";
     }
     return errors;
   };
 
   return (
-    <div className="form-content">
-      <h1 className="title-form">
-        <strong>Cadastro de Usuário</strong>
-      </h1>
-      <Formulary
-        initialValues={{
-          name: '',
-          password: '',
-          email: '',
-          cpf: '',
-        }}
-        validate={validate}
-        onSubmit={handleSubmit}
-        content={
-          <>
-            <MyTextInput
-              label="* Nome Completo"
-              name="name"
-              type="text"
-              placeholder="Nome Completo"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-            <MyTextInput
-              label="* Senha"
-              name="password"
-              type="password"
-              placeholder="Senha"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <MyTextInput
-              label="* Email"
-              name="email"
-              type="text"
-              placeholder="exemplo@email.com"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-            <MyTextInput
-              label="* CPF"
-              name="cpf"
-              type="text"
-              placeholder="CPF"
-              value={cpf}
-              onChange={(e) => {
-                setCpf(cpfMask(e.target.value));
-              }}
-            />
-          </>
-        }
-        button={
-          <ButtonForm
-            type="submit"
-            text="Cadastrar"
-          />
-        }
-      />
-    </div>
+    <Base>
+      <Title title="Cadastro de Usuário" />
+      <div className="form-content">
+        <Formulary
+          initialValues={{
+            name: "",
+            password: "",
+            email: "",
+            cpf: "",
+          }}
+          validate={validate}
+          onSubmit={handleSubmit}
+          content={
+            <>
+              <MyTextInput
+                label="* Nome Completo"
+                name="name"
+                type="text"
+                placeholder="Nome Completo"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+              <MyTextInput
+                label="* Senha"
+                name="password"
+                type="password"
+                placeholder="Senha"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              <MyTextInput
+                label="* Email"
+                name="email"
+                type="text"
+                placeholder="exemplo@email.com"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              <MyTextInput
+                label="* CPF"
+                name="cpf"
+                type="text"
+                placeholder="CPF"
+                value={cpf}
+                onChange={(e) => {
+                  setCpf(cpfMask(e.target.value));
+                }}
+              />
+            </>
+          }
+          button={<ButtonForm type="submit" text="Cadastrar" />}
+        />
+      </div>
+    </Base>
   ); //fim return
 }; //fim classe Subscribe
 

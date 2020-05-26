@@ -6,11 +6,8 @@ import Base from "../../template/Base";
 import ActivityCard from "../../components/ActivityCard";
 import Assistants from "../../components/Assistants";
 import Loading from "../../components/Loading";
-
-import Modal from "../../components/Modal";
-import ToastAnimated, { showToast } from "../../components/Toast/toast";
 import "react-toastify/dist/ReactToastify.css";
-import { Modal as ModalTeste } from "@material-ui/core";
+import { Modal } from "@material-ui/core";
 
 import "./styles.css";
 
@@ -30,7 +27,7 @@ const Event = () => {
   useEffect(() => {
     getEvent(id)
       .then(async (response) => {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        //await new Promise((resolve) => setTimeout(resolve, 2000));
         setEvent(response.data);
         setLoading(false);
       })
@@ -40,14 +37,6 @@ const Event = () => {
         setLoading(false);
       });
   }, []);
-
-  function handleSuccess() {
-    showToast({ type: "success", message: "Mensagem de sucesso" });
-  }
-
-  function handleError() {
-    showToast({ type: "warn", message: "Mensagem de erro" });
-  }
 
   function showAssistents() {
     // essa informação já tem salvo no evento
@@ -88,48 +77,39 @@ const Event = () => {
           </div>
 
           <section className="controls">
-            <Button
-              
-              title="Nova atividade"
-              to = {`/activity/create/${id}`}
-           />
-              
-            <OutlineButton title="Inscrever-se" />
+            <button onClick={() => toggle(true)}></button>
+
+            <Button title="Nova atividade" to={`/activity/create/${id}`} />
+          </section>
+          {/*
+            <Modal
             <Button title="Assistentes" />
             <OutlineButton title="Editar evento" />
-            <button onClick={() => toggle(true)}></button>
-            <ToastAnimated />
-          </section>
+            <OutlineButton title="Inscrever-se" />
+              BackdropProps={{ style: { backgroundColor: "transparent" } }}
+              open={isOpen}
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+              }}
+              onClose={() => toggle(false)}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            >
+              <Assistants />
+            </Modal>
 
-          <ModalTeste
-            BackdropProps={{ style: { backgroundColor: "transparent" } }}
-            open={isOpen}
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              alignItems: "center",
-            }}
-            onClose={() => toggle(false)}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-          >
-            <Assistants />
-          </ModalTeste>
-          {}
+            */}
 
           <div className="container-activities">
-            <ActivityCard />
-            <ActivityCard />
-            <ActivityCard />
-            <ActivityCard />
-            <ActivityCard />
-            <ActivityCard />
-            <ActivityCard />
-            <ActivityCard />
-            <ActivityCard />
-            <ActivityCard />
-            <ActivityCard />
-            <ActivityCard />
+            {event.activities.length > 0 ? (
+              event.activities.map((activity) => (
+                <ActivityCard key={activity._id} activity={activity} />
+              ))
+            ) : (
+              <h2>Este evento ainda não possui nenhuma atividade!</h2>
+            )}
           </div>
         </div>
       </Base>

@@ -6,10 +6,10 @@ import Base from "../../template/Base";
 import ActivityCard from "../../components/ActivityCard";
 import Assistants from "../../components/Assistants";
 import Loading from "../../components/Loading";
-import "react-toastify/dist/ReactToastify.css";
 import { Modal } from "@material-ui/core";
 
 import "./styles.css";
+import { Success } from "../../components/Toast";
 
 const Event = () => {
   const [modalIsVisible, setModalIsVisible] = useState(false);

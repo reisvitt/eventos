@@ -1,6 +1,4 @@
-import React from "react";
 import { toast } from "react-toastify";
-//import "react-toastify/dist/ReactToastify.css";
 import "./styles.css";
 
 const customId = "custom-id-yes";

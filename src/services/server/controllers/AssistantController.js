@@ -7,9 +7,9 @@ const permission = require("../utils/permission");
 const add = async (req, res) => {
   const { id: eventID } = req.params;
   const token = req.headers.authorization;
-  const email = req.body.email
+  const email = req.body.email;
 
-  const allow = await permission.allowedEvent(token, eventID)
+  const allow = await permission.coordinator(token, eventID);
 
   if (!allow) {
     return res.status(401).json({
@@ -19,12 +19,12 @@ const add = async (req, res) => {
 
   if (!email) {
     return res.status(400).json({
-      error: "Dados inválidos"
-    })
+      error: "Dados inválidos",
+    });
   }
 
   try {
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email });
     if (!user) {
       return res.sendStatus(404);
     }
@@ -32,18 +32,18 @@ const add = async (req, res) => {
     User.updateOne(
       { _id: user._id },
       {
-        $push: { events_assistant: eventID },
-        update_at: new Date()
+        $addToSet: { events_assistant: eventID },
+        update_at: new Date(),
       },
-      () =>{
-        return res.status(200)
+      () => {
+        return res.status(200);
       }
-    )
-    
+    );
+
     Event.updateOne(
       { _id: eventID },
       {
-        $push: { assistants: user._id },
+        $addToSet: { assistants: user._id },
         updated_at: new Date(),
       },
       (error, raw) => {
@@ -64,20 +64,20 @@ const add = async (req, res) => {
           error: "Não encontrado!",
         });
       }
-    )
+    );
   } catch (error) {
     return res.status(404).json({
       error: mongooseError.error(error),
     });
   }
-}
+};
 
 const remove = async (req, res) => {
   const { id: eventID } = req.params;
   const token = req.headers.authorization;
-  const email = req.body.email
+  const email = req.body.email;
 
-  const allow = await permission.allowedEvent(token, eventID)
+  const allow = await permission.coordinator(token, eventID);
 
   if (!allow) {
     return res.status(401).json({
@@ -87,12 +87,12 @@ const remove = async (req, res) => {
 
   if (!email) {
     return res.status(400).json({
-      error: "Dados inválidos"
-    })
+      error: "Dados inválidos",
+    });
   }
 
   try {
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email });
     if (!user) {
       return res.sendStatus(404);
     }
@@ -101,12 +101,12 @@ const remove = async (req, res) => {
       { _id: user._id },
       {
         $pull: { events_assistant: eventID },
-        update_at: new Date()
+        update_at: new Date(),
       },
-      () =>{
-        return res.status(200)
+      () => {
+        return res.status(200);
       }
-    )
+    );
 
     Event.updateOne(
       { _id: eventID },
@@ -132,12 +132,12 @@ const remove = async (req, res) => {
           error: "Não encontrado!",
         });
       }
-    )
+    );
   } catch (error) {
     return res.status(404).json({
       error: mongooseError.error(error),
     });
   }
-}
+};
 
-module.exports = { add, remove }
+module.exports = { add, remove };

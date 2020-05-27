@@ -24,7 +24,6 @@ const Subscribre = ({ history }) => {
   document.title = "Cadastrar"; // title da pagina
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
 
     // fazer tratamento
     const name_user = name.split(" ", 2);
@@ -39,7 +38,7 @@ const Subscribre = ({ history }) => {
       cpf: cpfUnmask,
       password: password,
     };
-
+    
     await SignUp(user)
       .then(() => {
         history.push("/");
@@ -109,7 +108,7 @@ const Subscribre = ({ history }) => {
     }
     if (!cpf) {
       errors.cpf = "* Campo requerido";
-    } else if (cpf.length < 11 || !validateCpf(cpf)) {
+    } else if (cpf.length < 11 || !validateCpf(unMask(cpf))) {
       errors.cpf = "* CPF inválido";
     }
     return errors;

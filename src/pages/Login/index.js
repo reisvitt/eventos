@@ -4,11 +4,11 @@ import Base from "../../template/Base";
 import Formulary from "../../components/FormComponents/Formulary";
 import MyTextInput from "../../components/FormComponents/MyTextInput";
 import ButtonForm from "../../components/FormComponents/ButtonForm";
+import Title from "../../components/Theme/Title";
+import { Error } from "../../components/Toast";
 
 import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "../../store/Auth";
-
-import Title from "../../components/Theme/Title";
 
 import "./styles.css";
 
@@ -26,12 +26,12 @@ const Login = () => {
         history.push("/");
       })
       .catch((error) => {
-        console.log("ERROR AO LOGAR");
+        Error(`Error ao entrar: ${error.message}`);
         console.log(error);
       });
   };
 
-  document.title = "Login";
+  document.title = "Entrar";
 
   const validate = () => {
     const errors = {};

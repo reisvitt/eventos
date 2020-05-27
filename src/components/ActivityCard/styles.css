@@ -35,7 +35,9 @@
   display: flex;
   flex-direction: column;
   padding: 10px;
+  min-height: 250px;
   max-height: 250px;
+  flex: 1;
 }
 
 .activity-card .about a {
@@ -73,6 +75,7 @@
   color: #363636;
   text-overflow: ellipsis;
   overflow: hidden;
+  flex: 1;
 }
 .activity-card .description p {
   margin: 0;

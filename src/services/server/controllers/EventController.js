@@ -113,7 +113,7 @@ const deleteEvent = async (req, res) => {
     });
   }
 
-  const allow = await permission.allowedEvent(token, eventID);
+  const allow = await permission.coordinator(token, eventID);
 
   if (!allow) {
     return res.sendStatus(401);

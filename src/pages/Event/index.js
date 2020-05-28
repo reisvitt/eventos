@@ -80,6 +80,7 @@ const Event = () => {
             <button onClick={() => toggle(true)}></button>
 
             <Button title="Nova atividade" to={`/activity/create/${id}`} />
+            <Button title="Editar atividade" to={`/event/edit/${id}`} />
           </section>
           {/*
             <Modal

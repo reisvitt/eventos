@@ -29,6 +29,7 @@ const Subscribre = ({ history }) => {
   const handleSubmit = async (e) => {
     //const name_user = e.name.split(" ", 2);
 
+
     const cpfUnmask = unMask(e.cpf);
 
     const user = {
@@ -37,7 +38,7 @@ const Subscribre = ({ history }) => {
       cpf: cpfUnmask,
       password: e.password,
     };
-
+    
     await SignUp(user)
       .then(() => {
         history.push("/");

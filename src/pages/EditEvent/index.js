@@ -4,12 +4,16 @@ import MyTextInput from "../../components/FormComponents/MyTextInput";
 import MyTextAreaInput from "../../components/FormComponents/MyTextAreaInput";
 import Datepicker from "../../components/FormComponents/Datepicker";
 import ButtonForm from "../../components/FormComponents/ButtonForm";
-import { saveEvent } from "../../services/endpoints";
+import { saveEvent, getEvent } from "../../services/endpoints";
 import Base from "../../template/Base";
 import Title from "../../components/Theme/Title";
 import { FaCalendarAlt } from "react-icons/fa";
 import { Success, Error } from "../../components/Toast";
-//import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import JS from "../../assets/js.png";
+import Loading from "../../components/Loading";
+import * as Yup from "yup";
+import DatePick from "react-datepicker";
 
 import "./styles.css";
 
@@ -21,35 +25,49 @@ const EditEvent = (props) => {
     today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date + " " + time;
 
-  const [title, setTitle] = useState("");
-  const [startDateEvent, setStartDateEvent] = useState("");
-  const [endDateEvent, setEndDateEvent] = useState("");
-  const [startDateSubmit, setstartDateSubmit] = useState("");
-  const [endDateSubmit, setEndDateSubmit] = useState("");
-  const [address, setAddress] = useState("");
-  const [email, setEmail] = useState("");
-  const [contact, setContact] = useState("");
-  const [accountable, setAccountable] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-
-  const [startSubscriptionEvent, setStartSubscriptionEvent] = useState("");
-  const [endSubscriptionEvent, setEndSubscriptionEvent] = useState("");
+  const { id } = useParams();
 
   const [erroMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
 
   const [saving, setSaving] = useState(false);
+  const [event, setEvent] = useState({});
+  const [loading, setLoading] = useState(true);
 
   document.title = "Criar Evento"; // title of page
 
   useEffect(() => {
     // pegar as informações do BD
-    
-  }, [])
+    setLoading(true);
+    getEvent(id)
+      .then((evento) => {
+        console.log("EVENTO", evento.data);
+
+        setEvent({
+          accountable: evento.data.accountable || "",
+          address: evento.data.address || "",
+          description: evento.data.description || "",
+          start_date: evento.data.start_date || "",
+          end_date: evento.data.end_date || "",
+          title: evento.data.title || "",
+          payment_address: evento.data.payment_address || "",
+          picture: evento.data.picture || JS,
+          start_subscribe: evento.data.start_subscribe || "",
+          end_subscribe: evento.data.end_subscribe || "",
+          price: evento.data.price || "",
+        });
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log("ERRO AO CARREGAR DADOS:", error);
+        setLoading(false);
+      });
+  }, []);
 
   const handleSubmit = async (e) => {
-    console.log("e", e)
+    console.log("e", {
+      ...e,
+    });
     setSaving(true);
     /*saveEvent({
       title,
@@ -78,144 +96,125 @@ const EditEvent = (props) => {
       });*/
   };
 
-  const validate = () => {
-    const errors = {};
-    if (!title) {
-      errors.title = "* Campo requerido";
-    } else if (title.length > 15) {
-      errors.title = "* Deve ter 15 caracteres ou menos";
-    }
-    return errors;
-  };
+  const schema = Yup.object().shape({
+    title: Yup.string("Campo requerido").max(100, "Máximo 100 caracteres!"),
+    start_date: Yup.date(),
+    end_date: Yup.date().min(
+      Yup.ref("start_date"),
+      "O final do evento não pode ser antes de seu inicio!"
+    ),
+    start_subscribe: Yup.date().max(
+      Yup.ref("end_date"),
+      "O inicio das incrições precisa ser antes do fim do evento!"
+    ),
+    end_subscribe: Yup.date()
+      .min(
+        Yup.ref("start_subscribe"),
+        "O final das inscrições não pode ser antes de seu inicio!"
+      )
+      .max(
+        Yup.ref("end_date"),
+        "O final das inscriçõe precisa ser antes do final do evento!"
+      ),
+  });
 
   return (
     <Base>
-      <Title title="Editar Evento" />
-      <div className="form-content">
-        {errorVisible ? (
-          <label className="errorMessage">{erroMessage}</label>
-        ) : null}
-        <Formulary
-          initialValues={{
-            title: "",
-            address: "",
-            description: "",
-            price: "",
-          }}
-          validate={validate}
-          onSubmit={handleSubmit}
-          content={
-            <>
-              <MyTextInput
-                label="* Nome do Evento"
-                name="title"
-                type="text"
-                placeholder="Nome do evento"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              />
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <Title title="Editar Evento" />
+          <div className="form-content">
+            {errorVisible ? (
+              <label className="errorMessage">{erroMessage}</label>
+            ) : null}
+            <Formulary
+              initialValues={event}
+              validationSchema={schema}
+              onSubmit={handleSubmit}
+              content={
+                <>
+                  <MyTextInput
+                    label="* Nome do Evento"
+                    name="title"
+                    key="title"
+                    type="text"
+                    placeholder="Nome do evento"
+                  />
+                  <div className="row">
+                    <div className="col">
+                      <Datepicker
+                        text="Início do evento"
+                        name="start_date"
+                        type="text"
+                      />
+                    </div>
 
-              <div className="row">
-                <div className="col">
-                  <Datepicker
-                    selected={startDateEvent}
-                    onChange={(date) => {
-                      setStartDateEvent(date);
-                    }}
-                    text="Início do evento"
+                    <div className="col">
+                      <Datepicker
+                        name="end_date"
+                        type="text"
+                        text="Fim do evento"
+                      ></Datepicker>
+                    </div>
+                    <div className="col">
+                      <Datepicker
+                        name="start_subscribe"
+                        type="text"
+                        text="Início das inscrições"
+                      />
+                    </div>
+                    <div className="col">
+                      <Datepicker
+                        name="end_subscribe"
+                        type="text"
+                        text="Fim das inscrições"
+                      />
+                    </div>
+                  </div>
+                  {/*
+                  <MyTextInput
+                    label="Endereço"
+                    name="address"
+                    type="text"
+                    placeholder="Local do evento"
                   />
-                </div>
-                
-                <div className="col">
-                  <Datepicker
-                    selected={endDateEvent}
-                    onChange={(date) => {
-                      setEndDateEvent(date);
-                    }}
-                    text="Fim do evento"
-                  >
-                    <FaCalendarAlt size={20} color="#4d4faa" />
-                  </Datepicker>
-                </div>
-                <div className="col">
-                  <Datepicker
-                    selected={startDateSubmit}
-                    onChange={(date) => {
-                      setstartDateSubmit(date);
-                    }}
-                    text="Início das inscrições"
+                  <MyTextInput
+                    label="Contato"
+                    name="contact"
+                    type="text"
+                    placeholder="Telefone/Celular"
                   />
-                </div>
-                <div className="col">
-                  <Datepicker
-                    selected={endDateSubmit}
-                    onChange={(date) => {
-                      setEndDateSubmit(date);
-                    }}
-                    text="Fim das inscrições"
+                  <MyTextInput
+                    label="Email"
+                    name="email"
+                    type="text"
+                    placeholder="Endereço de email"
                   />
-                </div>  
-              </div>
-              <MyTextInput
-                label="Endereço"
-                name="address"
-                type="text"
-                placeholder="Local do evento"
-                value={address}
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                }}
-              />
-              <MyTextInput
-                label="Contato"
-                name="contact"
-                type="text"
-                placeholder="Telefone/Celular"
-                value={contact}
-                onChange={(e) => {
-                  setContact(e.target.value);
-                }}
-              />
-              <MyTextInput
-                label="Email"
-                name="email"
-                type="text"
-                placeholder="Endereço de email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-              <MyTextInput
-                label="Setor responsável"
-                name="accountable"
-                type="text"
-                placeholder="Setor responsável"
-                value={accountable}
-                onChange={(e) => {
-                  setAccountable(e.target.value);
-                }}
-              />
-              <MyTextAreaInput
-                label="Descrição"
-                name="description"
-                type="text"
-                placeholder="Descrição"
-                value={description}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-            </>
-          }
-          button={<ButtonForm type="submit" text="Salvar alterações" />}
-        />
-      </div>
+
+                  */}
+                  <MyTextInput
+                    label="Setor responsável"
+                    name="accountable"
+                    type="text"
+                    placeholder="Setor responsável"
+                  />
+                  <MyTextAreaInput
+                    label="Descrição"
+                    name="description"
+                    type="text"
+                    placeholder="Descrição"
+                  />
+                </>
+              }
+              button={<ButtonForm type="submit" text="Salvar alterações" />}
+            />
+          </div>
+        </>
+      )}
     </Base>
   ); //fim return
 }; //fim classe EditEvent
 
 export default EditEvent;
-

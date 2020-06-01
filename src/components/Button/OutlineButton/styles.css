@@ -15,10 +15,10 @@
   padding: 10px 25px;
   border-radius: 20px;
   text-decoration: none;
-  color: #151515;
+  color: #4d4daa;
 }
 
 .outline-button a:hover {
   outline: none;
-  background-color: #ededf6;
+  background-color: white;
 }

@@ -2,32 +2,28 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
+import { useField } from "formik";
 
-export default class Datepicker extends React.Component {
-  constructor(props) {
-    super(props);
-    //eh o estado do componente, dentro desse estado guardaremos todas as variaveis que utilizaremos
-    this.state = {
-      newCommentText: "",
-    }; //fim this.state
-  } //fim metodo construtor
+const Datepicker = (props) => {
+  const [field, meta, helpers] = useField(props);
 
-  render() {
-    return (
-      <div className="form-date">
-        <div>
-          <label className="form-date-label">{this.props.text}</label>
-        </div>
-        <DatePicker
-          dropdownMode
-          className="form-date-container"
-          selected={this.props.selected}
-          onChange={this.props.onChange}
-          dateFormat="dd/MM/yyyy"
-          minDate={new Date()}
-          placeholderText={this.props.text}
-        />
+  return (
+    <div className="form-date">
+      <div>
+        <label className="form-date-label">{props.text}</label>
       </div>
-    ); //fim return
-  } //fim metodo render
-} //fim classe DatePicker
+      <DatePicker
+        dropdownMode
+        className="form-date-container"
+        selected={field.value ? new Date(field.value) : null}
+        dateFormat="dd/MM/yyyy"
+        minDate={new Date()}
+        placeholderText={props.text}
+        onChange={(e) => helpers.setValue(e.toISOString())}
+      />
+      {meta.error ? <div className="form-error">{meta.error}</div> : null}
+    </div>
+  ); //fim return
+}; //fim classe DatePicker
+
+export default Datepicker;

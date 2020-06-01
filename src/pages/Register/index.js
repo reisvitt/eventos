@@ -3,11 +3,14 @@ import Base from "../../template/Base";
 
 import Formulary from "../../components/FormComponents/Formulary";
 import MyTextInput from "../../components/FormComponents/MyTextInput";
+import MaskedInput from "../../components/FormComponents/MaskedInput";
 import ButtonForm from "../../components/FormComponents/ButtonForm";
 
 import { cpfMask } from "../../utils/mask/cpfMask";
 import { unMask } from "../../utils/mask/unMask";
 import { useAuthContext } from "../../store/Auth";
+
+import * as Yup from "yup";
 
 import Title from "../../components/Theme/Title";
 
@@ -24,18 +27,15 @@ const Subscribre = ({ history }) => {
   document.title = "Cadastrar"; // title da pagina
 
   const handleSubmit = async (e) => {
+    //const name_user = e.name.split(" ", 2);
 
-    const name_user = name.split(" ", 2);
-
-    const cpfUnmask = unMask(cpf);
+    const cpfUnmask = unMask(e.cpf);
 
     const user = {
-      first_name: name_user[0],
-      last_name: name_user[1] || "",
-      email: email,
-      name: name,
+      name: e.name,
+      email: e.email,
       cpf: cpfUnmask,
-      password: password,
+      password: e.password,
     };
 
     await SignUp(user)
@@ -113,6 +113,19 @@ const Subscribre = ({ history }) => {
     return errors;
   };
 
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required("* Campo requerido")
+      .matches(/[a-zA-Z0-9' 'a-zA-Z0-9]/),
+    password: Yup.string()
+      .required("* Campo requirido")
+      .min(8, `* A senha deve ter no mínimo 8 caracteres"`),
+    email: Yup.string()
+      .email("* Endereço de email inválido")
+      .required("* Campo requerido"),
+    cpf: Yup.string().min(14, "* CPF inválido").required("* Campo requerido"),
+  });
+
   return (
     <Base>
       <Title title="Cadastro de Usuário" />
@@ -124,7 +137,8 @@ const Subscribre = ({ history }) => {
             email: "",
             cpf: "",
           }}
-          validate={validate}
+          //validate={validate}
+          validationSchema={validationSchema}
           onSubmit={handleSubmit}
           content={
             <>
@@ -133,40 +147,24 @@ const Subscribre = ({ history }) => {
                 name="name"
                 type="text"
                 placeholder="Nome Completo"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
               />
               <MyTextInput
                 label="* Senha"
                 name="password"
                 type="password"
                 placeholder="Senha"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
               />
               <MyTextInput
                 label="* Email"
                 name="email"
                 type="text"
                 placeholder="exemplo@email.com"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
               />
-              <MyTextInput
+              <MaskedInput
                 label="* CPF"
                 name="cpf"
-                type="text"
                 placeholder="CPF"
-                value={cpf}
-                onChange={(e) => {
-                  setCpf(cpfMask(e.target.value));
-                }}
+                mask={cpfMask}
               />
             </>
           }

@@ -7,6 +7,7 @@ import ActivityCard from "../../components/ActivityCard";
 import Assistants from "../../components/Assistants";
 import Loading from "../../components/Loading";
 import { Modal } from "@material-ui/core";
+import logo from "../../assets/secomp.png";
 
 import "./styles.css";
 import { Success } from "../../components/Toast";
@@ -18,6 +19,8 @@ const Event = () => {
   const { id } = useParams();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  console.log("ISOPEN", isOpen);
 
   const toggle = (value) => {
     console.log("value", value);
@@ -56,53 +59,34 @@ const Event = () => {
   //falta botao de se inscrever
   return (
     <>
-      {modalIsVisible ? (
-        <Modal onClose={() => setModalIsVisible(false)} />
-      ) : null}
       <Base>
         <div className="event-container">
           <div className="conteudo">
-            <div className="contEscrito">
+            <div className="more">
               <strong className="title">{event.title}</strong>
               <p className="descricao">{event.description}</p>
               <p className="numeroVal">
-                {" "}
-                <strong className="valor">Valor: {event.prince}</strong>{" "}
-                {Intl.NumberFormat("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                }).format(2000)}
+                {event.price && event.price > 0 ? (
+                  <strong className="valor">
+                    Valor:{" "}
+                    {Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(event.price)}
+                  </strong>
+                ) : (
+                  <h4 className="valor">Evento gratuito</h4>
+                )}
               </p>
             </div>
+            <img src={logo} alt="wallpaper" />
           </div>
 
           <section className="controls">
-            <button onClick={() => toggle(true)}></button>
-
             <Button title="Nova atividade" to={`/activity/create/${id}`} />
-            <Button title="Editar atividade" to={`/event/edit/${id}`} />
+            <Button title="Assistentes" onClick={() => toggle} />
+            <OutlineButton title="Editar Evento" to={`/event/edit/${id}`} />
           </section>
-          {/*
-            <Modal
-            <Button title="Assistentes" />
-            <OutlineButton title="Editar evento" />
-            <OutlineButton title="Inscrever-se" />
-              BackdropProps={{ style: { backgroundColor: "transparent" } }}
-              open={isOpen}
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-              }}
-              onClose={() => toggle(false)}
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
-            >
-              <Assistants />
-            </Modal>
-
-            */}
-
           <div className="container-activities">
             {event.activities.length > 0 ? (
               event.activities.map((activity) => (
@@ -113,6 +97,23 @@ const Event = () => {
             )}
           </div>
         </div>
+
+        <Modal
+          open={isOpen}
+          BackdropProps={{ style: { backgroundColor: "transparent" } }}
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+          onClose={() => toggle(false)}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <>
+            <Assistants event={event} />
+          </>
+        </Modal>
       </Base>
     </>
   );

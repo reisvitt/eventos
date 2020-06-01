@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Base from "../../template/Base";
+import * as Yup from "yup";
 
 import Formulary from "../../components/FormComponents/Formulary";
 import MyTextInput from "../../components/FormComponents/MyTextInput";
@@ -10,18 +11,17 @@ import { Error } from "../../components/Toast";
 import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "../../store/Auth";
 
+
 import "./styles.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const { SignIn } = useAuthContext();
   //funcao do render: retornar o conteudo html do componente App
 
   const history = useHistory();
 
   const handleSubmit = async (e) => {
-    SignIn(email, password)
+    SignIn(e.email, e.password)
       .then(() => {
         history.push("/");
       })
@@ -33,18 +33,11 @@ const Login = () => {
 
   document.title = "Entrar";
 
-  const validate = () => {
-    const errors = {};
-    if (!email) {
-      errors.email = "* Campo requerido";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      errors.email = "* Endereço de email inválido";
-    }
-    if (!password) {
-      errors.password = "* Campo requerido";
-    }
-    return errors;
-  };
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email('* Endereço de email inválido').required('* Campo requerido'),
+    password: Yup.string().required('* Campo requerido'),
+  })
+
 
   return (
     <Base>
@@ -65,7 +58,7 @@ const Login = () => {
               email: "",
               password: "",
             }}
-            validate={validate}
+            validationSchema={validationSchema}
             onSubmit={handleSubmit}
             content={
               <>
@@ -74,20 +67,14 @@ const Login = () => {
                   name="email"
                   type="text"
                   placeholder="Email do usuário"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
+                  
                 />
                 <MyTextInput
                   label="Senha"
                   name="password"
                   type="password"
                   placeholder="Senha"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
+                  
                 />
               </>
             }

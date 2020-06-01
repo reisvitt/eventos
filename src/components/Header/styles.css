@@ -30,6 +30,7 @@ header .menu a {
   color: #151515;
   font-weight: 500;
   margin-left: 15px;
+  font-family: initial;
 }
 header .menu a:hover {
   color: #4d4faa;

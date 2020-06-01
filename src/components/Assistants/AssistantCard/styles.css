@@ -18,8 +18,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .container-assistant-card .assistant:hover {
-  background-color: #4d4daa38;
+  background-color: #4d4daa;
+  color: white;
 }
 
 .container-assistant-card .assistant .name {
@@ -45,6 +47,15 @@
   line-height: 25px;
   padding: 15px 15px;
   border-radius: 5px;
+}
+.container-assistant-card .loadingIcon {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  justify-content: center;
+  line-height: 25px;
+  padding: 0px 12.5px;
 }
 
 .container-assistant-card .buttonIcon:hover {

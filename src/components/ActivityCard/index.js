@@ -15,6 +15,9 @@ const ActivityCard = ({ activity }) => {
   }, []);
 
   function getDate() {
+    if (!activity.start_date && !activity.end_date) {
+      return "Sem data até o momento";
+    }
     const dayStart = getDay(activity.start_date);
     const dayEnd = getDay(activity.end_date);
     const monthStart = getMonthName(activity.start_date);

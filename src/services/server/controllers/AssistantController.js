@@ -73,11 +73,10 @@ const add = async (req, res) => {
 };
 
 const remove = async (req, res) => {
-  const { id: eventID } = req.params;
+  const { eventId, userId } = req.params;
   const token = req.headers.authorization;
-  const email = req.body.email;
 
-  const allow = await permission.coordinator(token, eventID);
+  const allow = await permission.coordinator(token, eventId);
 
   if (!allow) {
     return res.status(401).json({
@@ -85,14 +84,8 @@ const remove = async (req, res) => {
     });
   }
 
-  if (!email) {
-    return res.status(400).json({
-      error: "Dados inválidos",
-    });
-  }
-
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findById(userId);
     if (!user) {
       return res.sendStatus(404);
     }
@@ -100,7 +93,7 @@ const remove = async (req, res) => {
     User.updateOne(
       { _id: user._id },
       {
-        $pull: { events_assistant: eventID },
+        $pull: { events_assistant: eventId },
         update_at: new Date(),
       },
       () => {
@@ -109,7 +102,7 @@ const remove = async (req, res) => {
     );
 
     Event.updateOne(
-      { _id: eventID },
+      { _id: eventId },
       {
         $pull: { assistants: user._id },
         updated_at: new Date(),
@@ -140,4 +133,55 @@ const remove = async (req, res) => {
   }
 };
 
-module.exports = { add, remove };
+const list = async (req, res) => {
+  const { id: eventID } = req.params;
+  const token = req.headers.authorization;
+
+  const allow = await permission.allowedEvent(token, eventID);
+
+  if (!allow) {
+    return res.status(401).json({
+      error: "Você não tem autorização para lista os assistentes deste evento",
+    });
+  }
+
+  try {
+    const event = await Event.findById(eventID).populate("assistants").exec();
+    if (!event) {
+      return res.sendStatus(404);
+    }
+
+    const assistants = await event.assistants;
+
+    return res.status(200).json(assistants);
+  } catch (error) {
+    res.sendStatus(404);
+  }
+};
+
+const get = async (req, res) => {
+  const { id: eventID } = req.params;
+  const token = req.headers.authorization;
+  const email = req.body.email;
+
+  const allow = await permission.allowedEvent(token, eventID);
+
+  if (!allow) {
+    return res.status(401).json({
+      error: "Você não tem autorização",
+    });
+  }
+
+  try {
+    const users = await User.find({ email });
+    if (!users) {
+      return res.sendStatus(404);
+    }
+
+    return res.status(200).json(users);
+  } catch (error) {
+    res.sendStatus(404);
+  }
+};
+
+module.exports = { add, remove, list, get };

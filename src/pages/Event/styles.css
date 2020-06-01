@@ -1,35 +1,51 @@
 .conteudo {
+  margin-top: 20px;
   display: flex;
-  flex-direction: column;
-  height: 250px;
-  margin-bottom: 40px;
+  flex-direction: row;
+  min-height: 250px;
+  margin-bottom: 15px;
   border-radius: 10px;
   padding: 10px;
-  background-image: url("../../assets/secomp.png");
-  background-color: rgba(0, 0, 0, 25%);
   background-repeat: no-repeat;
   background-position: right;
   background-size: contain;
+  position: relative;
+}
+.conteudo::before {
+  content: "";
+  width: 95%;
+  position: absolute;
+  height: 1px;
+  background-color: #b8b8b8;
+  bottom: 0;
+  display: flex;
+  justify-self: conter;
+  left: 2.5%;
+}
+
+.conteudo img {
+  height: 250px;
+  box-shadow: 0.5px 0.5px 10px 0.5px #e0e0e0;
+  margin-left: 15px;
 }
 
 .conteudo .title {
-  font-size: 30px;
-  color: white;
+  font-size: 25px;
 }
 
 .conteudo .descricao {
   font-size: 17px;
-  color: white;
+  font-weight: 300;
 }
 
 .conteudo .valor {
-  font-size: 17px;
-  color: white;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
 }
 
 .conteudo .numeroVal {
   font-size: 17px;
-  color: white;
 }
 
 .event-container .controls {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Formulary from "../../components/FormComponents/Formulary";
 import MyTextInput from "../../components/FormComponents/MyTextInput";
 import MyTextAreaInput from "../../components/FormComponents/MyTextAreaInput";
+import MaskedInput from "../../components/FormComponents/MaskedInput";
 import Datepicker from "../../components/FormComponents/Datepicker";
 import ButtonForm from "../../components/FormComponents/ButtonForm";
 import { saveActivity } from "../../services/endpoints";
@@ -15,16 +16,6 @@ import "./styles.css";
 import { useParams } from "react-router-dom";
 
 const CreateActivity = (props) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [picture, setPicture] = useState("");
-  const [start_date, setStart_date] = useState("");
-  const [end_date, setEnd_date] = useState("");
-  const [type, setType] = useState("");
-  const [subscribed_users, setSubscribed_users] = useState("");
-  // const [event_id, setEvent_id] = useState('');
-  const [price, setPrice] = useState("");
-  const [moneyPrice, setMoneyPrice] = useState("");
   const [erroMessage, setErrorMessage] = useState("");
   const [errorVisible, setErrorVisible] = useState(false);
 
@@ -32,19 +23,20 @@ const CreateActivity = (props) => {
 
   //document.title = "Atividade"
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (form) => {
     //Colocar esse id no api.post para criar a atividade - event_id: '5eba856f1ec95c086063fda4',
     // Não sei ainda como pegar o id do evento diretamente pela pagina
     //So o usuario de vitor pode criar uma atividade nesse evento, porque ele eh o cordenador
     //login: reis@outlook.com, password: 123
+    const price = parseFloat(form.price.replace(/\D/g, "")) / 100;
     saveActivity(id, {
-      title,
-      description,
-      picture: "",
-      start_date,
-      end_date,
-      type: "",
-      price,
+      title: form.title,
+      description: form.description,
+      picture: form.picture || "",
+      start_date: form.start_date,
+      end_date: form.end_date,
+      type: form.type || "",
+      price: price || 0,
     })
       .then((response) => {
         Success("Atividade criada com Sucesso!");
@@ -52,11 +44,6 @@ const CreateActivity = (props) => {
       })
       .catch((error) => {
         Error(`Error ao criar atividade: ${error.message}`);
-        setErrorMessage(error);
-        setErrorVisible(true);
-        setTimeout(() => {
-          setErrorVisible(false);
-        }, 5000);
       });
   };
 
@@ -65,7 +52,7 @@ const CreateActivity = (props) => {
       pictures: this.state.pictures.concat(picture),
     });
   };
-
+  /*
   const validate = () => {
     const errors = {};
     if (!title) {
@@ -74,7 +61,7 @@ const CreateActivity = (props) => {
       errors.title = "* Deve ter 15 caracteres ou menos";
     }
     return errors;
-  };
+  };*/
 
   return (
     <Base>
@@ -89,7 +76,7 @@ const CreateActivity = (props) => {
             description: "",
             price: "",
           }}
-          validate={validate}
+          //validate={validate}
           onSubmit={handleSubmit}
           content={
             <>
@@ -98,53 +85,27 @@ const CreateActivity = (props) => {
                 name="title"
                 type="text"
                 placeholder="Nome da atividade"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
               />
               <MyTextAreaInput
                 label="Descrição"
                 name="description"
                 type="text"
                 placeholder="Descrição"
-                value={description}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
               />
               <div className="row">
                 <div className="col">
-                  <Datepicker
-                    selected={start_date}
-                    onChange={(date) => {
-                      setStart_date(date);
-                    }}
-                    text="Início da atividade"
-                  />
+                  <Datepicker name="start_date" text="Início da atividade" />
                 </div>
                 <div className="col">
-                  <Datepicker
-                    selected={end_date}
-                    onChange={(date) => {
-                      setEnd_date(date);
-                    }}
-                    text="Fim da atividade"
-                  />
+                  <Datepicker name="end_date" text="Fim da atividade" />
                 </div>
               </div>
-              <MyTextInput
+              <MaskedInput
                 label="Preço da atividade"
                 name="price"
                 type="text"
                 placeholder="Preço da atividade"
-                value={moneyMask(moneyPrice)}
-                onChange={(e) => {
-                  setMoneyPrice(e.target.value);
-                  let value =
-                    parseFloat(e.target.value.replace(/\D/g, "")) / 100;
-                  setPrice(value);
-                }}
+                mask={moneyMask}
               />
             </>
           }

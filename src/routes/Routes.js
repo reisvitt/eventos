@@ -8,6 +8,7 @@ import Event from "./../pages/Event";
 import PageError from "./../pages/Error";
 import CreateEvent from "./../pages/CreateEvent";
 import CreateActivity from "../pages/CreateActivity";
+import EditEvent from "../pages/EditEvent";
 import { useAuthContext } from "../store/Auth";
 import { Success, Warn } from "../components/Toast";
 
@@ -52,6 +53,8 @@ const Routers = () => (
       <Route path="/event" exact component={Event} />
       <Route path="/event/create" exact component={CreateEvent} />
       <Route path="/event/:id" exact component={Event} />
+      <Route path="/event/edit/:id" exact component={EditEvent} />
+
       <Route component={PageError} />
     </Switch>
   </BrowserRouter>

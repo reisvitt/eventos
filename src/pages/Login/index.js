@@ -7,6 +7,8 @@ import ButtonForm from "../../components/FormComponents/ButtonForm";
 import Title from "../../components/Theme/Title";
 import { Error } from "../../components/Toast";
 
+import ButtonLoader from "../../components/Button/ButtonLoader";
+
 import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "../../store/Auth";
 
@@ -30,6 +32,7 @@ const Login = () => {
         console.log(error);
       });
   };
+
 
   document.title = "Entrar";
 
@@ -91,7 +94,10 @@ const Login = () => {
                 />
               </>
             }
-            button={<ButtonForm type="submit" text="Entrar" />}
+            button={<div className="default-button">
+
+            <ButtonLoader type="submit" text="Entrar" /> </div>}
+            
           />
         </div>
       </div>

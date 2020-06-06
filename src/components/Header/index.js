@@ -3,8 +3,7 @@ import "./styles.css";
 import { Link, useHistory } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import js from "../../assets/js.jpg";
-
-import { removeToken } from "../../utils/auth";
+import { Col, Row } from "reactstrap";
 
 import { OutlineButton, Button } from "../Button";
 import { FaChevronDown } from "react-icons/fa";
@@ -74,14 +73,14 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <section className="section-logo">
+    <header className="row">
+      <Col xs={4}>
         <Link to="/">
           <img className="logo" src={logo} alt="logoSite" />
         </Link>
-      </section>
+      </Col>
       {user ? (
-        <section className="menu">
+        <Col xs={8} className="menu">
           <div className="mainMenu">
             <Link to="/">Meus eventos</Link>
             <Link to="/">Novo Evento</Link>
@@ -142,12 +141,12 @@ const Header = () => {
               </StyledMenu>
             </div>
           </div>
-        </section>
+        </Col>
       ) : (
-        <section className="section-auth">
-          <OutlineButton to="/login" title="Entrar" />
+        <Col className="d-flex justify-content-end">
+          <OutlineButton className="mr-1" to="/login" title="Entrar" />
           <Button to="/register" title="Cadastrar" />
-        </section>
+        </Col>
       )}
     </header>
   );

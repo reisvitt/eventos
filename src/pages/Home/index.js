@@ -4,6 +4,7 @@ import EventCard from "../../components/EventCard";
 import Base from "../../template/Base";
 import { getAllEvents } from "../../services/endpoints";
 import Title from "../../components/Theme/Title";
+import { Row } from "reactstrap";
 
 import "./styles.css";
 
@@ -42,13 +43,13 @@ const Home = () => {
     <Base>
       <div className="home">
         <Title title="Próximos Eventos" />
-        <div className="row">
+        <Row noGutters className="mt-4">
           {events.length > 0 ? (
             events.map((event) => <EventCard key={event._id} event={event} />)
           ) : (
             <h2>Nenhum evento disponível até o momento</h2>
           )}
-        </div>
+        </Row>
       </div>
     </Base>
   );

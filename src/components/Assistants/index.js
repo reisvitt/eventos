@@ -69,6 +69,7 @@ const Assistants = ({ event, ...props }) => {
         setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         console.log("EEROR", error);
       });
 

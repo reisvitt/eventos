@@ -36,10 +36,6 @@ const AssistantCard = ({ add, user, id, reload }) => {
       });
   }
 
-  useEffect(() => {
-    console.log("USER", user);
-  }, []);
-
   async function handleRemoveAssistant() {
     setDeleting(true);
     api

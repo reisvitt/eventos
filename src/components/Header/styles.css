@@ -1,22 +1,15 @@
 header {
   display: flex;
-  flex-direction: row;
   box-sizing: border-box;
-  position: relative;
   padding: 10px 30px;
   align-items: center;
-}
-
-header .section-logo {
+  justify-content: space-between;
 }
 
 header .menu {
-  position: absolute;
-  right: 0;
   display: flex;
   align-content: center;
-  justify-content: center;
-  margin-right: 30px;
+  justify-content: flex-end;
 }
 
 header .menu .mainMenu {
@@ -68,16 +61,6 @@ header .menu .menu-profile .icon {
   cursor: pointer;
 }
 
-header .section-auth {
-  position: absolute;
-  min-width: 350px;
-  padding-right: 30px;
-  right: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
 
 @media (max-width: 576px) {
   header {

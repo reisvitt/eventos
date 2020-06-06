@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Base from "../../template/Base";
 import * as Yup from "yup";
-
+import { Row, Col } from "reactstrap";
 import Formulary from "../../components/FormComponents/Formulary";
 import MyTextInput from "../../components/FormComponents/MyTextInput";
 import ButtonForm from "../../components/FormComponents/ButtonForm";
@@ -12,7 +12,6 @@ import ButtonLoader from "../../components/Button/ButtonLoader";
 
 import { Link, useHistory } from "react-router-dom";
 import { useAuthContext } from "../../store/Auth";
-
 
 import "./styles.css";
 
@@ -33,29 +32,26 @@ const Login = () => {
       });
   };
 
-
   document.title = "Entrar";
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email('* Endereço de email inválido').required('* Campo requerido'),
-    password: Yup.string().required('* Campo requerido'),
-  })
-
+    email: Yup.string()
+      .email("* Endereço de email inválido")
+      .required("* Campo requerido"),
+    password: Yup.string().required("* Campo requerido"),
+  });
 
   return (
     <Base>
-      <div className=" login-container">
-        <div>
+      <Row className="mt-3 d-flex align-items-center">
+        <Col className="d-none d-lg-flex">
           <img
             src="https://cdn.worldvectorlogo.com/logos/react-1.svg"
             style={{ width: 500, color: "#4d4daa" }}
             alt="logo"
           />
-        </div>
-        <div className="form-content">
-          <div className="title">
-            <Title className="title-container" title="Entrar" />
-          </div>
+        </Col>
+        <Col className="form-content">
           <Formulary
             initialValues={{
               email: "",
@@ -64,30 +60,44 @@ const Login = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
             content={
-              <>
-                <MyTextInput
-                  label="Email"
-                  name="email"
-                  type="text"
-                  placeholder="Email do usuário"
-                  
-                />
-                <MyTextInput
-                  label="Senha"
-                  name="password"
-                  type="password"
-                  placeholder="Senha"
-                  
-                />
-              </>
+              <Row className="d-flex flex-column justify-content-center align-items-center">
+                <Row
+                  noGutters
+                  className="col-10 col-sm-8 col-md-6 col-lg-10 d-flex"
+                >
+                  <Col xs={12}>
+                    <Title className="title-container" title="Entrar" />
+                  </Col>
+                  <Col xs={12}>
+                    <MyTextInput
+                      label="Email"
+                      name="email"
+                      type="text"
+                      placeholder="Email do usuário"
+                    />
+                  </Col>
+                  <Col xs={12}>
+                    <MyTextInput
+                      label="Senha"
+                      name="password"
+                      type="password"
+                      placeholder="Senha"
+                    />
+                  </Col>
+                </Row>
+              </Row>
             }
-            button={<div className="default-button">
-
-            <ButtonLoader type="submit" text="Entrar" /> </div>}
-            
+            button={
+              <div className="default-button">
+                <ButtonForm type="submit" text="Entrar" />
+                {
+                  //<ButtonLoader type="submit" text="Entrar" />
+                }
+              </div>
+            }
           />
-        </div>
-      </div>
+        </Col>
+      </Row>
     </Base>
   ); //fim return
 }; //fim classe Login

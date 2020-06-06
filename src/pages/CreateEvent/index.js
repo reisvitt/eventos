@@ -10,6 +10,7 @@ import Title from "../../components/Theme/Title";
 import { FaCalendarAlt } from "react-icons/fa";
 import { Success, Error } from "../../components/Toast";
 import * as Yup from "yup";
+import { Col, Row } from "reactstrap";
 
 import "./styles.css";
 
@@ -47,7 +48,7 @@ const CreateEvent = (props) => {
   return (
     <Base>
       <Title title="Novo Evento" />
-      <div className="form-content">
+      <div className="form-content mt-5">
         <Formulary
           initialValues={{
             title: "",
@@ -60,35 +61,42 @@ const CreateEvent = (props) => {
           validationSchema={schema}
           onSubmit={handleSubmit}
           content={
-            <>
-              <MyTextInput
-                label="* Nome do Evento"
-                name="title"
-                type="text"
-                placeholder="Nome do evento"
-              />
+            <Row>
+              <Col xs={12}>
+                <MyTextInput
+                  label="* Nome do Evento"
+                  name="title"
+                  type="text"
+                  placeholder="Nome do evento"
+                />
+              </Col>
 
-              <div className="row">
-                <div className="col">
+              <Row noGutters className="col-12">
+                <Col xs={12} sm={6} className="pr-1">
                   <Datepicker name="start_date" text="Início do evento" />
-                </div>
-                <div className="col">
+                </Col>
+                <Col xs={12} sm={6} className="pl-1">
                   <Datepicker name="end_date" text="Fim do evento" />
-                </div>
-              </div>
-              <MyTextInput
-                label="Endereço"
-                name="address"
-                type="text"
-                placeholder="Local do evento"
-              />
-              <MyTextAreaInput
-                label="Descrição"
-                name="description"
-                type="text"
-                placeholder="Descrição"
-              />
-            </>
+                </Col>
+              </Row>
+
+              <Col xs={12}>
+                <MyTextInput
+                  label="Endereço"
+                  name="address"
+                  type="text"
+                  placeholder="Local do evento"
+                />
+              </Col>
+              <Col xs={12}>
+                <MyTextAreaInput
+                  label="Descrição"
+                  name="description"
+                  type="text"
+                  placeholder="Descrição"
+                />
+              </Col>
+            </Row>
           }
           button={<ButtonForm type="submit" text="Criar Evento" />}
         />

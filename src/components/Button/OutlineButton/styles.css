@@ -14,11 +14,12 @@
   border: 1px solid #4d4daa;
   padding: 10px 25px;
   border-radius: 20px;
-  text-decoration: none;
+  text-decoration: none !important;
   color: #4d4daa;
 }
 
 .outline-button a:hover {
   outline: none;
-  background-color: white;
+  color: #4d4daa;
+  background-color: white ;
 }

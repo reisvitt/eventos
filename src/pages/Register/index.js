@@ -5,6 +5,7 @@ import Formulary from "../../components/FormComponents/Formulary";
 import MyTextInput from "../../components/FormComponents/MyTextInput";
 import MaskedInput from "../../components/FormComponents/MaskedInput";
 import ButtonForm from "../../components/FormComponents/ButtonForm";
+import { Row, Col } from "reactstrap";
 
 import { cpfMask } from "../../utils/mask/cpfMask";
 import { unMask } from "../../utils/mask/unMask";
@@ -29,7 +30,6 @@ const Subscribre = ({ history }) => {
   const handleSubmit = async (e) => {
     //const name_user = e.name.split(" ", 2);
 
-
     const cpfUnmask = unMask(e.cpf);
 
     const user = {
@@ -38,7 +38,7 @@ const Subscribre = ({ history }) => {
       cpf: cpfUnmask,
       password: e.password,
     };
-    
+
     await SignUp(user)
       .then(() => {
         history.push("/");
@@ -130,7 +130,7 @@ const Subscribre = ({ history }) => {
   return (
     <Base>
       <Title title="Cadastro de Usuário" />
-      <div className="form-content">
+      <Row className="form-content mt-2">
         <Formulary
           initialValues={{
             name: "",
@@ -142,36 +142,49 @@ const Subscribre = ({ history }) => {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
           content={
-            <>
-              <MyTextInput
-                label="* Nome Completo"
-                name="name"
-                type="text"
-                placeholder="Nome Completo"
-              />
-              <MyTextInput
-                label="* Senha"
-                name="password"
-                type="password"
-                placeholder="Senha"
-              />
-              <MyTextInput
-                label="* Email"
-                name="email"
-                type="text"
-                placeholder="exemplo@email.com"
-              />
-              <MaskedInput
-                label="* CPF"
-                name="cpf"
-                placeholder="CPF"
-                mask={cpfMask}
-              />
-            </>
+            <Row className="d-flex justify-content-center">
+              <Row
+                noGutters
+                className="col-11 col-sm-10 col-md-8 col-lg-6 d-flex justify-content-center"
+              >
+                <Col xs={12}>
+                  <MyTextInput
+                    label="* Nome Completo"
+                    name="name"
+                    type="text"
+                    placeholder="Nome Completo"
+                  />
+                </Col>
+                <Col xs={12}>
+                  <MyTextInput
+                    label="* Senha"
+                    name="password"
+                    type="password"
+                    placeholder="Senha"
+                  />
+                </Col>
+                <Col xs={12}>
+                  <MyTextInput
+                    label="* Email"
+                    name="email"
+                    type="text"
+                    placeholder="exemplo@email.com"
+                  />
+                </Col>
+                <Col xs={12}>
+                  <MaskedInput
+                    label="* CPF"
+                    name="cpf"
+                    placeholder="CPF"
+                    mask={cpfMask}
+                  />
+                </Col>
+              </Row>
+            </Row>
           }
           button={<ButtonForm type="submit" text="Cadastrar" />}
         />
-      </div>
+      </Row>
     </Base>
   ); //fim return
 }; //fim classe Subscribe

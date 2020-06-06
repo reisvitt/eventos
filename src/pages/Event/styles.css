@@ -10,6 +10,7 @@
   background-position: right;
   background-size: contain;
   position: relative;
+  justify-content: space-between;
 }
 .conteudo::before {
   content: "";

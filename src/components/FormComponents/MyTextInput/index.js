@@ -5,15 +5,17 @@ import "./styles.css";
 const TextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   return (
-    <>
-      <label className="form-text-label" htmlFor={props.id || props.name}>
-        {label}
-      </label>
+    <div>
+      <div>
+        <label className="form-text-label" htmlFor={props.id || props.name}>
+          {label}
+        </label>
+      </div>
       <input {...props} {...field} />
       {meta.touched && meta.error ? (
         <div className="form-error">{meta.error}</div>
       ) : null}
-    </>
+    </div>
   );
 };
 

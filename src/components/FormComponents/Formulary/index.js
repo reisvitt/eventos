@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import "./styles.css";
 
 export default class Formulary extends React.Component {
@@ -17,10 +17,12 @@ export default class Formulary extends React.Component {
         <Formik
           initialValues={this.props.initialValues}
           onSubmit={this.props.onSubmit}
-          validate={ this.props.validate && this.props.validate}
-          validationSchema={this.props.validationSchema && this.props.validationSchema}
+          validate={this.props.validate && this.props.validate}
+          validationSchema={
+            this.props.validationSchema && this.props.validationSchema
+          }
         >
-          <Form>
+          <Form className={`${this.props.className || ""}`}>
             {this.props.content}
             {this.props.button}
           </Form>

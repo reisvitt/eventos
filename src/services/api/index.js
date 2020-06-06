@@ -1,13 +1,13 @@
 import axios from "axios";
-import {getToken} from '../../utils/auth'
+import { getToken } from "../../utils/auth";
 
-const baseUrl = "http://localhost:3333/api/";
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const api = axios.create({
   baseURL: baseUrl,
   headers: {
-    Authorization: getToken()
-  }
+    Authorization: getToken(),
+  },
 });
 
 export default api;

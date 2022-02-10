@@ -16,7 +16,7 @@
     "formik": "^2.1.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.5",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "react": "^16.13.0",
     "react-date-range": "^1.0.3",
     "react-datepicker": "^2.14.1",
